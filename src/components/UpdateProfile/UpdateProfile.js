@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import ProfileDetails from '../../components/UpdateProfile/ProfileDetails/ProfileDetails'
+
 
 const UpdateProfile = () => {
     const emailRef = useRef()
@@ -11,6 +13,8 @@ const UpdateProfile = () => {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+
+
     function handleSubmit(e) {
         e.preventDefault()
 
@@ -31,6 +35,7 @@ const UpdateProfile = () => {
     
         Promise.all(promises)
           .then(() => {
+            setLoading(true)
             navigate("/")
           })
           .catch(() => {
@@ -79,7 +84,10 @@ const UpdateProfile = () => {
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
+
+       <ProfileDetails currentUserUid={currentUser.uid}/>
+
+       <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>
       </div>
     </>
