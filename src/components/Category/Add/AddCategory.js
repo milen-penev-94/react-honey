@@ -54,7 +54,7 @@ const AddCategory = () => {
 
     return(
         <div className="add-category-component">
-            <Link to="/list-category" className="cancel">
+            <Link to="/list-category" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
                 <span className="label">Към листа с категории</span>
             </Link>

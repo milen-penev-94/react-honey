@@ -28,7 +28,7 @@ const ListCategories = () => {
 
     return(
         <div className="list-categories-component">
-            <Link to="/add-category" className="add-category">
+            <Link to="/add-category" className="add-category profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faPlusSquare} /></span>
                 <span className="label">Добави категория</span>
             </Link>
