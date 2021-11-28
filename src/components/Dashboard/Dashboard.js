@@ -19,25 +19,16 @@ export default function Dashboard() {
     }
   }
 
-  function currentUserDataInfo() {
-
-    let isLoaded = false;
-    if(Object.keys(currentUserData).length !== 0) {
-      isLoaded = true;
-    }
-
-    return isLoaded
-   }
-
-  
   return (
     <>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           <p>Email: {currentUser.email}</p>
-          { currentUserDataInfo && <p>Name: {currentUserData.name}</p> }
-          { currentUserDataInfo && <p>Last name: {currentUserData.lastName}</p> }
+          { currentUserData && <p>Name: {currentUserData.name}</p> }
+          { currentUserData && <p>Last name: {currentUserData.lastName}</p> }
+
+          { currentUserData.isAdmin && <p>Admin profile</p> }
           {error && <Alert variant="danger">{error}</Alert>}
           <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
@@ -49,6 +40,18 @@ export default function Dashboard() {
           Log Out
         </Button>
       </div>
+
+      { currentUserData.isAdmin  && 
+          <Link to="/add-category" >
+            Add Category
+          </Link> 
+      }
+
+      { currentUserData.isAdmin  && 
+          <Link to="/list-category" >
+            All categories
+          </Link> 
+      }
     </>
   )
 }

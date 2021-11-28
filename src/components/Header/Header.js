@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom"
 function Header () {
     
     return (
@@ -5,7 +6,9 @@ function Header () {
         <div className="header-lower">
             <div className="outer-box">
                 <div className="logo-box">
-                    <figure className="logo"><a href="index.html"><img src="/images/logo-3.png" alt="" /> </a></figure>
+                    <figure className="logo">
+                        <Link to="/" ><img src="/images/logo-3.png" alt="" /> </Link> 
+                    </figure>
                 </div>
                 <div className="menu-area">
                   

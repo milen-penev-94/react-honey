@@ -4,7 +4,6 @@ import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import ProfileDetails from '../../components/UpdateProfile/ProfileDetails/ProfileDetails'
 
-
 const UpdateProfile = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -85,7 +84,7 @@ const UpdateProfile = () => {
         </Card.Body>
       </Card>
 
-       <ProfileDetails currentUserUid={currentUser.uid}/>
+       <ProfileDetails/>
 
        <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>

@@ -1,15 +1,12 @@
-import React, { useRef, useState, useEffect } from "react"
-import { Form, Button, Alert, Card } from "react-bootstrap"
+import React, { useState, useEffect } from "react"
+import { Alert } from "react-bootstrap"
 import { collection, where, query, getDocs, doc, updateDoc } from "firebase/firestore"
 import { useAuth } from "../../../contexts/AuthContext"
 
 import { db } from "../../../firebase"
 
-const ProfileDetails = (
-    currentUserUid
-) => {
+const ProfileDetails = () => {
     const { currentUserData } = useAuth({})
-    const [userData, setUserData] = useState([])
     const [successMessage, setSuccessMessage] = useState("")
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
@@ -25,9 +22,9 @@ const ProfileDetails = (
         //   });
         // } 
     
-        if(Object.keys(currentUserData).length !== 0) {
-          setUserData(currentUserData) 
-        }
+        // if(Object.keys(currentUserData).length !== 0) {
+        //   setUserData(currentUserData) 
+        // }
       };
   
       getUser();
@@ -49,35 +46,39 @@ const ProfileDetails = (
       ) 
       {
 
-        ///const userDataQuery = query(collection(db, "userData"), where("userId", "==", currentUserUid.currentUserUid));
-        const userDataQuery = query(collection(db, "userData"), where("userId", "==", currentUserData.userId));
-        const userDataSnapshot = await getDocs(userDataQuery);
-  
         let docId = null;
-        userDataSnapshot.forEach((doc)  => {
-          docId = doc.id;
-        });
-  
-        const thisUserDate = doc(db, "userData", docId);
-    
-        
-        try {
-          await updateDoc(thisUserDate, {
-            name: name,
-            lastName: lastName,
-            age: age,
-            city: city,
-            phone: phone,
-            address: address 
+        const userDataQuery = await query(collection(db, "userData"), where("userId", "==", currentUserData.userId));
+        await getDocs(userDataQuery)
+          .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+              docId = doc.id;
+            })
           })
-        
-          setSuccessMessage("Successfully saved changes")
-          setTimeout(function () {
-            setSuccessMessage("")
-          }, 5000);
-        } catch (e) {
-          setError("Error update user date:", e);
-        }
+          .catch(err => {
+            setError(err)
+        })
+
+        const thisUserDate =  doc(db, "userData", docId);
+        await updateDoc(thisUserDate, {
+          name: name,
+          lastName: lastName,
+          age: age,
+          city: city,
+          phone: phone,
+          address: address 
+        })
+        .then(() => {
+          
+        })
+        .catch(err => {
+          setError(err)
+        })
+      
+        setSuccessMessage("Successfully saved changes")
+        setTimeout(function () {
+          setSuccessMessage("")
+        }, 5000);
+     
       }
     }
 
@@ -87,7 +88,7 @@ const ProfileDetails = (
         {error && <Alert variant="danger">{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name">Name; </label>
+              <label htmlFor="name">Name: </label>
               <input name="name" id="name" type="text"  defaultValue={currentUserData.name}/>
             </div>
             <div>
@@ -110,11 +111,6 @@ const ProfileDetails = (
               <label htmlFor="address">Address:</label>
               <input name="address" id="address" type="text"  defaultValue={currentUserData.address}/>
             </div>
-
-            {/* <div>
-              <label htmlFor="address">Address:</label>
-              <input name="address" id="address" type="text"  defaultValue={userData.address}/>
-            </div> */}
             
             <button type="submit" disabled={loading}>Update</button>
           </form>

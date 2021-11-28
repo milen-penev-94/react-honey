@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
 import { auth, db } from "../firebase"
-import { collection, where, query, getDocs, doc, getDoc, updateDoc } from "firebase/firestore"
+import { collection, where, query, getDocs, addDoc } from "firebase/firestore"
 
 const AuthContext = React.createContext()
 
@@ -42,41 +42,43 @@ export function AuthProvider({ children }) {
     const userDataSnapshot = await getDocs(userDataQuery);
 
     if (!userDataSnapshot.empty) {
+
       userDataSnapshot.forEach((doc) => {
         setCurrentUserData(doc.data())        
       });
+
     } else {
 
-      const userDataQuery = query(collection(db, "userData"), where("userId", "==", user.uid));
-      const userDataSnapshot = await getDocs(userDataQuery);
-
       if (userDataSnapshot.empty) {
-          let name = null;
-          let lastName = null
-          let city = null;
-          let address= null
-          let age = null
-          let phone = null
-          let userId = user.uid
-          let isAdmin = false
+        let name = null;
+        let lastName = null
+        let city = null;
+        let address= null
+        let age = null
+        let phone = null
+        let userId = user.uid
+        let isAdmin = false
 
-          let userDataCollection = db.collection('userData')
-          .doc()
-
-          let newUserData = {
-              name,
-              lastName,
-              city,
-              address,
-              age,
-              phone,
-              userId,
-              isAdmin
-          }
-
-          userDataCollection.set({
-              ...newUserData
-          })
+        let newUserData = {
+            name,
+            lastName,
+            city,
+            address,
+            age,
+            phone,
+            userId,
+            isAdmin
+        }
+        const newCurrentUserData = await addDoc(collection(db, "userData"), {
+          ...newUserData
+        })
+        .then(() =>{
+            setCurrentUserData(newCurrentUserData)
+        })
+        .catch(err => {
+            console.err(err)
+        })
+       
       }
     }
   };
@@ -91,7 +93,6 @@ export function AuthProvider({ children }) {
       }
     
     })
-
     return unsubscribe
   }, [])
 

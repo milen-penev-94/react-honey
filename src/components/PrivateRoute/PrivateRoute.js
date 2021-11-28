@@ -1,18 +1,30 @@
-import React, { useRef, useState, useEffect } from "react"
 import { BrowserRouter as Router,
   Navigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
-import { db } from "../../firebase"
-import {
-    collection,
-    where,
-    query,
-    getDocs,
-  } from "firebase/firestore"
 
-export default function PrivateRoute({ children }) {
-    const [loading, setLoading] = useState(false)
-    const { currentUser } = useAuth()
+export default function PrivateRoute({ children, isAdmin }) {
+    const { currentUser, currentUserData } = useAuth()
+    let redirect = null
 
-    return currentUser ? children : <Navigate to="/login" />;
+    if (currentUser) {
+
+      if (isAdmin) {
+        if(Object.keys(currentUserData).length !== 0) {
+          if(currentUserData.isAdmin) {
+            redirect = children
+          } else {
+            redirect = <Navigate to="/" />
+          }
+        }
+      } else {
+
+          if (currentUser) {
+              redirect = children
+          }
+      }
+    } else {
+      redirect = <Navigate to="/login" />
+    }
+
+   return redirect;
 }
