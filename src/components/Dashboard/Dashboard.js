@@ -3,6 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import './Dashboard.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faList } from '@fortawesome/free-solid-svg-icons'
 
 export default function Dashboard() {
   const [error, setError] = useState("")
@@ -41,7 +43,8 @@ export default function Dashboard() {
 
       { currentUserData.isAdmin  && 
           <Link to="/list-category" className="profile-action-button">
-             Всички категории
+            <span className="icon"><FontAwesomeIcon icon={faList} /></span>
+            <span className="label">Всички категории</span>
           </Link> 
       }
     </div>
