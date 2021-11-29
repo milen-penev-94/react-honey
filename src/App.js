@@ -15,6 +15,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import AddCategory from "./components/Category/Add/AddCategory";
 import ListCategories from "./components/Category/List/ListCategories";
 import UpdateCategory from "./components/Category/Update/UpdateCategory";
+import AddProduct from "./components/Product/Add/AddProduct";
+import UpdateProduct from "./components/Product/Update/UpdateProduct";
 
 export default function App() {
 
@@ -24,6 +26,8 @@ export default function App() {
         <div className="auto-container">
         <AuthProvider>
           <Routes>
+
+            {/* Profile */}
             <Route
               path="/"
               element={
@@ -40,34 +44,55 @@ export default function App() {
               </PrivateRoute>
               }
             />
+
+            {/* Category */}
             <Route
-              path="/update-profile"
-              element={
-                <PrivateRoute>
-                  <UpdateProfile />
-              </PrivateRoute>
-              }
-            />
-            <Route
-              path="/add-category"
+              path="/admin/add-category"
               element={
                 <PrivateRoute isAdmin="true">
                   <AddCategory />
               </PrivateRoute>
               }
             />
-              <Route
-              path="/update-category/:id"
+            <Route
+              path="/admin/list-category"
+              element={
+                <PrivateRoute isAdmin="true">
+                 <ListCategories />
+              </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/update-category/:id"
               element={
                 <PrivateRoute isAdmin="true">
                   <UpdateCategory />
               </PrivateRoute>
               }
             />
+
+            {/* Product */}
+            <Route
+              path="/admin/add-product"
+              element={
+                <PrivateRoute isAdmin="true">
+                  <AddProduct />
+              </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/admin/update-product/:id"
+              element={
+                <PrivateRoute isAdmin="true">
+                  <UpdateProduct />
+              </PrivateRoute>
+              }
+            />
+
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/list-category" element={<ListCategories />} />
           </Routes>
         </AuthProvider> 
         </div>  

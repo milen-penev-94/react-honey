@@ -1,5 +1,5 @@
-.list-categories-component .categories-list .category {
-   margin-bottom: 2px;
+.list-categories-component .categories-list > .category {
+   margin-bottom: 4px;
    padding: 8px 20px;
    background: #f3f3f3;
 }
@@ -9,16 +9,49 @@
     right: 20px;
 }
 
-.list-categories-component .categories-list .category .actions .name {
-    margin-right: 20px;
+.list-categories-component .categories-list .category .actions span {
+    margin-left: 7px;
+    vertical-align: middle;
+}
+
+.list-categories-component .categories-list .category .actions a {
+    vertical-align: middle;
+}
+
+.list-categories-component .categories-list .category .actions .status .enabled {
+    color: #26b502;
+}
+
+.list-categories-component .categories-list .category .actions .status .disabled {
+    color: #db0000;
 }
 
 .list-categories-component .categories-list .category .actions .edit {
-    margin-right: 20px;
+    margin-left: 5px;
     color: #131313;
 }
 
 .list-categories-component .categories-list .category .actions .delete {
     color: #131313;
     cursor: pointer;
+}
+
+.list-categories-component .categories-list .category .child-categories .categories-list {
+    position: relative;
+}
+.list-categories-component .categories-list .category .child-categories .categories-list .category:before {
+    content: '>';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+}
+
+.list-categories-component .categories-list .category .child-categories .categories-list .category {
+    margin-top: 10px;
+    border-top: 1px solid #fff;
+    padding: 8px 0 8px 30px;
+} 
+
+.list-categories-component .categories-list .category .child-categories .categories-list .category:last-child {
+    padding: 8px 0 0 30px;
 }

@@ -1,5 +1,5 @@
 import { db } from "../firebase"
-import { getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, collection, query } from "firebase/firestore"
+import { getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore"
 
 
 export  async function getAll() {
@@ -20,6 +20,46 @@ export  async function getAll() {
 
     return allCategoriesArray
 }
+
+
+export  async function getParentCategories() {
+    let allCategoriesArray = []
+
+    const allCategoriesQuery = query(collection(db, "categories"), where("parent", "==", ""));
+    await getDocs(allCategoriesQuery)
+    .then((snapshot) => {
+       
+        snapshot.docs.forEach((doc) => {
+            let categoryData = Object.assign(doc.data(), {docId: doc.id})
+            allCategoriesArray.push(categoryData)
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+    return allCategoriesArray
+}
+
+export  async function getChildCategories(parentId) {
+    let childCategoriesArray = []
+
+    const childCategoriesQuery = query(collection(db, "categories"), where("parent", "==", parentId));
+    await getDocs(childCategoriesQuery)
+    .then((snapshot) => {
+       
+        snapshot.docs.forEach((doc) => {
+            let categoryData = Object.assign(doc.data(), {docId: doc.id})
+            childCategoriesArray.push(categoryData)
+        })
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+    return childCategoriesArray
+}
+
 
 export  async function getOne(id) {
     let category = null
@@ -69,7 +109,6 @@ export async function update(category, docId) {
 }
 
 export async function remove(docId) {
-    console.log(docId)
 
     let successDelete = false
 

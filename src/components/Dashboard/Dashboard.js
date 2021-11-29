@@ -42,7 +42,7 @@ export default function Dashboard() {
       </div>
 
       { currentUserData.isAdmin  && 
-          <Link to="/list-category" className="profile-action-button">
+          <Link to="/admin/list-category" className="profile-action-button">
             <span className="icon"><FontAwesomeIcon icon={faList} /></span>
             <span className="label">Всички категории</span>
           </Link> 

@@ -35,6 +35,7 @@ const UpdateCategory = () => {
 
         e.preventDefault(); 
 
+        let form = e.currentTarget
         let formData = new FormData(e.currentTarget);
         let {isEnabled, name, description, parent} = Object.fromEntries(formData)
 
@@ -53,6 +54,7 @@ const UpdateCategory = () => {
                     setUpdateForm(true)
                     setTimeout(() =>{
                         setSuccessMessage('')
+                        form.reset()
                     }, 2000)
                 }
             })   
@@ -64,7 +66,7 @@ const UpdateCategory = () => {
 
     return(
         <div className="update-category-component">            
-            <Link to="/list-category" className="cancel profile-action-button">
+            <Link to="/admin/list-category" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
                 <span className="label">Към листа с категории</span>
             </Link>
@@ -75,9 +77,9 @@ const UpdateCategory = () => {
              <form onSubmit={handleSubmit}>
                 <div>
                      <label htmlFor="isEnabled">Статус: </label>
-                     <select id="isEnabled" name="isEnabled" data-test={currentCategory.isEnabled}>
-                         <option value="1" selected={(currentCategory.isEnabled === 1) ? 'selected' : null}>Активна</option>
-                         <option value="0" selected={(currentCategory.isEnabled === 1) ? null : 'selected' }>Неактивна</option>
+                     <select id="isEnabled" name="isEnabled">
+                         <option value="1" selected={(currentCategory.isEnabled === '1') ? 'selected' : null}>Активна</option>
+                         <option value="0" selected={(currentCategory.isEnabled === '1') ? null : 'selected' }>Неактивна</option>
                      </select>
                  </div>
 

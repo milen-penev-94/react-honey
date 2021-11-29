@@ -4,25 +4,21 @@ import { Link } from "react-router-dom"
 import './ListCategories.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import ListCategory from "./ListCategory";
 
 const ListCategories = () => {
     const [allCategories, setAllCategories] = useState([]);
     const [deleteCategory, setDeleteCategory] = useState(false);
-    
 
     useEffect(() => {
-        categoriesService.getAll()
+        categoriesService.getParentCategories()
         .then(result => {
             setAllCategories(result);
         })  
     }, [deleteCategory]);
 
-    const removeCategory = (e) => {
-       let categoryId = e.currentTarget.getAttribute('data-category-id')
-       categoriesService.remove(categoryId)
-       .then(result => {
-           setDeleteCategory(true)
-       })  
+    function changeDeteleCategory(newValue) {
+        setDeleteCategory(newValue)
     }
 
     return(
@@ -33,7 +29,7 @@ const ListCategories = () => {
                 <span className="label">Към профила</span>
             </Link>
             
-            <Link to="/add-category" className="add-category profile-action-button">
+            <Link to="/admin/add-category" className="add-category profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faPlusSquare} /></span>
                 <span className="label">Добави категория</span>
             </Link>
@@ -43,11 +39,7 @@ const ListCategories = () => {
                     <ul className="categories-list">
                         {allCategories.map(x => 
                         <li className="category">
-                            <span className="name">{x.name}</span>
-                            <div className="actions">
-                                <Link to={`/update-category/${x.docId}`} className="edit"><FontAwesomeIcon icon={faEdit} /></Link> 
-                                <span className="delete" onClick={removeCategory} data-category-id={x.docId}><FontAwesomeIcon icon={faTrash} /></span>
-                            </div>
+                            <ListCategory category={x} deleteCategory={deleteCategory} onChange={changeDeteleCategory} />
                         </li>
                         )}
                     </ul>

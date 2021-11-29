@@ -6452,3 +6452,25 @@ select:focus {
 .profile-action-button .icon{
   margin-right: 8px;
 }
+
+.success-message {
+  background: #26b502;
+  padding: 15px 30px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.error-message {
+  background: #db0000;
+  padding: 15px 30px;
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}

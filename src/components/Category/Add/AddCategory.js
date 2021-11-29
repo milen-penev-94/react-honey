@@ -32,7 +32,6 @@ const AddCategory = () => {
         if (name.length > 3 ) {
             
             let newCategory = {isEnabled, name, description, parent}
-            console.log(newCategory)
 
             categoriesService.save(newCategory)
             .then(result => {
@@ -54,7 +53,7 @@ const AddCategory = () => {
 
     return(
         <div className="add-category-component">
-            <Link to="/list-category" className="cancel profile-action-button">
+            <Link to="/admin/list-category" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
                 <span className="label">Към листа с категории</span>
             </Link>
@@ -63,7 +62,7 @@ const AddCategory = () => {
             {errorMessage && <div className="error-message">{errorMessage}</div>}
 
             <form onSubmit={handleSubmit}>
-            <div>
+                <div>
                     <label htmlFor="isEnabled">Статус: </label>
                     <select id="isEnabled" name="isEnabled">
                         <option value="1">Активна</option>

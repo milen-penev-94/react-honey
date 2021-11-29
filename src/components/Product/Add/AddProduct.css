@@ -1,0 +1,17 @@
+.add-product-component h2 {
+    margin-bottom: 40px;
+}
+
+.add-product-component form {
+    margin-left: -20px;
+}
+.add-product-component form div {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.add-product-component .two-column {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 20px);
+}
