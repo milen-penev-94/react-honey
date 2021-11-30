@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import * as categoriesService from '../../../services/categoriesService';
+import * as categoriesService from '../../../../services/categoriesService';
 import './UpdateCategory.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -19,17 +19,21 @@ const UpdateCategory = () => {
 
         categoriesService.getOne(thisCategoryId)
         .then(result => {
-            setCurrentCategory(result)
+            setCurrentCategory(result) 
         })   
+
        
     }, [updateForm]);
+
 
     useEffect(() => {
         categoriesService.getAll()
             .then(result => {
-                setAllCategories(result);
+                setAllCategories(result);        
             })   
+
     }, []);
+
 
     const handleSubmit = async (e) => {
 
@@ -56,14 +60,13 @@ const UpdateCategory = () => {
                         setSuccessMessage('')
                         form.reset()
                     }, 2000)
+                } else {
+                    //TodDO err
                 }
             })   
-            .catch(err => {
-                console.log(err)
-            })
         }
     }
-
+ 
     return(
         <div className="update-category-component">            
             <Link to="/admin/list-category" className="cancel profile-action-button">
@@ -71,8 +74,10 @@ const UpdateCategory = () => {
                 <span className="label">Към листа с категории</span>
             </Link>
 
+            <h2>Категория: {currentCategory.name}</h2>
+
              {successMessage && <div className="success-message">{successMessage}</div>}
-             {errorMessage && <div className="error-message">{errorMessage}</div>}
+             {errorMessage && <div className="error-message"><div>{errorMessage}</div></div>}
 
              <form onSubmit={handleSubmit}>
                 <div>
@@ -95,6 +100,7 @@ const UpdateCategory = () => {
 
                  <div>
                      <label htmlFor="parent">Родителска категория: </label>
+
                      <select id="parent" name="parent">   
                         <option defaultValue=""></option> 
                          {allCategories.length > 0 

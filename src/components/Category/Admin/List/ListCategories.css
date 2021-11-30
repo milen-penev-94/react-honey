@@ -1,3 +1,7 @@
+.list-categories-component h2 {
+    margin-bottom: 20px;
+}
+
 .list-categories-component .categories-list > .category {
    margin-bottom: 4px;
    padding: 8px 20px;

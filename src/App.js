@@ -12,11 +12,13 @@ import Login from './components/Login/Login'
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import AddCategory from "./components/Category/Add/AddCategory";
-import ListCategories from "./components/Category/List/ListCategories";
-import UpdateCategory from "./components/Category/Update/UpdateCategory";
-import AddProduct from "./components/Product/Add/AddProduct";
-import UpdateProduct from "./components/Product/Update/UpdateProduct";
+import AddCategory from "./components/Category/Admin/Add/AddCategory";
+import ListCategories from "./components/Category/Admin/List/ListCategories";
+import UpdateCategory from "./components/Category/Admin/Update/UpdateCategory";
+import AddProduct from "./components/Product/Admin/Add/AddProduct";
+import UpdateProduct from "./components/Product/Admin/Update/UpdateProduct";
+import ListProducts from "./components/Product/Admin/List/ListProducts";
+import Products from "./components/Product/List/Products";
 
 export default function App() {
 
@@ -26,10 +28,14 @@ export default function App() {
         <div className="auto-container">
         <AuthProvider>
           <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/products" element={<Products />} />
 
             {/* Profile */}
             <Route
-              path="/"
+              path="/profile"
               element={
                 <PrivateRoute>
                   <Dashboard />
@@ -89,10 +95,15 @@ export default function App() {
               </PrivateRoute>
               }
             />
-
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            
+            <Route
+              path="/admin/list-products"
+              element={
+                <PrivateRoute isAdmin="true">
+                  <ListProducts />
+              </PrivateRoute>
+              }
+            />
           </Routes>
         </AuthProvider> 
         </div>  

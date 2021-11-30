@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import * as categoriesService from '../../../services/categoriesService';
-import * as productService from '../../../services/productService';
+import * as categoriesService from '../../../../services/categoriesService';
+import * as productService from '../../../../services/productService';
 import './AddProduct.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -24,7 +24,7 @@ const AddProduct = () => {
 
         let form = e.currentTarget
         let formData = new FormData(e.currentTarget);
-        let { isEnabled, name, description, image, quantity, category, price, salePrice } = Object.fromEntries(formData)
+        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData)
 
         let errors = [];
 
@@ -43,16 +43,39 @@ const AddProduct = () => {
         if (!price.length) {
             errors.push('Цената е задължителна')
         } else {
-            if (parseFloat(price) <= 0) {
-                errors.push('Цената рябва да е по-голяма от 0')
+
+            if (isNaN(price)) {
+                errors.push('Цената трябва да е число')
+            } else {
+
+                if (parseFloat(price) <= 0) {
+                    errors.push('Цената трябва да е по-голяма от 0')
+                }
             }
         }   
+        
+        if (salePrice.length) {
+            if (isNaN(salePrice)) {
+                errors.push('Промоционалната цена трябва да е число')
+            } else {
+
+                if (parseFloat(salePrice) <= 0) {
+                    errors.push('Промоционалната цена трябва да е по-голяма от 0')
+                }
+            }
+        }  
+
+        if (quantity.length) {
+            if (isNaN(quantity)) {
+                errors.push('Количеството трябва да е число')
+            } 
+        }  
         
         if (errors.length > 0) {
             setErrorMessage(errors)  
         } else {
-            let newProduct = {isEnabled, name, description, image, quantity, category, price, salePrice}
-            console.log(newProduct)
+            
+            let newProduct = {isEnabled, name, description, image, quantity, category, sku, price, salePrice}
 
             productService.save(newProduct)
             .then(result => {
@@ -63,17 +86,16 @@ const AddProduct = () => {
                     setTimeout(() => {
                         setSuccessMessage('')
                     }, 2000)
-                } 
-            })   
-            .catch(err => {
-                console.log(err)
-            })
+                } else {
+                    //TODO  add Err
+                }
+            })  
         }
     }
 
     return(
         <div className="add-product-component">
-            <Link to="/admin/list-product" className="cancel profile-action-button">
+            <Link to="/admin/list-products" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
                 <span className="label">Към листа с продукти</span>
             </Link>
@@ -82,9 +104,11 @@ const AddProduct = () => {
 
             {successMessage && <div className="success-message">{successMessage}</div>}
 
-            { (errorMessage.length > 0) ? errorMessage.map((error) =>
-                <div>{error}</div>
-            ) : null}
+            <div className={(errorMessage.length > 0) ? 'error-message' : null}>
+                { (errorMessage.length > 0) ? errorMessage.map((error) =>
+                    <div>{error}</div>
+                ) : null}
+            </div>
 
             <form onSubmit={handleSubmit}>
                 <div className="two-column">
@@ -116,13 +140,18 @@ const AddProduct = () => {
                     <input id="quantity" name="quantity" type="text" />
                 </div>     
 
-                <div>
+                <div className="two-column" >
                     <label htmlFor="category">Категория: </label>
                     <select id="category" name="category">   
                         <option defaultValue=""></option>                   
                         {allCategories.length > 0 ? allCategories.map(x => <option key={x.docId} value={x.docId}>{x.name}</option>) : null}                       
                     </select>
                 </div>
+
+                <div className="two-column">
+                    <label htmlFor="sku">Артикулен номер: </label>
+                    <input id="sku" name="sku" type="text" />
+                </div>  
 
                 <div className="two-column">
                     <label htmlFor="price">Цена: </label>

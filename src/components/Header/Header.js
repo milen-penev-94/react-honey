@@ -112,7 +112,7 @@ function Header () {
                                     <div className="form-container">
                                         <form method="post" action="http://azim.commonsupport.com/Hanta/blog.html">
                                             <div className="form-group">
-                                                <input type="search" name="search-field" value="" placeholder="Search...." required="" />
+                                                <input type="search" name="search-field" value=""  required="" />
                                                 <button type="submit" className="search-btn"><span className="fas fa-search"></span></button>
                                             </div>
                                         </form>

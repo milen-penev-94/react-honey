@@ -47,6 +47,13 @@ export default function Dashboard() {
             <span className="label">Всички категории</span>
           </Link> 
       }
+
+      { currentUserData.isAdmin  && 
+          <Link to="/admin/list-products" className="profile-action-button">
+            <span className="icon"><FontAwesomeIcon icon={faList} /></span>
+            <span className="label">Всички продукти</span>
+          </Link> 
+      }     
     </div>
   )
 }

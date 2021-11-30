@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { Component, useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import * as categoriesService from '../../../services/categoriesService';
+import * as categoriesService from '../../../../services/categoriesService';
 import './AddCategory.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
@@ -14,7 +14,7 @@ const AddCategory = () => {
     useEffect(() => {
         categoriesService.getAll()
             .then(result => {
-                setAllCategories(result);
+                setAllCategories(result)
             })   
     }, []);
 
@@ -32,8 +32,7 @@ const AddCategory = () => {
         if (name.length > 3 ) {
             
             let newCategory = {isEnabled, name, description, parent}
-
-            categoriesService.save(newCategory)
+             categoriesService.save(newCategory)
             .then(result => {
                 if(result) {
                     form.reset()
@@ -41,15 +40,15 @@ const AddCategory = () => {
                     setSuccessMessage("Успешно запаметена категория")
                     setTimeout(() => {
                         setSuccessMessage("")
-                        navigate("/list-category")
+                        navigate("/admin/list-category")
                     }, 3000)
-                } 
-            })   
-            .catch(err => {
-                console.err(err)
-            })
+                } else {
+                    //TODO:  add err
+                }
+            })  
         }
     }
+    
 
     return(
         <div className="add-category-component">
@@ -58,8 +57,10 @@ const AddCategory = () => {
                 <span className="label">Към листа с категории</span>
             </Link>
 
+            <h2>Добавяне на категория</h2>
+
             {successMessage && <div className="success-message">{successMessage}</div>}
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {errorMessage && <div className="error-message"><div>{errorMessage}</div></div>}
 
             <form onSubmit={handleSubmit}>
                 <div>
@@ -82,10 +83,11 @@ const AddCategory = () => {
 
                 <div>
                     <label htmlFor="parent">Родителска среща: </label>
-                    <select id="parent" name="parent">   
+
+                    {<select id="parent" name="parent">   
                         <option defaultValue=""></option>                   
                         {allCategories.length > 0 ? allCategories.map(x => <option key={x.docId} value={x.docId}>{x.name}</option>) : null}                       
-                    </select>
+                    </select>}
                 </div>
 
                 <button type="submit">Запазване</button>

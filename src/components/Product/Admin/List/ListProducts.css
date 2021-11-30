@@ -1,0 +1,42 @@
+.list-products-component h2 {
+    margin-bottom: 20px;
+}
+
+.list-products-component .products-list > .product{
+    margin-bottom: 4px;
+    padding: 8px 20px;
+    background: #f3f3f3;
+ }
+ 
+ .list-products-component .products-list .product .actions {
+     float: right;
+     right: 20px;
+ }
+ 
+ .list-products-component .products-list .product .actions span {
+     margin-left: 7px;
+     vertical-align: middle;
+ }
+ 
+ .list-products-component .products-list .product .actions a {
+     vertical-align: middle;
+ }
+ 
+ .list-products-component .products-list .product .actions .status .enabled {
+     color: #26b502;
+ }
+ 
+ .list-products-component .products-list .product .actions .status .disabled {
+     color: #db0000;
+ }
+ 
+ .list-products-component .products-list .product .actions .edit {
+     margin-left: 5px;
+     color: #131313;
+ }
+ 
+ .list-products-component .products-list .product .actions .delete {
+     color: #131313;
+     cursor: pointer;
+ }
+ 

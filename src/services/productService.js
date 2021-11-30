@@ -1,86 +1,80 @@
 import { db } from "../firebase"
-import { getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, collection, query } from "firebase/firestore"
+import { getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, where, collection, query } from "firebase/firestore"
 
+export  async function getAll() {
+    let allProductsArray = []
+    const allProductsQuery = query(collection(db, "products"));
+    const snapshot =  await getDocs(allProductsQuery)
+      
+    snapshot.docs.forEach((doc) => {
+        let categoryData = Object.assign(doc.data(), {docId: doc.id})
+        allProductsArray.push(categoryData)
+    })
+  
+    return allProductsArray
+}
 
-// export  async function getAll() {
-//     let allProductsArray = []
-
-//     const allProductsQuery = query(collection(db, "products"));
-//     await getDocs(allProductsQuery)
-//     .then((snapshot) => {
-       
-//         snapshot.docs.forEach((doc) => {
-//             let productsData = Object.assign(doc.data(), {docId: doc.id})
-//             allProductsArray.push(productsData)
-//         })
-//     })
-//     .catch(err => {
-//         console.log(err)
-//     })
-
-//     return allProductsArray
-// }
+export  async function getAllEnabled() {
+    let allProductsArray = []
+    const allProductsQuery = query(collection(db, "products"), where("isEnabled", "==", "1"));
+    const snapshot =  await getDocs(allProductsQuery)
+      
+    snapshot.docs.forEach((doc) => {
+        let categoryData = Object.assign(doc.data(), {docId: doc.id})
+        allProductsArray.push(categoryData)
+    })
+  
+    return allProductsArray
+}
 
 export  async function getOne(id) {
     let product = null
-    const productQuery = doc(db, "products", id);
-    await getDoc(productQuery)
-    .then((doc) => {
-        product = doc.data()
-    })
+    let productQuery = doc(db, "products", id);
 
+    let docSnap = await getDoc(productQuery);
+    if (docSnap.exists()) {
+        product = docSnap.data()
+    }
      return product
 }
 
 export  async function save(newProduct) {
 
     let successSave = false
-
-    await addDoc(collection(db, "products"), {
+    let addProduct = await addDoc(collection(db, "products"), {
         ...newProduct
     })   
-    .then(() => {
+
+    if (addProduct.id) {
         successSave = true
-    })
-    .catch(err => {
-        console.log(err)
-        successSave = false
-    })
+    }
 
-     return successSave
-}
+    return successSave
+ }
 
-export async function update(product, docId) {
+ export async function update(product, docId) {
 
     let successSave = false
-
-    await updateDoc(doc(db, "products", docId), {
-    ...product
-    })
-    .then(() => {
-        successSave = true
-    })
-    .catch(err => {
-        console.log(err)
-        successSave = false
-    })
-
+    let query = doc(db, "products", docId);
+    if(query) {
+         await updateDoc(query, {
+        ...product
+        })
+        successSave = true;
+    }
      return successSave
 }
 
-// export async function remove(docId) {
-//     console.log(docId)
 
-//     let successDelete = false
+export async function remove(docId) {
 
-//     await deleteDoc(doc(db, "categories", docId))
-//     .then(() => {
-//         successDelete = true
-//     })
-//     .catch(err => {
-//         console.log(err)
-//         successDelete = false
-//     })
+    let successDelete = false
+    let query = doc(db, "products", docId)
 
-//      return successDelete
-// }
+    if(query) {
+       await deleteDoc(query)
+       successDelete = true;
+    }
+
+     return successDelete
+}
