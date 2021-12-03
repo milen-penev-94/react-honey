@@ -1,0 +1,16 @@
+.product h5 {
+    margin-top: 20px;
+}
+.product .product-image {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 20px auto 0;
+}
+.product .sale-price {
+    color: #b73604;
+    font-size: 18px;
+    margin-right: 5px;
+}
+.product .old-price {
+    text-decoration: line-through;
+}

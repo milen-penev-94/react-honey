@@ -1,0 +1,17 @@
+.list-products-component .pagination-wrapper {
+    margin: 0 auto;
+}
+
+.list-products-component .sidebar-widget .category-list .child-categories  {
+    margin-top: 10px;
+    margin-left: 14px;
+}
+
+.list-products-component .sidebar-widget .category-list .child-categories li {
+    margin-bottom: 5px;
+}
+
+.list-products-component .sidebar-widget .category-list .child-categories li  a {
+    font-weight: 500;
+    font-size: 14px;
+}

@@ -1,5 +1,4 @@
-import { BrowserRouter as Router,
-  Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
 
 export default function PrivateRoute({ children, isAdmin }) {
@@ -9,7 +8,9 @@ export default function PrivateRoute({ children, isAdmin }) {
     if (currentUser) {
 
       if (isAdmin) {
+
         if(Object.keys(currentUserData).length !== 0) {
+         
           if(currentUserData.isAdmin) {
             redirect = children
           } else {

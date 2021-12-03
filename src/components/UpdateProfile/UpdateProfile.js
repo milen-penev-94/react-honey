@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
+import { Alert } from "react-bootstrap"
 import { useAuth } from "../../contexts/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import ProfileDetails from '../../components/UpdateProfile/ProfileDetails/ProfileDetails'
@@ -47,31 +47,30 @@ const UpdateProfile = () => {
       
   return (
     <>
-  
-          <h2 className="text-center mb-4">Update Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Email</label>
-              <input type="email" ref={emailRef} required defaultValue={currentUser.email} />
-            </div>
-            <div>
-              <label>Password</label>
-              <input type="password" ref={passwordRef} placeholder="Leave blank to keep the same" />
-            </div>
-              <div>         
-              <label>Password Confirmation</label>
-              <input type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
-            </div>
+      <h2 className="text-center mb-4">Update Profile</h2>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email</label>
+          <input type="email" ref={emailRef} required defaultValue={currentUser.email} />
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" ref={passwordRef} placeholder="Leave blank to keep the same" />
+        </div>
+          <div>         
+          <label>Password Confirmation</label>
+          <input type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
+        </div>
 
-            <button disabled={loading} type="submit">
-              Update
-            </button>
-          </form>
+        <button disabled={loading} type="submit">
+          Update
+        </button>
+      </form>
 
-        <ProfileDetails/>
+      <ProfileDetails/>
 
-        <Link to="/">Cancel</Link>
+      <Link to="/">Cancel</Link>
     </>
   )
 }

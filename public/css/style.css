@@ -100,7 +100,7 @@ body {
 
 .auto-container{
   position:static;
-  max-width:1200px;
+  max-width:1300px;
   padding:0px 15px;
   margin:0 auto;
 }
@@ -407,9 +407,14 @@ img {
   display: block;
 }
 
-.pagination li{
+.pagination li {
   display: inline-block;
   margin: 0px 12px;
+}
+
+.pagination li.current a {
+  background: #cb9744;
+  color: #fff;
 }
 
 .pagination li a{
@@ -5252,6 +5257,7 @@ div#mCSB_1_container{
 .addto-cart-box .clearfix li{
   position: relative;
   display: inline-block;
+  max-width: fit-content;
 }
 
 .addto-cart-box .input-group {
@@ -5274,7 +5280,6 @@ div#mCSB_1_container{
   max-width: 130px;
   width: 100%;
   float: left;
-  padding: 0px 40px;
   margin-right: 10px;
   border: 1px solid #dddddd;
   z-index: 1;

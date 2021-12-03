@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react"
-import { Alert } from "react-bootstrap"
+import React, { useState } from "react"
 import { collection, where, query, getDocs, doc, updateDoc } from "firebase/firestore"
 import { useAuth } from "../../../contexts/AuthContext"
 
@@ -8,32 +7,13 @@ import { db } from "../../../firebase"
 const ProfileDetails = () => {
     const { currentUserData } = useAuth({})
     const [successMessage, setSuccessMessage] = useState("")
-    const [error, setError] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
     const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-      const getUser = async () => {
-        // const userDataQuery = query(collection(db, "userData"), where("userId", "==", currentUserUid.currentUserUid));
-        // const userDataSnapshot = await getDocs(userDataQuery);
-
-        // if (!userDataSnapshot.empty) {
-        //   userDataSnapshot.forEach((doc) => {
-        //       setUserData(doc.data())  
-        //   });
-        // } 
-    
-        // if(Object.keys(currentUserData).length !== 0) {
-        //   setUserData(currentUserData) 
-        // }
-      };
-  
-      getUser();
-      
-    }, [])
 
     const handleSubmit = async (e) => {
       e.preventDefault();
 
+      let form = e.currentTarget
       let formData = new FormData(e.currentTarget);
       let {name, lastName, age, city, phone, address} = Object.fromEntries(formData)
       if(
@@ -47,45 +27,50 @@ const ProfileDetails = () => {
       {
 
         let docId = null;
-        const userDataQuery = await query(collection(db, "userData"), where("userId", "==", currentUserData.userId));
-        await getDocs(userDataQuery)
+        try {
+          const userDataQuery = await query(collection(db, "userData"), where("userId", "==", currentUserData.userId));
+          await getDocs(userDataQuery)
           .then((snapshot) => {
             snapshot.docs.forEach((doc) => {
               docId = doc.id;
             })
+            setLoading(true)
           })
-          .catch(err => {
-            setError(err)
-        })
+        }
+        catch {
+          setErrorMessage('Няма данни за такъв потребител')
+        }
+        setLoading(true)
 
-        const thisUserDate =  doc(db, "userData", docId);
-        await updateDoc(thisUserDate, {
-          name: name,
-          lastName: lastName,
-          age: age,
-          city: city,
-          phone: phone,
-          address: address 
-        })
-        .then(() => {
-          
-        })
-        .catch(err => {
-          setError(err)
-        })
-      
-        setSuccessMessage("Successfully saved changes")
-        setTimeout(function () {
-          setSuccessMessage("")
-        }, 5000);
-     
+        try {
+          const thisUserDate = doc(db, "userData", docId);
+          await updateDoc(thisUserDate, {
+            name: name,
+            lastName: lastName,
+            age: age,
+            city: city,
+            phone: phone,
+            address: address 
+          })
+          .then(() => {
+            setSuccessMessage("Successfully saved changes")
+            setTimeout(function () {
+              setSuccessMessage("")
+              form.reset()
+            }, 5000);
+          })
+        } catch {
+          setErrorMessage('ГРЕШКА: Проблем със запазването на данните за профила')
+        }
+
       }
     }
 
     return(
      <>
-        {successMessage && <Alert variant="success">{successMessage}</Alert>}
-        {error && <Alert variant="danger">{error}</Alert>}
+        {successMessage && <div className="success-message">{successMessage}</div>}
+        {errorMessage && <div className="error-message"><div>{errorMessage}</div></div>}
+
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name">Name: </label>

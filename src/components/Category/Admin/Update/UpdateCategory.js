@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
 
 const UpdateCategory = () => {
-    let params = useParams()
-    let thisCategoryId = params.id
+    const params = useParams()
+    const thisCategoryId =params.id
 
     const [currentCategory, setCurrentCategory] = useState({})
     const [allCategories, setAllCategories] = useState([]);
@@ -21,9 +21,7 @@ const UpdateCategory = () => {
         .then(result => {
             setCurrentCategory(result) 
         })   
-
-       
-    }, [updateForm]);
+    }, [updateForm, thisCategoryId]);
 
 
     useEffect(() => {
@@ -31,9 +29,7 @@ const UpdateCategory = () => {
             .then(result => {
                 setAllCategories(result);        
             })   
-
     }, []);
-
 
     const handleSubmit = async (e) => {
 

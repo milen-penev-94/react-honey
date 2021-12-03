@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import * as categoriesService from '../../../../services/categoriesService';
 import './AddCategory.css'
