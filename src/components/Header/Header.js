@@ -1,9 +1,18 @@
+import React, { useContext } from "react";
 import { Link } from "react-router-dom"
-import { useAuth } from "../../contexts/AuthContext"
+import { CartContext } from "../../contexts/CartProvider";
+import './Header.css'
 
 function Header () {
+    const { cart, dispatch } = useContext(CartContext);
 
-    const { currentUser } = useAuth()
+    function cartQuantity() {
+        let quantity = 0
+        cart.forEach(cartItem => {
+            quantity = quantity + parseInt(cartItem.quantity)
+        })
+        return quantity
+    }
 
     function logo() {
         return (
@@ -29,7 +38,7 @@ function Header () {
     function navigationRightContent() {
         return (
             <ul className="menu-right-content clearfix">
-                <li><Link to="/profile" ><i className="far fa-user"></i></Link></li>
+                <li className="profile"><Link to="/profile" ><i className="far fa-user"></i></Link></li>
                 <li className="search-box-outer">
                     <div className="dropdown">
                         <button className="search-box-btn" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="far fa-search"></i></button>
@@ -46,7 +55,11 @@ function Header () {
                     </div>
                 </li>
                 <li className="cart-btn">
-                    <a href="shop.html"><i className="far fa-cart-plus"></i><span>0</span></a>
+                    <Link to="/cart"><i className="far fa-cart-plus"></i>
+                        <div className="cartQantity" >
+                            <span className="label">{cartQuantity()}</span>
+                        </div>
+                    </Link>
                 </li>
                 <li className="like-btn"><a href="index.html"><i className="far fa-heart"></i></a></li>
             </ul>
@@ -54,7 +67,7 @@ function Header () {
     }
     
     return (
-      <header className="main-header style-two">
+      <header className="header-component main-header style-two">
         <div className="header-lower">
             <div className="outer-box">
                 {logo()}

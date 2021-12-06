@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import * as productService from '../../../../services/productService';
 import { Link } from "react-router-dom"
-import './ListProducts.css'
+import './Products.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import ListProduct from "./ListProduct";
+import Product from "./Product";
 
-const ListProducts = () => {
+const Products = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [deleteProduct, setDeleteProduct] = useState(false);
 
@@ -24,7 +24,7 @@ const ListProducts = () => {
     }
 
     return (
-        <div className="list-products-component">
+        <div className="list-products-component auto-container">
 
             <Link to="/profile" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
@@ -43,7 +43,7 @@ const ListProducts = () => {
                     <ul className="products-list">
                         {allProducts.map(x => 
                         <li className="product" key={x.docId}>
-                            <ListProduct product={x} deleteProduct={deleteProduct} onChange={changeDeteleProduct} />
+                            <Product product={x} deleteProduct={deleteProduct} onChange={changeDeteleProduct} />
                         </li>
                         )}
                     </ul>
@@ -54,4 +54,4 @@ const ListProducts = () => {
     )
 }
 
-export default ListProducts
+export default Products

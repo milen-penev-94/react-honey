@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import * as productService from '../../../../services/productService';
 import { Link } from "react-router-dom"
-import './ListProducts.css'
+import './Products.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faCheckSquare, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 
-const ListProduct = ({product, onChange}) => {
+const Product = ({product, onChange}) => {
 
     const removeProduct = (e) => {
         let productId = e.currentTarget.getAttribute('data-product-id')
@@ -26,4 +26,4 @@ const ListProduct = ({product, onChange}) => {
         </>
     )
 }
-export default ListProduct;
+export default Product;

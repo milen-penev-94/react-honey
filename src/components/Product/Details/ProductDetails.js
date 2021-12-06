@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import {  Link, useParams } from "react-router-dom"
 import * as productService from '../../../services/productService';
 import * as categoriesService from '../../../services/categoriesService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 import './ProductDetails.css'
+import { CartContext } from "../../../contexts/CartProvider";
+import { clearCart } from "../../../cartReducer";
 
 const ProductDetails = () => {
 
@@ -12,6 +14,10 @@ const ProductDetails = () => {
     let thisProductId = params.id
     const [product, setProduct] = useState({})
     const [productCategory, setProductCategory] = useState({})
+    const [quantity, setQuantity] = useState(1)
+    const [successMessage, setSuccessMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+    const { cart, dispatch } = useContext(CartContext);
 
     useEffect(() => {
         productService.getOne(thisProductId)
@@ -24,6 +30,52 @@ const ProductDetails = () => {
             })   
         })    
     }, []);
+
+
+    const increaseQuantityHandler = () => {
+        let count = quantity
+        count = count + 1
+
+        if (count > parseInt(product.quantity)) {
+            setErrorMessage('Няма достатъчно наличност')
+        }  else {
+            
+        }
+
+        setQuantity(count);
+    };
+
+    const decreaseQuantityHandler = () => {
+        let count = quantity
+        if (count > 1) {
+            count = count - 1    
+
+            if (count == parseInt(product.quantity) || count < parseInt(product.quantity)) {
+                setErrorMessage('')
+            } 
+        }
+
+        setQuantity(count);
+    };
+
+    const addToCartHandler = () => {
+
+        dispatch({
+            type: "ADD_TO_CART",
+            item: {
+                id: thisProductId,
+                name: product.name,
+                image: product.image,
+                price: product.price,
+                quantity: quantity
+            }
+        });    
+
+        setSuccessMessage('Продукта е успешно добавен в количката')
+        setTimeout(() => {
+            setSuccessMessage('')
+        }, 3000)
+    };
 
     return (
         <div className="product-details-component">
@@ -69,13 +121,18 @@ const ProductDetails = () => {
                                         : <span className="price">{product.price}лв.</span>
                                     }
                                     <div className="addto-cart-box"> 
+                                        {successMessage && <Link to="/cart"><div className="success-message">
+                                                            <div>{successMessage}</div>
+                                                        </div>
+                                        </Link>}
+                                        {errorMessage && <div className="error-message"><div>{errorMessage}</div></div>}
                                         <ul className="clearfix">
                                             <li className="item-quantity">
-                                                <div className="button-quantity decrease-button"><FontAwesomeIcon icon={faMinus} /></div>
-                                                <input className="quantity-spinner" type="text" defaultValue="1" name="quantity" />
-                                                <div className="button-quantity increase-button"><FontAwesomeIcon icon={faPlus} /></div>
+                                                <div className="button-quantity decrease-button" onClick={decreaseQuantityHandler}><FontAwesomeIcon icon={faMinus} /></div>
+                                                <input className="quantity-spinner" type="text" value={quantity} name="quantity" />
+                                                <div className="button-quantity increase-button"  onClick={increaseQuantityHandler}><FontAwesomeIcon icon={faPlus} /></div>
                                             </li>
-                                            <li><button type="button" className="theme-btn-two">Добави в количката</button></li>
+                                            <li><button type="button" className="theme-btn-two" onClick={addToCartHandler}>Добави в количката</button></li>
                                         </ul>
                                     </div>
                                 </div>

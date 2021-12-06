@@ -6385,7 +6385,8 @@ textarea:focus{
 
 }
 
-button[type="submit"]{
+button[type="submit"],
+.button {
   background: #cb9744;
   position: relative;
   display: inline-block;
@@ -6401,7 +6402,8 @@ button[type="submit"]{
   margin-top: 20px;
 }
 
-button[type="submit"]:before{
+button[type="submit"]:before,
+.button:before {
   position: absolute;
   content: '';
   width: 0%;
@@ -6413,9 +6415,11 @@ button[type="submit"]:before{
   transition: all 500ms ease;
 }
 
-button[type="submit"]:hover:before{
+button[type="submit"]:hover:before,
+.button:hover:before{
   width: 100%;
 }
+
 
  select {
   display: block;

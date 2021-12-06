@@ -6,7 +6,7 @@ import './Dashboard.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faList } from '@fortawesome/free-solid-svg-icons'
 
-export default function Dashboard() {
+const Dashboard = () => {
   const [error, setError] = useState("")
   const { currentUser, currentUserData, logout } = useAuth()
   const navigate = useNavigate()
@@ -23,7 +23,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="dashboard-component">
+    <div className="dashboard-component auto-container">
+
       <h2 className="text-center mb-4">Profile</h2>
       <p>Email: {currentUser.email}</p>
       { currentUserData && <p>Name: {currentUserData.name}</p> }
@@ -31,7 +32,7 @@ export default function Dashboard() {
 
       { currentUserData.isAdmin && <p>Admin profile</p> }
       {error && <Alert variant="danger">{error}</Alert>}
-      <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+      <Link to="/update-profile" className="button">
         Update Profile
       </Link>
   
@@ -57,3 +58,5 @@ export default function Dashboard() {
     </div>
   )
 }
+
+export default Dashboard;

@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import * as categoriesService from '../../../../services/categoriesService';
 import { Link } from "react-router-dom"
-import './ListCategories.css'
+import './Categories.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faCheckSquare, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 
-const ListCategory = ({category, onChange, childCategories}) => {
+const Category = ({category, onChange, childCategories}) => {
     const [deleteChildCategory, setDeleteChildCategory] = useState(false);
 
     function changeDeteleChildCategory() {
@@ -43,7 +43,7 @@ const ListCategory = ({category, onChange, childCategories}) => {
                         <ul className="categories-list">
                             {childCategories.map(x => 
                             <li className="category" key={x.docId}>
-                                <ListCategory category={x} childCategories={[]} deleteCategory={deleteChildCategory} onChange={changeDeteleChildCategory} />
+                                <Category category={x} childCategories={[]} deleteCategory={deleteChildCategory} onChange={changeDeteleChildCategory} />
                             </li>
                             )}
                         </ul>
@@ -54,4 +54,4 @@ const ListCategory = ({category, onChange, childCategories}) => {
         </>
     )
 }
-export default ListCategory;
+export default Category;

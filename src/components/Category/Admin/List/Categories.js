@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import * as categoriesService from '../../../../services/categoriesService';
 import { Link } from "react-router-dom"
-import './ListCategories.css'
+import './Categories.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import ListCategory from "./ListCategory";
+import Category from "./Category";
 
-const ListCategories = () => {
+const Categories = () => {
     const [allCategories, setAllCategories] = useState([]);
     const [deleteCategory, setDeleteCategory] = useState(false);
 
@@ -46,7 +46,7 @@ const ListCategories = () => {
     }
 
     return(
-        <div className="list-categories-component">
+        <div className="list-categories-component auto-container">
 
             <Link to="/profile" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
@@ -65,7 +65,7 @@ const ListCategories = () => {
                     <ul className="categories-list">
                         { parentCategories().map(parentCategory => 
                         <li className="category" key={parentCategory.docId}  >
-                            { <ListCategory category={parentCategory} childCategories={childCategories(parentCategory)} deleteCategory={deleteCategory} onChange={changeDeteleCategory} /> }
+                            { <Category category={parentCategory} childCategories={childCategories(parentCategory)} deleteCategory={deleteCategory} onChange={changeDeteleCategory} /> }
                         </li>
                         )}
                     </ul>
@@ -75,4 +75,4 @@ const ListCategories = () => {
         </div>
     )
 }
-export default ListCategories;
+export default Categories;

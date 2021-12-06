@@ -13,7 +13,6 @@ const UpdateProfile = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-
     function handleSubmit(e) {
         e.preventDefault()
 
@@ -46,8 +45,8 @@ const UpdateProfile = () => {
       }
       
   return (
-    <>
-      <h2 className="text-center mb-4">Update Profile</h2>
+    <div className="auto-container">
+      <h2 className="text-center mb-4">Промяна на продила</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <form onSubmit={handleSubmit}>
         <div>
@@ -71,7 +70,7 @@ const UpdateProfile = () => {
       <ProfileDetails/>
 
       <Link to="/">Cancel</Link>
-    </>
+    </div>
   )
 }
 export default UpdateProfile;

@@ -109,7 +109,7 @@ const UpdateProduct = () => {
     }
 
     return (
-        <div className="update-product-component">
+        <div className="update-product-component auto-container">
 
             <Link to="/admin/list-products" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>

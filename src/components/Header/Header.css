@@ -1,0 +1,25 @@
+.header-component .cart-btn  .cartQantity {
+    position: relative;
+    top: -42px;
+    left: 9px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #b73604;
+    color: #fff !important;
+}
+
+.header-component .cart-btn  .cartQantity .label {
+    position: absolute;
+    color: #fff !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    text-align: center;
+}
+
+.header-component .menu-right-content .profile a {
+    color: #131313;
+}

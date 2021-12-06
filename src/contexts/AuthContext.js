@@ -99,6 +99,7 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     currentUserData,
+    isAuthenticated: Boolean(currentUser),
     login,
     signup,
     logout,

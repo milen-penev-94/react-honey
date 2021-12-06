@@ -88,7 +88,7 @@ export  async function save(newCategory) {
     } catch(error) {
         console.log(error)
     }
- }
+}
 
 export async function update(category, docId) {
 

@@ -1,0 +1,72 @@
+.checkout-component .page-title {
+    padding: 60px 0px 60px 0px;;
+    margin-bottom: 60px;
+}
+
+.checkout-component h4 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.checkout-component form {
+    margin-left: -20px;
+}
+
+.checkout-component form div {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.checkout-component .two-column {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 20px);
+}
+
+.checkout-component form input[type=radio]{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: 3px;
+    visibility: hidden;
+}
+
+.checkout-component form input[type=radio]:before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    background: #b73604;
+    position: relative;
+    margin-right: 20px;
+    border-radius: 50%;
+    visibility: visible;
+}   
+
+.checkout-component form input[type=radio]:checked:after {
+    content: '';
+    position: absolute;
+    border: 2px solid #fff;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    top: 5px;
+    left: 4px;
+    z-index: 5;
+    visibility: visible;
+}
+
+.checkout-component form .radio-label {
+    margin-left: 10px;
+}
+
+.checkout-component .error-message {
+    margin-left: 0;
+}
+
+.checkout-component .error-message div {
+    display: inline-block;
+    width: calc(50% - 20px);
+}

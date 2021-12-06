@@ -94,7 +94,7 @@ const AddProduct = () => {
     }
 
     return(
-        <div className="add-product-component">
+        <div className="add-product-component auto-container">
             <Link to="/admin/list-products" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
                 <span className="label">Към листа с продукти</span>
