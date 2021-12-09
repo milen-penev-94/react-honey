@@ -1,29 +1,33 @@
-import React from "react"
-import Signup from "./components/SignUp/Signup"
-import { AuthProvider } from "./contexts/AuthContext"
+import React from 'react'
+import Signup from './components/SignUp/Signup'
+import { AuthProvider } from './contexts/AuthContext'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-import Dashboard from './components/Dashboard/Dashboard'
 import Login from './components/Login/Login'
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Profile from './components/Profile/Profile'
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import AddCategory from "./components/Category/Admin/Add/AddCategory";
-import AdminCategories from "./components/Category/Admin/List/Categories";
-import AdminUpdateCategory from "./components/Category/Admin/Update/UpdateCategory";
-import AdminAddProduct from "./components/Product/Admin/Add/AddProduct";
-import AdminUpdateProduct from "./components/Product/Admin/Update/UpdateProduct";
-import AdminProducts from "./components/Product/Admin/List/Products";
-import Products from "./components/Product/List/Products";
-import ProductDetails from "./components/Product/Details/ProductDetails";
-import Checkout from "./components/Checkout/Checkout";
-import Cart from "./components/Cart/Cart";
+import AuthPrivateRoute from './components/PrivateRoute/AuthPrivateRoute';
+import CartPrivateRoute from './components/PrivateRoute/CartPrivateRoute';
+import AdminOrders from './components/Orders/Admin/List/Orders';
+import AdminUpdateOrders from './components/Orders/Admin/Update/UpdateOrder';
+import AddCategory from './components/Category/Admin/Add/AddCategory';
+import AdminCategories from './components/Category/Admin/List/Categories';
+import AdminUpdateCategory from './components/Category/Admin/Update/UpdateCategory';
+import AdminAddProduct from './components/Product/Admin/Add/AddProduct';
+import AdminUpdateProduct from './components/Product/Admin/Update/UpdateProduct';
+import AdminProducts from './components/Product/Admin/List/Products';
+import Products from './components/Product/List/Products';
+import ProductDetails from './components/Product/Details/ProductDetails';
+import Checkout from './components/Checkout/Checkout';
+import SuccessCheckout from './components/Checkout/Success';
+import Cart from './components/Cart/Cart';
 
 export default function App() {
 
   return(
-      <BrowserRouter>
+    <BrowserRouter>
       <AuthProvider>
         <Header />
         <Routes>
@@ -33,62 +37,81 @@ export default function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
           <Route path="/cart" element={<Cart />} />
+
+          {/* Checkout */}
+          <Route path="/checkout" element={
+            <CartPrivateRoute>
+              <Checkout />
+            </CartPrivateRoute>
+          }/>
+          <Route path="/checkout/success/:orderNumber" element={<SuccessCheckout />} />
 
           {/* Profile */}
           <Route path="/profile" element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+            <AuthPrivateRoute>
+              <Profile />
+            </AuthPrivateRoute>
           }/>
 
           <Route path="/update-profile" element={
-            <PrivateRoute>
+            <AuthPrivateRoute>
               <UpdateProfile />
-            </PrivateRoute>
+            </AuthPrivateRoute>
+          }/> 
+
+          {/* Orders */}
+          <Route path="/admin/orders" element={
+            <AuthPrivateRoute isAdmin="true">
+                <AdminOrders />
+            </AuthPrivateRoute>
+          }/>
+
+          <Route path="/admin/update-order/:id" element={
+            <AuthPrivateRoute>
+              <AdminUpdateOrders />
+            </AuthPrivateRoute>
           }/> 
 
           {/* Category */}
           <Route path="/admin/add-category" element={
-            <PrivateRoute isAdmin="true">
+            <AuthPrivateRoute isAdmin="true">
                 <AddCategory />
-            </PrivateRoute>
+            </AuthPrivateRoute>
           }/>
 
           <Route path="/admin/list-category" element={
-            <PrivateRoute isAdmin="true">
+            <AuthPrivateRoute isAdmin="true">
               <AdminCategories />
-            </PrivateRoute>
+            </AuthPrivateRoute>
           }/>
 
           <Route path="/admin/update-category/:id" element={
-            <PrivateRoute isAdmin="true">
+            <AuthPrivateRoute isAdmin="true">
               <AdminUpdateCategory />
-            </PrivateRoute>
+            </AuthPrivateRoute>
           }/>
 
           {/* Product */}
           <Route path="/admin/add-product"  element={
-            <PrivateRoute isAdmin="true">
+            <AuthPrivateRoute isAdmin="true">
               <AdminAddProduct />
-            </PrivateRoute>
+            </AuthPrivateRoute>
           }/>
 
           <Route path="/admin/update-product/:id" element={
-            <PrivateRoute isAdmin="true">
+            <AuthPrivateRoute isAdmin="true">
               <AdminUpdateProduct />
-            </PrivateRoute>
+            </AuthPrivateRoute>
           }/>
           
           <Route path="/admin/list-products" element={
-            <PrivateRoute isAdmin="true">
+            <AuthPrivateRoute isAdmin="true">
               <AdminProducts />
-            </PrivateRoute>
+            </AuthPrivateRoute>
           }/>
         </Routes>
       </AuthProvider>    
-
-      </BrowserRouter>  
+    </BrowserRouter>  
   );
 }

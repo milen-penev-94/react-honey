@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react"
 import * as productService from '../../../../services/productService';
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 import './Products.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import Product from "./Product";
+import Product from './Product';
 
 const Products = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [deleteProduct, setDeleteProduct] = useState(false);
 
     useEffect(() => {
-        setDeleteProduct(false)
+        setDeleteProduct(false);
 
         productService.getAll()
         .then(result => {
             setAllProducts(result);
         })  
+        .catch(err => {
+            console.log(err);
+        })
     }, [deleteProduct]);
 
     function changeDeteleProduct(newValue) {
-        setDeleteProduct(newValue)
+        setDeleteProduct(newValue);
     }
 
     return (
@@ -41,9 +44,9 @@ const Products = () => {
             {allProducts.length > 0
                 ? (
                     <ul className="products-list">
-                        {allProducts.map(x => 
-                        <li className="product" key={x.docId}>
-                            <Product product={x} deleteProduct={deleteProduct} onChange={changeDeteleProduct} />
+                        {allProducts.map(product => 
+                        <li className="product" key={product.docId}>
+                            <Product product={product} deleteProduct={deleteProduct} onChange={changeDeteleProduct} />
                         </li>
                         )}
                     </ul>

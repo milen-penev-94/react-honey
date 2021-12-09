@@ -4,10 +4,6 @@ import { collection, where, query, getDocs, addDoc } from "firebase/firestore"
 
 const AuthContext = React.createContext()
 
-export function useAuth() {
-  return useContext(AuthContext)
-}
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [currentUserData, setCurrentUserData] = useState({})
@@ -113,4 +109,8 @@ export function AuthProvider({ children }) {
        {!loading && children}
    </AuthContext.Provider>
   )
+}
+
+export function useAuth() {
+  return useContext(AuthContext)
 }

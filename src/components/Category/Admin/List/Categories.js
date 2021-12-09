@@ -16,6 +16,9 @@ const Categories = () => {
         categoriesService.getAll()
         .then(result => {
             setAllCategories(result);
+        })
+        .catch(err => {
+            console.log(err);
         })  
 
     }, [deleteCategory]);

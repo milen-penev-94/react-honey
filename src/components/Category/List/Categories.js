@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import * as categoriesService from '../../../services/categoriesService';
-import { Link } from "react-router-dom"
 
 const Categories = () => {
 
@@ -11,7 +11,10 @@ const Categories = () => {
         categoriesService.getAll()
         .then(result => {
             setAllCategories(result);
-        })  
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }, []);
 
     function parentCategories() {

@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import ReactPaginate from 'react-paginate';
 import * as productService from '../../../services/productService';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import Product from './Product.js'
-import Categories from '../../Category/List/Categories'
-import ReactPaginate from "react-paginate";
-import { useNavigate, useParams } from "react-router-dom"
+import Product from './Product.js';
+import Categories from '../../Category/List/Categories';
 import './Products.css'
 
 const Products = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-    const navigate = useNavigate()
-    const params = useParams()
+    const navigate = useNavigate();
+    const params = useParams();
 
     const productsPerPage = 3;
     const pagesVisited = pageNumber * productsPerPage;
@@ -22,13 +22,16 @@ const Products = () => {
         .then(result => {
             setAllProducts(result);
         })  
+        .catch(err => {
+            console.log(err);
+        })
     }, []);
 
     useEffect(() => {        
         if (params.id)  {
             setPageNumber(parseInt(params.id) - 1)
         } else {
-            setPageNumber(0)
+            setPageNumber(0);
         }
     }, [pageNumber]);
 
@@ -42,7 +45,7 @@ const Products = () => {
 
     const pageCount = Math.ceil(allProducts.length / productsPerPage);
     if (pageCount > 0 && pageCount < params.id) {
-        navigate('/404')
+        navigate('/404');
     }
 
     const allProductsCount = allProducts.length
@@ -50,13 +53,12 @@ const Products = () => {
     const changePage = ({ selected }) => {
         const pageNumber =  (selected + 1)
         if (pageNumber == 1) {
-            navigate('/products')
+            navigate('/products');
         } else {
-            navigate('/products/' + pageNumber)
+            navigate('/products/' + pageNumber);
         }
       setPageNumber(selected);
     };
-
 
     return (
         <section className="list-products-component shop-page-section">
@@ -65,17 +67,9 @@ const Products = () => {
                     <div className="row clearfix">
                         <div className="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                             <div className="shop-sidebar">
-                                <div className="sidebar-search">
-                                    <form action="http://azim.commonsupport.com/Hanta/shop.html" method="post" className="search-form">
-                                        <div className="form-group">
-                                            <input type="search" name="search-field" placeholder="Search here" required="" />
-                                            <button type="submit"><i className="far fa-search"></i></button>
-                                        </div>
-                                    </form>
-                                </div>
 
                                 {<Categories />}
-
+                                
                             </div>
                         </div>
                         <div className="col-lg-9 col-md-12 col-sm-12 content-side">

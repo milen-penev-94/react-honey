@@ -70,3 +70,7 @@
     display: inline-block;
     width: calc(50% - 20px);
 }
+
+.checkout-component .delivery-method p {
+    font-size: 12px;
+}

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom"
-import { CartContext } from "../../contexts/CartProvider";
+import { useCart } from "../../contexts/CartContext";
 import './Header.css'
 
 function Header () {
-    const { cart, dispatch } = useContext(CartContext);
+    const { cart, dispatch } = useCart();
 
     function cartQuantity() {
         let quantity = 0
@@ -18,7 +18,7 @@ function Header () {
         return (
             <div className="logo-box">
                 <figure className="logo">
-                    <Link to="/" ><img src="/images/logo-3.png" alt="" /></Link>
+                    <Link to="/" ><img src="/images/logo-Penev.png" alt="" /></Link>
                 </figure>
              </div>
         )
@@ -55,7 +55,7 @@ function Header () {
                     </div>
                 </li>
                 <li className="cart-btn">
-                    <Link to="/cart"><i className="far fa-cart-plus"></i>
+                    <Link to="/checkout"><i className="far fa-cart-plus"></i>
                         <div className="cartQantity" >
                             <span className="label">{cartQuantity()}</span>
                         </div>

@@ -1,17 +1,21 @@
-import React, { useContext, useState } from "react";
-import { CartContext } from "../../contexts/CartProvider";
-import { useAuth } from "../../contexts/AuthContext"
-import { clearCart  } from "../../cartReducer";
-import * as orderService from "../../services/orderService";
-import { useNavigate, useParams } from "react-router-dom"
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'
+import { v4 as uuid } from 'uuid';
+import { useCart } from '../../contexts/CartContext';
+import { useAuth } from '../../contexts/AuthContext'
+import { clearCart  } from '../../cartReducer';
+import * as orderService from '../../services/orderService';
+import useDateNow from '../../hooks/useDateNowState';
+import Cart from '../Cart/Cart'
 import './Checkout.css'
 
 const Checkout = () => {
 
-  const { cart, dispatch } = useContext(CartContext);
+  const { cart, dispatch } = useCart();
   const { currentUser, currentUserData } = useAuth({})
   const [successMessage, setSuccessMessage] = useState()
   const [errorMessage, setErrorMessage] = useState([])
+  const [dateNow, setDateNow] = useDateNow(new Date());
   const navigate = useNavigate()
 
   const validateEmail = (email) => {
@@ -21,13 +25,17 @@ const Checkout = () => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  
+ 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+    setDateNow(new Date())
 
     let form = e.currentTarget
     let formData = new FormData(e.currentTarget);
     let {email, phone, name, lastName, city, address, paymentMethod} = Object.fromEntries(formData)
+    let status = 'NEW'
+    let orderDate = dateNow
+    let orderNumber = uuid();
 
     let errors = [];
 
@@ -81,20 +89,20 @@ const Checkout = () => {
         }
       })
       
-      let newOrder = {email, phone, name, lastName, city, address, paymentMethod, total, orderedProducts}
+      let newOrder = {email, phone, name, lastName, city, address, paymentMethod, total, orderedProducts, status, orderDate}
       orderService.save(newOrder)
       .then(result => {
-        if(result) {
-            form.reset()
-            setErrorMessage("")
-            dispatch(clearCart());
-            navigate('/success-page')
-        } else {
-            //TODO: 
-        }
+          form.reset()
+          setErrorMessage("")
+          navigate(`/checkout/success/${orderNumber}`)
+          dispatch(clearCart());
       }) 
+      .catch(err => {
+        console.log(err);
+      })
     }
   }
+
 
   return (
 
@@ -109,9 +117,8 @@ const Checkout = () => {
         </div>
       </section>
 
-      <div className="auto-container">
-        <form onSubmit={handleSubmit}>
-
+      <div className="auto-container row">
+        <form onSubmit={handleSubmit} className="col-lg-8 col-md-12 col-sm-12">
           {successMessage && <div className="success-message">{successMessage}</div>}
           <div className={(errorMessage.length > 0) ? 'error-message' : null}>
             { (errorMessage.length > 0) ? errorMessage.map((error) =>
@@ -152,16 +159,21 @@ const Checkout = () => {
               <input name="address" id="address" type="text"  defaultValue={currentUserData.address}/>
           </div>
 
-          <div>
-            <h4>Начин на плащане</h4>
-          </div>
+     
           <div className="two-column">
+            <h4>Начин на плащане</h4>
             <input type="radio" id="paymentMethod" name="paymentMethod" value="1" defaultChecked /> 
             <label htmlFor="paymentMethod" className="radio-label">Наложен латеж</label>
           </div>
 
+          <div className="two-column delivery-method">
+            <h4>Начин на доставка</h4>
+            <p>Продуктите се доставят на посоченият от вас адрес с фирма Еконт. Цената на доставка е 4.90лв.</p>
+          </div>
           <div><button type="submit">Поръчай</button></div>
         </form>
+
+        {<Cart />}
 
       </div>
     </div>

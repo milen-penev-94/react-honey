@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect } from "react"
 import {  Link, useParams } from "react-router-dom"
 import * as productService from '../../../services/productService';
 import * as categoriesService from '../../../services/categoriesService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { useCart } from "../../../contexts/CartContext";
 import './ProductDetails.css'
-import { CartContext } from "../../../contexts/CartProvider";
-import { clearCart } from "../../../cartReducer";
 
 const ProductDetails = () => {
 
@@ -17,7 +16,7 @@ const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1)
     const [successMessage, setSuccessMessage] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-    const { cart, dispatch } = useContext(CartContext);
+    const { cart, dispatch } = useCart();
 
     useEffect(() => {
         productService.getOne(thisProductId)
@@ -28,6 +27,9 @@ const ProductDetails = () => {
             .then(result => {
                 setProductCategory(result)
             })   
+            .catch(err => {
+                console.log(err);
+            })
         })    
     }, []);
 
@@ -58,6 +60,10 @@ const ProductDetails = () => {
         setQuantity(count);
     };
 
+    const financial = (price) => {
+        return Number.parseFloat(price).toFixed(2);
+      }
+
     const addToCartHandler = () => {
 
         dispatch({
@@ -66,7 +72,8 @@ const ProductDetails = () => {
                 id: thisProductId,
                 name: product.name,
                 image: product.image,
-                price: product.price,
+                price: financial(product.price),
+                salePrice: product.salePrice.length ? financial(product.salePrice) : null,
                 quantity: quantity
             }
         });    
@@ -121,7 +128,7 @@ const ProductDetails = () => {
                                         : <span className="price">{product.price}лв.</span>
                                     }
                                     <div className="addto-cart-box"> 
-                                        {successMessage && <Link to="/cart"><div className="success-message">
+                                        {successMessage && <Link to="/checkout"><div className="success-message">
                                                             <div>{successMessage}</div>
                                                         </div>
                                         </Link>}

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import * as productService from '../../../../services/productService';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faCheckSquare, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import * as orderService from '../../../../services/orderService';
 import DeleteConfirmDialog from '../../../Common/DeleteConfirmDialog/DeleteConfirmDialog';
-import './Products.css';
+import './Orders.css';
 
-const Product = ({product, onChange}) => {
+const Product = ({order, onChange}) => {
 
-    const[productId, setProductId] = useState()
+    const[orderId, setOrderId] = useState()
     const[showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     const deleteProduct = (e) => {
         e.preventDefault();
 
-        productService.remove(productId)
+        orderService.remove(orderId)
         .then(result => {
             onChange(true);
         })  
@@ -28,7 +28,7 @@ const Product = ({product, onChange}) => {
 
      const deleteClickHandler = (e) => {
         e.preventDefault();
-        setProductId(product.docId)
+        setOrderId(e.currentTarget.getAttribute('data-order-id'))
         setShowDeleteDialog(true);
      }
 
@@ -37,14 +37,29 @@ const Product = ({product, onChange}) => {
         setShowDeleteDialog(false);
      }
 
+     function quantityProducts() {
+
+     //Object.keys(order.orderedProducts).map((productId) => console.log(productId))
+       let quantity = 0
+
+       Object.values(order.orderedProducts)
+       .map((productQuantity) => {
+        quantity = quantity + productQuantity
+       })
+
+       return quantity
+     }
+
     return (
         <>
             <DeleteConfirmDialog show={showDeleteDialog} onClose={closeEventHandler} onDelete={deleteProduct} />
-            <span className="name">{product.name}</span>
+            <span className="date">Дата: {order.orderDate}</span>
+            <span className="quantity">Брой продукти: { quantityProducts() } </span>
+            <span className="status">Статус: {order.status} </span>
+            
             <div className="actions">
-                <span className="status">{(product.isEnabled === '1' ? <FontAwesomeIcon icon={faCheckSquare} className="enabled" /> : <FontAwesomeIcon icon={faWindowClose} className="disabled" />)} </span>
-                <Link to={`/admin/update-product/${product.docId}`} className="edit"><FontAwesomeIcon icon={faEdit} />  </Link> 
-                <span className="delete" onClick={deleteClickHandler}><FontAwesomeIcon icon={faTrash} /></span>
+                <Link to={`/admin/update-order/${order.docId}`} className="edit"><FontAwesomeIcon icon={faEdit} />  </Link> 
+                <span className="delete" onClick={deleteClickHandler} data-order-id={order.docId}><FontAwesomeIcon icon={faTrash} /></span>
             </div>
         </>
     )

@@ -1,47 +1,55 @@
-import React, { useState, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import * as categoriesService from '../../../../services/categoriesService';
 import * as productService from '../../../../services/productService';
-import './AddProduct.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import './AddProduct.css'
 
 const AddProduct = () => {
-    const [errorMessage, setErrorMessage] = useState([])
-    const [successMessage, setSuccessMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState([]);
+    const [successMessage, setSuccessMessage] = useState("");
     const [allCategories, setAllCategories] = useState([]);
     const navigate = useNavigate()
+
+        const statuses = [
+        { value: '1', text: 'Активен' },
+        { value: '2', text: 'Неактивен' },
+    ]
 
     useEffect(() => {
         categoriesService.getAll()
             .then(result => {
                 setAllCategories(result);
-            })   
+            }) 
+            .catch(err => {
+                console.log(err);
+            })  
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
 
-        let form = e.currentTarget
+        let form = e.currentTarget;
         let formData = new FormData(e.currentTarget);
-        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData)
+        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData);
 
         let errors = [];
 
         if (name.length < 3) {
-            errors.push('Името неможе да е по-малко от 3 символа')
+            errors.push('Името неможе да е по-малко от 3 символа');
         }
 
         if (description.length < 3) {
-            errors.push('Описанието неможе да е по-малко от 3 символа')
+            errors.push('Описанието неможе да е по-малко от 3 символа');
         }
 
         if (!image.length) {
-            errors.push('Снимката е задължителна')
+            errors.push('Снимката е задължителна');
         }
 
         if (!price.length) {
-            errors.push('Цената е задължителна')
+            errors.push('Цената е задължителна');
         } else {
 
             if (isNaN(price)) {
@@ -49,14 +57,14 @@ const AddProduct = () => {
             } else {
 
                 if (parseFloat(price) <= 0) {
-                    errors.push('Цената трябва да е по-голяма от 0')
+                    errors.push('Цената трябва да е по-голяма от 0');
                 }
             }
         }   
         
         if (salePrice.length) {
             if (isNaN(salePrice)) {
-                errors.push('Промоционалната цена трябва да е число')
+                errors.push('Промоционалната цена трябва да е число');
             } else {
 
                 if (parseFloat(salePrice) <= 0) {
@@ -67,7 +75,7 @@ const AddProduct = () => {
 
         if (quantity.length) {
             if (isNaN(quantity)) {
-                errors.push('Количеството трябва да е число')
+                errors.push('Количеството трябва да е число');
             } 
         }  
         
@@ -79,17 +87,17 @@ const AddProduct = () => {
 
             productService.save(newProduct)
             .then(result => {
-                if(result) {
-                    form.reset()
-                    setErrorMessage([])
-                    setSuccessMessage('Успешно добавен продукт')
-                    setTimeout(() => {
-                        setSuccessMessage('')
-                    }, 2000)
-                } else {
-                    //TODO  add Err
-                }
-            })  
+                form.reset()
+                setErrorMessage([]);
+                setSuccessMessage('Успешно добавен продукт');
+                setTimeout(() => {
+                    setSuccessMessage('');
+                }, 2000)
+            
+            })   
+            .catch(err => {
+                console.log(err);
+            })
         }
     }
 
@@ -113,6 +121,7 @@ const AddProduct = () => {
             <form onSubmit={handleSubmit}>
                 <div className="two-column">
                     <label htmlFor="isEnabled">Статус: </label>
+
                     <select id="isEnabled" name="isEnabled">
                         <option value="1">Активен</option>
                         <option value="0">Неактивен</option>

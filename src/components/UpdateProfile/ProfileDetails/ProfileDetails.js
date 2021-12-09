@@ -36,6 +36,7 @@ const ProfileDetails = () => {
             })
             setLoading(true)
           })
+          
         }
         catch {
           setErrorMessage('Няма данни за такъв потребител')

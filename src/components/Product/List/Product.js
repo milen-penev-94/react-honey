@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom'
 import './Product.css'
-import { Link } from "react-router-dom"
 
 const Product = ({product}) => {
 

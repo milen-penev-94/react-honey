@@ -1,0 +1,28 @@
+.component-success-checkout .check-circle {
+    color: #039b2b;
+    text-align: center;
+    font-size: 100px;
+    margin-bottom: 30px;
+}
+
+.component-success-checkout .bee-shop {
+    color: #b73604;
+    text-align: center;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+.component-success-checkout .order-number {
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.component-success-checkout .order-number strong {
+    font-weight: 500;
+}
+
+.component-success-checkout .text{
+    text-align: center;
+    margin-top: 10px;
+}

@@ -15,21 +15,33 @@ const UpdateCategory = () => {
     const [errorMessage, setErrorMessage] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
 
+    const statuses = [
+        { value: '1', text: 'Активна' },
+        { value: '2', text: 'Неактивна' },
+    ]
+
     useEffect(() => {
 
         categoriesService.getOne(thisCategoryId)
         .then(result => {
             setCurrentCategory(result) 
-        })   
+        })  
+        .catch(err => {
+            console.log(err);
+        }) 
     }, [updateForm, thisCategoryId]);
 
 
     useEffect(() => {
         categoriesService.getAll()
-            .then(result => {
-                setAllCategories(result);        
-            })   
+        .then(result => {
+            setAllCategories(result);        
+        }) 
+        .catch(err => {
+            console.log(err);
+        })  
     }, []);
+
 
     const handleSubmit = async (e) => {
 
@@ -56,10 +68,11 @@ const UpdateCategory = () => {
                         setSuccessMessage('')
                         form.reset()
                     }, 2000)
-                } else {
-                    //TodDO err
                 }
             })   
+            .catch(err => {
+                console.log(err);
+            })
         }
     }
  
@@ -78,10 +91,9 @@ const UpdateCategory = () => {
              <form onSubmit={handleSubmit}>
                 <div>
                      <label htmlFor="isEnabled">Статус: </label>
-                     <select id="isEnabled" name="isEnabled">
-                         <option value="1" selected={(currentCategory.isEnabled === '1') ? 'selected' : null}>Активна</option>
-                         <option value="0" selected={(currentCategory.isEnabled === '1') ? null : 'selected' }>Неактивна</option>
-                     </select>
+                     <select id="isEnabled" name="isEnabled" value={currentCategory.isEnabled} onChange={(e) => setCurrentCategory(s => ({...s, isEnabled: e.target.value}))}>
+                        {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
+                    </select> 
                  </div>
 
                  <div>
@@ -95,15 +107,14 @@ const UpdateCategory = () => {
                  </div>     
 
                  <div>
-                     <label htmlFor="parent">Родителска категория: </label>
-
-                     <select id="parent" name="parent">   
-                        <option defaultValue=""></option> 
-                         {allCategories.length > 0 
-                            ? allCategories.map(x => 
-                                <option key={x.docId} value={x.docId} selected={x.docId === currentCategory.parent ? 'selected' : ''}>{x.name}</option>) 
-                            : null}                                
-                     </select>
+                    <label htmlFor="parent">Родителска категория: </label>
+                    <select id="parent" name="parent"  value={currentCategory.parent} onChange={(e) => setCurrentCategory(s => ({...s, parent: e.target.value}))}>   
+                        <option value=""></option> 
+                        {allCategories.length > 0 
+                        ? allCategories.map(x => 
+                            <option key={x.docId} value={x.docId} selected={x.docId === currentCategory.parent}>{x.name}</option>) 
+                        : null}                                
+                    </select> 
                  </div>
 
                  <button type="submit">Запазване</button>

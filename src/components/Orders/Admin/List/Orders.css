@@ -1,0 +1,46 @@
+.component-orders h2 {
+    margin-bottom: 20px;
+}
+
+.component-orders .orders-list > .order {
+    margin-bottom: 4px;
+    padding: 8px 20px;
+    background: #f3f3f3;
+ }
+
+ .component-orders .orders-list .order > span {
+     margin-right: 30px;
+ }
+ 
+ .component-orders .orders-list .order .actions {
+     float: right;
+     right: 20px;
+ }
+ 
+ .component-orders .orders-list .order .actions span {
+     margin-left: 7px;
+     vertical-align: middle;
+ }
+ 
+ .component-orders .orders-list .order .actions a {
+     vertical-align: middle;
+ }
+ 
+ .component-orders .orders-list .order .actions .status .enabled {
+     color: #26b502;
+ }
+ 
+ .component-order .orders-list .order .actions .status .disabled {
+     color: #db0000;
+ }
+ 
+ .component-orders .orders-list .order .actions .edit {
+     margin-left: 5px;
+     color: #131313;
+ }
+ 
+ .component-orders .orders-list .order .actions .delete {
+     color: #131313;
+     cursor: pointer;
+ }
+ 

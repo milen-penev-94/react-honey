@@ -1,27 +1,35 @@
-import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom"
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import * as productService from '../../../../services/productService';
 import * as categoriesService from '../../../../services/categoriesService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import './UpdateProduct.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
 
 const UpdateProduct = () => {
-    let params = useParams()
-    let thisProductId = params.id
+    const params = useParams()
+    const thisProductId = params.id
 
-    const [currentProduct, setCurrentProduct] = useState({})
+    const [currentProduct, setCurrentProduct] = useState({});
     const [allCategories, setAllCategories] = useState([]);
     const [updateForm, setUpdateForm] = useState(false);
-    const [errorMessage, setErrorMessage] = useState([])
-    const [successMessage, setSuccessMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState([]);
+    const [successMessage, setSuccessMessage] = useState("");
+
+    const statuses = [
+        { value: '1', text: 'Активен' },
+        { value: '2', text: 'Неактивен' },
+    ]
 
     useEffect(() => {
 
         productService.getOne(thisProductId)
         .then(result => {
-            setCurrentProduct(result)
+            setCurrentProduct(result);
         })   
+        .catch(err => {
+            console.log(err);
+        })
        
     }, [updateForm]);
 
@@ -29,59 +37,66 @@ const UpdateProduct = () => {
         categoriesService.getAll()
             .then(result => {
                 setAllCategories(result);
-            })   
+            })  
+            .catch(err => {
+                console.log(err);
+            }) 
     }, []);
 
     const handleSubmit = async (e) => {
 
         e.preventDefault(); 
 
-        let form = e.currentTarget
+        let form = e.currentTarget;
         let formData = new FormData(e.currentTarget);
-        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData)
+        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData);
 
         let errors = [];
 
         if (name.length < 3) {
-            errors.push('Името неможе да е по-малко от 3 символа')
+            errors.push('Името неможе да е по-малко от 3 символа');
         }
 
         if (description.length < 3) {
-            errors.push('Описанието неможе да е по-малко от 3 символа')
+            errors.push('Описанието неможе да е по-малко от 3 символа');
         }
 
         if (!image.length) {
-            errors.push('Снимката е задължителна')
+            errors.push('Снимката е задължителна');
         }
 
         if (!price.length) {
-            errors.push('Цената е задължителна')
+            errors.push('Цената е задължителна');
         } else {
 
             if (isNaN(price)) {
-                errors.push('Цената трябва да е число')
+                errors.push('Цената трябва да е число');
             } else {
 
                 if (parseFloat(price) <= 0) {
-                    errors.push('Цената трябва да е по-голяма от 0')
+                    errors.push('Цената трябва да е по-голяма от 0');
                 }
             }
         }   
         
         if (salePrice.length) {
             if (isNaN(salePrice)) {
-                errors.push('Промоционалната цена трябва да е число')
+                errors.push('Промоционалната цена трябва да е число');
             } else {
 
                 if (parseFloat(salePrice) <= 0) {
-                    errors.push('Промоционалната цена трябва да е по-голяма от 0')
+                    errors.push('Промоционалната цена трябва да е по-голяма от 0');
+                }
+
+                if (parseFloat(salePrice) > parseFloat(price)) {
+                    errors.push('Промоционалната цена трябва да е по-малка от цената');
                 }
             }
         }  
 
         if (quantity.length) {
             if (isNaN(quantity)) {
-                errors.push('Количеството трябва да е число')
+                errors.push('Количеството трябва да е число');
             } 
         }  
 
@@ -92,18 +107,17 @@ const UpdateProduct = () => {
 
             productService.update(product, thisProductId)
             .then(result => {
-                if(result) {
-                    setErrorMessage('')
-                    setSuccessMessage('Успешно редактиран продукт')
-                    setUpdateForm(true)
-                    setTimeout(() =>{
-                        setSuccessMessage('')
-                        form.reset()
-                    }, 2000)
-                }
+                setErrorMessage('');
+                setSuccessMessage('Успешно редактиран продукт');
+                setTimeout(() => {
+                    setSuccessMessage('');
+                    setUpdateForm(true);
+                    form.reset();
+                }, 2000)
+               
             })   
             .catch(err => {
-                console.log(err)
+                console.log(err);
             })
         }
     }
@@ -129,10 +143,9 @@ const UpdateProduct = () => {
             <form onSubmit={handleSubmit}>
                 <div className="two-column">
                     <label htmlFor="isEnabled">Статус: </label>
-                    <select id="isEnabled" name="isEnabled">
-                        <option value="1" selected={(currentProduct.isEnabled === '1') ? 'selected' : null}>Активна</option>
-                         <option value="0" selected={(currentProduct.isEnabled === '1') ? null : 'selected' }>Неактивна</option>
-                    </select>
+                    <select id="isEnabled" name="isEnabled" value={currentProduct.isEnabled} onChange={(e) => setCurrentProduct(s => ({...s, isEnabled: e.target.value}))}>
+                        {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
+                    </select> 
                 </div>
 
                 <div className="two-column">
@@ -158,13 +171,13 @@ const UpdateProduct = () => {
 
                 <div className="two-column">
                     <label htmlFor="category" >Категория: </label>
-                    <select id="category" name="category">   
-                        <option defaultValue=""></option>    
-                         {allCategories.length > 0 
-                            ? allCategories.map(x => 
-                                <option key={x.docId} value={x.docId} selected={x.docId === currentProduct.category ? 'selected' : ''}>{x.name}</option>) 
-                            : null}                         
-                    </select>
+                    <select id="category" name="category"  value={currentProduct.category} onChange={(e) => setCurrentProduct(s => ({...s, category: e.target.value}))}>   
+                        <option value=""></option> 
+                        {allCategories.length > 0 
+                        ? allCategories.map(x => 
+                            <option key={x.docId} value={x.docId} selected={x.docId === currentProduct.category}>{x.name}</option>) 
+                        : null}                                
+                    </select> 
                 </div>
 
                 <div className="two-column">

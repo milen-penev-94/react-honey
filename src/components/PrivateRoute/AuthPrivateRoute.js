@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
 
-export default function PrivateRoute({ children, isAdmin }) {
+export default function AuthPrivateRoute({ children, isAdmin }) {
     const { currentUser, currentUserData } = useAuth()
     let redirect = null
 

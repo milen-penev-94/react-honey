@@ -16,6 +16,9 @@ const AddCategory = () => {
             .then(result => {
                 setAllCategories(result)
             })   
+            .catch(err => {
+                console.log(err);
+            })
     }, []);
 
     const handleSubmit = async (e) => {
@@ -34,18 +37,17 @@ const AddCategory = () => {
             let newCategory = {isEnabled, name, description, parent}
              categoriesService.save(newCategory)
             .then(result => {
-                if(result) {
-                    form.reset()
-                    setErrorMessage("")
-                    setSuccessMessage("Успешно запаметена категория")
-                    setTimeout(() => {
-                        setSuccessMessage("")
-                        navigate("/admin/list-category")
-                    }, 3000)
-                } else {
-                    //TODO:  add err
-                }
+                form.reset()
+                setErrorMessage("")
+                setSuccessMessage("Успешно запаметена категория")
+                setTimeout(() => {
+                    setSuccessMessage("")
+                    navigate("/admin/list-category")
+                }, 3000)  
             })  
+            .catch(err => {
+                console.log(err);
+            })
         }
     }
     
