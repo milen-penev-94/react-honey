@@ -58,7 +58,7 @@
 
         // What buttons should appear in the top right corner.
         // Buttons will be created using templates from `btnTpl` option
-        // and they will be placed into toolbar (className="fancybox-toolbar"` element)
+        // and they will be placed into toolbar (class="fancybox-toolbar"` element)
         buttons : [
             'slideShow',
             'fullScreen',
@@ -109,7 +109,7 @@
         iframe : {
 
             // Iframe template
-            tpl : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" className="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen allowtransparency="true" src=""></iframe>',
+            tpl : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen allowtransparency="true" src=""></iframe>',
 
             // Preload iframe before displaying it
             // This allows to calculate iframe content width and height
@@ -170,40 +170,40 @@
 
         // Base template for layout
         baseTpl	:
-            '<div className="fancybox-container" role="dialog" tabindex="-1">' +
-                '<div className="fancybox-bg"></div>' +
-                '<div className="fancybox-inner">' +
-                    '<div className="fancybox-infobar">' +
+            '<div class="fancybox-container" role="dialog" tabindex="-1">' +
+                '<div class="fancybox-bg"></div>' +
+                '<div class="fancybox-inner">' +
+                    '<div class="fancybox-infobar">' +
                         '<span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span>' +
                     '</div>' +
-                    '<div className="fancybox-toolbar">{{buttons}}</div>' +
-                    '<div className="fancybox-navigation">{{arrows}}</div>' +
-                    '<div className="fancybox-stage"></div>' +
-                    '<div className="fancybox-caption-wrap"><div className="fancybox-caption"></div></div>' +
+                    '<div class="fancybox-toolbar">{{buttons}}</div>' +
+                    '<div class="fancybox-navigation">{{arrows}}</div>' +
+                    '<div class="fancybox-stage"></div>' +
+                    '<div class="fancybox-caption-wrap"><div class="fancybox-caption"></div></div>' +
                 '</div>' +
             '</div>',
 
         // Loading indicator template
-        spinnerTpl : '<div className="fancybox-loading"></div>',
+        spinnerTpl : '<div class="fancybox-loading"></div>',
 
         // Error message template
-        errorTpl : '<div className="fancybox-error"><p>{{ERROR}}<p></div>',
+        errorTpl : '<div class="fancybox-error"><p>{{ERROR}}<p></div>',
 
         btnTpl : {
 
-            download : '<a download data-fancybox-download className="fancybox-button fancybox-button--download" title="{{DOWNLOAD}}">' +
+            download : '<a download data-fancybox-download class="fancybox-button fancybox-button--download" title="{{DOWNLOAD}}">' +
                         '<svg viewBox="0 0 40 40">' +
                             '<path d="M20,23 L20,8 L20,23 L13,16 L20,23 L27,16 L20,23 M26,28 L13,28 L27,28 L14,28" />' +
                         '</svg>' +
                     '</a>',
 
-            zoom : '<button data-fancybox-zoom className="fancybox-button fancybox-button--zoom" title="{{ZOOM}}">' +
+            zoom : '<button data-fancybox-zoom class="fancybox-button fancybox-button--zoom" title="{{ZOOM}}">' +
                         '<svg viewBox="0 0 40 40">' +
                             '<path d="M 18,17 m-8,0 a 8,8 0 1,0 16,0 a 8,8 0 1,0 -16,0 M25,23 L31,29 L25,23" />' +
                         '</svg>' +
                     '</button>',
 
-            close : '<button data-fancybox-close className="fancybox-button fancybox-button--close" title="{{CLOSE}}">' +
+            close : '<button data-fancybox-close class="fancybox-button fancybox-button--close" title="{{CLOSE}}">' +
                         '<svg viewBox="0 0 40 40">' +
                             '<path d="M10,10 L30,30 M30,10 L10,30" />' +
                         '</svg>' +
@@ -211,16 +211,16 @@
 
             // This small close button will be appended to your html/inline/ajax content by default,
             // if "smallBtn" option is not set to false
-            smallBtn   : '<button data-fancybox-close className="fancybox-close-small" title="{{CLOSE}}"></button>',
+            smallBtn   : '<button data-fancybox-close class="fancybox-close-small" title="{{CLOSE}}"></button>',
 
             // Arrows
-            arrowLeft : '<button data-fancybox-prev className="fancybox-button fancybox-button--arrow_left" title="{{PREV}}">' +
+            arrowLeft : '<button data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}">' +
                             '<svg viewBox="0 0 40 40">' +
                               '<path d="M10,20 L30,20 L10,20 L18,28 L10,20 L18,12 L10,20"></path>' +
                             '</svg>' +
                           '</button>',
 
-            arrowRight : '<button data-fancybox-next className="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}">' +
+            arrowRight : '<button data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}">' +
                           '<svg viewBox="0 0 40 40">' +
                             '<path d="M30,20 L10,20 L30,20 L22,28 L30,20 L22,12 L30,20"></path>' +
                           '</svg>' +
@@ -1209,7 +1209,7 @@
             index = index < 0 ? self.group.length + index : index;
 
             if ( !self.slides[ pos ] && self.group[ index ] ) {
-                $slide = $('<div className="fancybox-slide"></div>').appendTo( self.$refs.stage );
+                $slide = $('<div class="fancybox-slide"></div>').appendTo( self.$refs.stage );
 
                 self.slides[ pos ] = $.extend( true, {}, self.group[ index ], {
                     pos      : pos,
@@ -1756,7 +1756,7 @@
             }
 
             // This will be wrapper containing both ghost and actual image
-            slide.$content = $('<div className="fancybox-image-wrap"></div>')
+            slide.$content = $('<div class="fancybox-image-wrap"></div>')
                 .addClass( 'fancybox-is-hidden' )
                 .appendTo( slide.$slide );
 
@@ -1878,7 +1878,7 @@
                 $slide	= slide.$slide,
                 $iframe;
 
-            slide.$content = $('<div className="fancybox-content' + ( opts.preload ? ' fancybox-is-hidden' : '' ) + '"></div>')
+            slide.$content = $('<div class="fancybox-content' + ( opts.preload ? ' fancybox-is-hidden' : '' ) + '"></div>')
                 .css( opts.css )
                 .appendTo( $slide );
 
@@ -2151,7 +2151,7 @@
                 // Add fake element on top of the image
                 // This makes a bit harder for user to select image
                 if ( slide.type === 'image' ) {
-                    $( '<div className="fancybox-spaceball"></div>' ).appendTo( slide.$content );
+                    $( '<div class="fancybox-spaceball"></div>' ).appendTo( slide.$content );
                 }
 
             }
@@ -4253,7 +4253,7 @@
 	$.extend(true, $.fancybox.defaults, {
 		btnTpl : {
 			slideShow :
-				'<button data-fancybox-play className="fancybox-button fancybox-button--play" title="{{PLAY_START}}">' +
+				'<button data-fancybox-play class="fancybox-button fancybox-button--play" title="{{PLAY_START}}">' +
 					'<svg viewBox="0 0 40 40">' +
 						'<path d="M13,12 L27,20 L13,27 Z" />' +
 						'<path d="M15,10 v19 M23,10 v19" />' +
@@ -4553,7 +4553,7 @@
 	$.extend(true, $.fancybox.defaults, {
 		btnTpl : {
 			fullScreen :
-				'<button data-fancybox-fullscreen className="fancybox-button fancybox-button--fullscreen" title="{{FULL_SCREEN}}">' +
+				'<button data-fancybox-fullscreen class="fancybox-button fancybox-button--fullscreen" title="{{FULL_SCREEN}}">' +
 					'<svg viewBox="0 0 40 40">' +
 						'<path d="M9,12 h22 v16 h-22 v-16 v16 h22 v-16 Z" />' +
 					'</svg>' +
@@ -4648,7 +4648,7 @@
 	$.fancybox.defaults = $.extend(true, {
 		btnTpl : {
 			thumbs :
-			'<button data-fancybox-thumbs className="fancybox-button fancybox-button--thumbs" title="{{THUMBS}}">' +
+			'<button data-fancybox-thumbs class="fancybox-button fancybox-button--thumbs" title="{{THUMBS}}">' +
 				'<svg viewBox="0 0 120 120">' +
 					'<path d="M30,30 h14 v14 h-14 Z M50,30 h14 v14 h-14 Z M70,30 h14 v14 h-14 Z M30,50 h14 v14 h-14 Z M50,50 h14 v14 h-14 Z M70,50 h14 v14 h-14 Z M30,70 h14 v14 h-14 Z M50,70 h14 v14 h-14 Z M70,70 h14 v14 h-14 Z" />' +
 				'</svg>' +
@@ -4712,7 +4712,7 @@
 				list,
 				src;
 
-			self.$grid = $('<div className="fancybox-thumbs fancybox-thumbs-' + self.opts.axis + '"></div>').appendTo( instance.$refs.container.find( parentEl ).addBack().filter( parentEl ) );
+			self.$grid = $('<div class="fancybox-thumbs fancybox-thumbs-' + self.opts.axis + '"></div>').appendTo( instance.$refs.container.find( parentEl ).addBack().filter( parentEl ) );
 
 			// Build list HTML
 			list = '<ul>';
@@ -4725,7 +4725,7 @@
 				}
 
 				if ( src && src.length ) {
-					list += '<li data-index="' + i + '"  tabindex="0" className="fancybox-thumbs-loading"><img data-src="' + src + '" /></li>';
+					list += '<li data-index="' + i + '"  tabindex="0" class="fancybox-thumbs-loading"><img data-src="' + src + '" /></li>';
 				}
 			});
 
@@ -4900,7 +4900,7 @@
 	$.extend(true, $.fancybox.defaults, {
 		btnTpl : {
 			share :
-				'<button data-fancybox-share className="fancybox-button fancybox-button--share" title="{{SHARE}}">' +
+				'<button data-fancybox-share class="fancybox-button fancybox-button--share" title="{{SHARE}}">' +
 					'<svg viewBox="0 0 40 40">' +
 						'<path d="M6,30 C8,18 19,16 23,16 L23,16 L23,10 L33,20 L23,29 L23,24 C19,24 8,27 6,30 Z">' +
 					'</svg>' +
@@ -4908,23 +4908,23 @@
 		},
 		share : {
 			tpl :
-				'<div className="fancybox-share">' +
+				'<div class="fancybox-share">' +
 					'<h1>{{SHARE}}</h1>' +
-					'<p className="fancybox-share__links">' +
-						'<a className="fancybox-share__button fancybox-share__button--fb" href="https://www.facebook.com/sharer/sharer.php?u={{url}}">' +
+					'<p class="fancybox-share__links">' +
+						'<a class="fancybox-share__button fancybox-share__button--fb" href="https://www.facebook.com/sharer/sharer.php?u={{url}}">' +
 							'<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m287 456v-299c0-21 6-35 35-35h38v-63c-7-1-29-3-55-3-54 0-91 33-91 94v306m143-254h-205v72h196" /></svg>' +
 							'<span>Facebook</span>' +
 						'</a>' +
-						'<a className="fancybox-share__button fancybox-share__button--pt" href="https://www.pinterest.com/pin/create/button/?url={{url}}&description={{descr}}&media={{media}}">' +
+						'<a class="fancybox-share__button fancybox-share__button--pt" href="https://www.pinterest.com/pin/create/button/?url={{url}}&description={{descr}}&media={{media}}">' +
 							'<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m265 56c-109 0-164 78-164 144 0 39 15 74 47 87 5 2 10 0 12-5l4-19c2-6 1-8-3-13-9-11-15-25-15-45 0-58 43-110 113-110 62 0 96 38 96 88 0 67-30 122-73 122-24 0-42-19-36-44 6-29 20-60 20-81 0-19-10-35-31-35-25 0-44 26-44 60 0 21 7 36 7 36l-30 125c-8 37-1 83 0 87 0 3 4 4 5 2 2-3 32-39 42-75l16-64c8 16 31 29 56 29 74 0 124-67 124-157 0-69-58-132-146-132z" fill="#fff"/></svg>' +
 							'<span>Pinterest</span>' +
 						'</a>' +
-						'<a className="fancybox-share__button fancybox-share__button--tw" href="https://twitter.com/intent/tweet?url={{url}}&text={{descr}}">' +
+						'<a class="fancybox-share__button fancybox-share__button--tw" href="https://twitter.com/intent/tweet?url={{url}}&text={{descr}}">' +
 							'<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m456 133c-14 7-31 11-47 13 17-10 30-27 37-46-15 10-34 16-52 20-61-62-157-7-141 75-68-3-129-35-169-85-22 37-11 86 26 109-13 0-26-4-37-9 0 39 28 72 65 80-12 3-25 4-37 2 10 33 41 57 77 57-42 30-77 38-122 34 170 111 378-32 359-208 16-11 30-25 41-42z" /></svg>' +
 							'<span>Twitter</span>' +
 						'</a>' +
 					'</p>' +
-					'<p><input className="fancybox-share__input" type="text" value="{{url_raw}}" /></p>' +
+					'<p><input class="fancybox-share__input" type="text" value="{{url_raw}}" /></p>' +
 				'</div>'
 		}
 	});

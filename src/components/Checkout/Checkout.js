@@ -79,17 +79,19 @@ const Checkout = () => {
 
       let total = 0
       let orderedProducts = { };
+   
       cart.forEach(cartItem => {
         orderedProducts[cartItem.id] = cartItem.quantity;
 
-        if (cartItem.salePrice < (cartItem.price)) {
-          total = total + (parseFloat(cartItem.salePrice) * parseInt(cartItem.quantity))
+        if (parseFloat(cartItem.salePrice) < parseFloat(cartItem.price)) {
+          total = total + (cartItem.salePrice * cartItem.quantity)
         } else {
-          total = total + (parseFloat(cartItem.price) * parseInt(cartItem.quantity))
+          total = total + (cartItem.price * cartItem.quantity)
         }
       })
-      
+   
       let newOrder = {email, phone, name, lastName, city, address, paymentMethod, total, orderedProducts, status, orderDate}
+  
       orderService.save(newOrder)
       .then(result => {
           form.reset()

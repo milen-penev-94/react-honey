@@ -36,7 +36,7 @@
 
 	//Submenu Dropdown Toggle
 	if($('.main-header li.dropdown ul').length){
-		$('.main-header .navigation li.dropdown').append('<div className="dropdown-btn"><span className="fas fa-angle-down"></span></div>');
+		$('.main-header .navigation li.dropdown').append('<div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>');
 		
 	}
 
@@ -212,7 +212,7 @@
     		active: true,
 			smartSpeed: 1000,
 			autoplay: 6000,
-            navText: [ '<span className="far fa-long-arrow-left"></span>', '<span className="far fa-long-arrow-right"></span>' ],
+            navText: [ '<span class="far fa-long-arrow-left"></span>', '<span class="far fa-long-arrow-right"></span>' ],
             responsive:{
                 0:{
                     items:1
@@ -242,7 +242,7 @@
 			nav:true,
 			smartSpeed: 1000,
 			autoplay: 500,
-			navText: [ '<span className="fal fa-long-arrow-left"></span>', '<span className="fal fa-long-arrow-right"></span>' ],
+			navText: [ '<span class="fal fa-long-arrow-left"></span>', '<span class="fal fa-long-arrow-right"></span>' ],
 			responsive:{
 				0:{
 					items:1
@@ -272,7 +272,7 @@
 			nav:true,
 			smartSpeed: 1000,
 			autoplay: 500,
-			navText: [ '<span className="flaticon-left-2"></span>', '<span className="flaticon-right-1"></span>' ],
+			navText: [ '<span class="flaticon-left-2"></span>', '<span class="flaticon-right-1"></span>' ],
 			responsive:{
 				0:{
 					items:1
@@ -302,7 +302,7 @@
 			nav:true,
 			smartSpeed: 500,
 			autoplay: 1000,
-			navText: [ '<span className="icon-Arrow-Left"></span>', '<span className="icon-Arrow-Right"></span>' ],
+			navText: [ '<span class="icon-Arrow-Left"></span>', '<span class="icon-Arrow-Right"></span>' ],
 			responsive:{
 				0:{
 					items:1
@@ -332,7 +332,7 @@
 			nav:false,
 			smartSpeed: 3000,
 			autoplay: true,
-			navText: [ '<span className="fas fa-angle-left"></span>', '<span className="fas fa-angle-right"></span>' ],
+			navText: [ '<span class="fas fa-angle-left"></span>', '<span class="fas fa-angle-right"></span>' ],
 			responsive:{
 				0:{
 					items:1
@@ -363,7 +363,7 @@
 			nav:false,
 			smartSpeed: 3000,
 			autoplay: true,
-			navText: [ '<span className="fal fa-long-arrow-left"></span>', '<span className="fal fa-long-arrow-right"></span>' ],
+			navText: [ '<span class="fal fa-long-arrow-left"></span>', '<span class="fal fa-long-arrow-right"></span>' ],
 			responsive:{
 				0:{
 					items:1
@@ -511,8 +511,8 @@
 		$('.product-details-content .bxslider').bxSlider({
 	        nextSelector: '.product-details-content #slider-next',
 	        prevSelector: '.product-details-content #slider-prev',
-	        nextText: '<i className="fa fa-angle-right"></i>',
-	        prevText: '<i className="fa fa-angle-left"></i>',
+	        nextText: '<i class="fa fa-angle-right"></i>',
+	        prevText: '<i class="fa fa-angle-left"></i>',
 	        mode: 'fade',
 	        auto: 'true',
 	        speed: '700',

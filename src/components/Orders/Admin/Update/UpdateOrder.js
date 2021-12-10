@@ -26,14 +26,31 @@ const UpdateOrder = () => {
         })
        
     }, [updateForm]);
+    
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault(); 
+    }
 
     return (
         <div className="update-order-component auto-container">
-            <form>
-                <label htmlFor="status">Статус: </label>
-                <select id="status" name="status" value={order.status} onChange={(e) => setOrder(s => ({...s, status: e.target.value}))}>
-                    {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
-                </select>
+            <form onSubmit={handleSubmit}>
+                <div className="two-column">
+                    <label htmlFor="status">Статус: </label>
+                    <select id="status" name="status" value={order.status} onChange={(e) => setOrder(s => ({...s, status: e.target.value}))}>
+                        {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
+                    </select>
+                </div>   
+
+                <div className="two-column">
+                    <label htmlFor="total">Сума: </label>
+                    <input id="total" name="total" type="text" defaultValue={order.total} />
+                </div> 
+
+                <div>
+                    <button type="submit">Запази</button>
+                </div>
             </form>
         </div>
     )

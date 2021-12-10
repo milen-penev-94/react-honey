@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom"
-import { useCart } from "../../contexts/CartContext";
+import { useCart } from "../../../contexts/CartContext";
 import './Header.css'
 
 function Header () {
@@ -29,8 +29,8 @@ function Header () {
             <ul className="navigation clearfix">
                 <li><Link to="/">Начало</Link></li> 
                 <li><Link to="/products">Продукти</Link></li>
-                <li><Link to="javascript;">За нас</Link></li>
-                <li><a href="index.html">Blog</a></li>   
+                <li><Link to="/about">За нас</Link></li>
+                <li><Link to="/contacts">Контакти</Link></li>   
             </ul>
         )
     }
@@ -39,21 +39,6 @@ function Header () {
         return (
             <ul className="menu-right-content clearfix">
                 <li className="profile"><Link to="/profile" ><i className="far fa-user"></i></Link></li>
-                <li className="search-box-outer">
-                    <div className="dropdown">
-                        <button className="search-box-btn" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="far fa-search"></i></button>
-                        <div className="dropdown-menu search-panel" aria-labelledby="dropdownMenu3">
-                            <div className="form-container">
-                                <form method="post" action="http://azim.commonsupport.com/Hanta/blog.html">
-                                    <div className="form-group">
-                                        <input type="search" name="search-field" defaultValue=""  required="" />
-                                        <button type="submit" className="search-btn"><span className="fas fa-search"></span></button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </li>
                 <li className="cart-btn">
                     <Link to="/checkout"><i className="far fa-cart-plus"></i>
                         <div className="cartQantity" >
@@ -61,7 +46,6 @@ function Header () {
                         </div>
                     </Link>
                 </li>
-                <li className="like-btn"><a href="index.html"><i className="far fa-heart"></i></a></li>
             </ul>
         )
     }

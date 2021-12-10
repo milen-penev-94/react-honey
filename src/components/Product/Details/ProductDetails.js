@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import {  Link, useParams } from "react-router-dom"
+import {Helmet} from "react-helmet";
 import * as productService from '../../../services/productService';
 import * as categoriesService from '../../../services/categoriesService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -86,6 +87,10 @@ const ProductDetails = () => {
 
     return (
         <div className="product-details-component">
+            <Helmet>
+                <title>{product.name}</title>
+            </Helmet>
+
             <section className="page-title centred" style={{backgroundImage: `url("/images/background/page-title.jpg")`}}>
                 <div className="auto-container">
                 <div className="content-box">

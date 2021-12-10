@@ -1,0 +1,49 @@
+.login-component {
+    display: block;
+    width: 400px;
+    margin: 40px auto 0;
+    padding: 40px;
+    border: 2px solid #ececec;
+}
+
+.login-component .group {
+    margin-bottom: 20px;
+}
+
+.login-component .button-action {
+    background: #fff;
+    position: relative;
+    display: block;
+    font-size: 16px;
+    line-height: 26px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: 700;
+    color: #6c757d;
+    text-align: center;
+    padding: 17px 45px;
+    text-transform: uppercase;
+    z-index: 1;
+    margin-top: 20px;
+    border: 1px solid #6c757d;
+    border-radius: 0;
+}
+
+.login-component .button-action:before {
+    position: absolute;
+    content: '';
+    width: 0%;
+    height: 100%;
+    background: #131313;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    transition: all 500ms ease;
+}
+
+.login-component .button-action:hover {
+    color: #fff;
+}
+
+.login-component .button-action:hover:before {
+    width: 100%;
+}

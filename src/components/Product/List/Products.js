@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from 'react-paginate';
@@ -61,47 +62,63 @@ const Products = () => {
     };
 
     return (
-        <section className="list-products-component shop-page-section">
-            <div className="auto-container">
-                <div className="inner-container">
-                    <div className="row clearfix">
-                        <div className="col-lg-3 col-md-12 col-sm-12 sidebar-side">
-                            <div className="shop-sidebar">
+        <div className="list-products-component ">
+            <Helmet>
+                <title>Продукти</title>
+            </Helmet>
 
-                                {<Categories />}
-                                
-                            </div>
-                        </div>
-                        <div className="col-lg-9 col-md-12 col-sm-12 content-side">
-                            <div className="our-shop">
-                                <div className="item-shorting clearfix">
-                                    <div className="text pull-left">
-                                        <p>Showing 1–12 of  {allProductsCount}</p>
-                                    </div>
+            <section className="page-title centred" style={{backgroundImage: `url("/images/background/page-title.jpg")`}}>
+                <div className="auto-container">
+                <div className="content-box">
+                    <div className="title">
+                    <h1>Продукти</h1>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <section className="shop-page-section">
+                <div className="auto-container">
+                    <div className="inner-container">
+                        <div className="row clearfix">
+                            <div className="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+                                <div className="shop-sidebar">
+
+                                    {<Categories />}
+                                    
                                 </div>
-                                <div className="row clearfix centred">
-                                    {displayAllProducts}
-                                    <div className="pagination-wrapper">
-                                        <ReactPaginate
-                                            previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}
-                                            nextLabel={<FontAwesomeIcon icon={faArrowRight} />}
-                                            pageCount={pageCount}
-                                            onPageChange={changePage}
-                                            containerClassName={"pagination centred"}
-                                            previousLinkClassName={"previousBttn"}
-                                            nextLinkClassName={"nextBttn"}
-                                            disabledClassName={"paginationDisabled"}
-                                            activeClassName={"current"}
-                                            initialPage={params.id ? (parseInt(params.id) - 1) : 0}
-                                        />
+                            </div>
+                            <div className="col-lg-9 col-md-12 col-sm-12 content-side">
+                                <div className="our-shop">
+                                    <div className="item-shorting clearfix">
+                                        <div className="text pull-left">
+                                            <p>Showing 1–12 of  {allProductsCount}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row clearfix centred">
+                                        {displayAllProducts}
+                                        <div className="pagination-wrapper">
+                                            <ReactPaginate
+                                                previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}
+                                                nextLabel={<FontAwesomeIcon icon={faArrowRight} />}
+                                                pageCount={pageCount}
+                                                onPageChange={changePage}
+                                                containerClassName={"pagination centred"}
+                                                previousLinkClassName={"previousBttn"}
+                                                nextLinkClassName={"nextBttn"}
+                                                disabledClassName={"paginationDisabled"}
+                                                activeClassName={"current"}
+                                                initialPage={params.id ? (parseInt(params.id) - 1) : 0}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     )
 }
 

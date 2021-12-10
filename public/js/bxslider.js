@@ -183,11 +183,11 @@
 		 */
 		var setup = function(){
 			// wrap el in a wrapper
-			el.wrap('<div className="' + slider.settings.wrapperClass + '"><div className="bx-viewport"></div></div>');
+			el.wrap('<div class="' + slider.settings.wrapperClass + '"><div class="bx-viewport"></div></div>');
 			// store a namspace reference to .bx-viewport
 			slider.viewport = el.parent();
 			// add a loading div to display while images are loading
-			slider.loader = $('<div className="bx-loading" />');
+			slider.loader = $('<div class="bx-loading" />');
 			slider.viewport.prepend(slider.loader);
 			// set el to a massive width, to hold any needed slides
 			// also strip any margin and padding from el
@@ -240,7 +240,7 @@
 				slider.children.eq(slider.settings.startSlide).css({zIndex: slider.settings.slideZIndex, display: 'block'});
 			}
 			// create an element to contain all slider controls (pager, start / stop, etc)
-			slider.controls.el = $('<div className="bx-controls" />');
+			slider.controls.el = $('<div class="bx-controls" />');
 			// if captions are requested, add them
 			if(slider.settings.captions) appendCaptions();
 			// check if startSlide is last slide
@@ -603,7 +603,7 @@
 				}
 				// var linkContent = slider.settings.buildPager && $.isFunction(slider.settings.buildPager) ? slider.settings.buildPager(i) : i + 1;
 				// add the markup to the string
-				pagerHtml += '<div className="bx-pager-item"><a href="" data-slide-index="' + i + '" className="bx-pager-link">' + linkContent + '</a></div>';
+				pagerHtml += '<div class="bx-pager-item"><a href="" data-slide-index="' + i + '" class="bx-pager-link">' + linkContent + '</a></div>';
 			};
 			// populate the pager element with pager links
 			slider.pagerEl.html(pagerHtml);
@@ -615,7 +615,7 @@
 		var appendPager = function(){
 			if(!slider.settings.pagerCustom){
 				// create the pager DOM element
-				slider.pagerEl = $('<div className="bx-pager" />');
+				slider.pagerEl = $('<div class="bx-pager" />');
 				// if a pager selector was supplied, populate it with the pager
 				if(slider.settings.pagerSelector){
 					$(slider.settings.pagerSelector).html(slider.pagerEl);
@@ -636,8 +636,8 @@
 		 * Appends prev / next controls to the controls element
 		 */
 		var appendControls = function(){
-			slider.controls.next = $('<a className="bx-next" href="">' + slider.settings.nextText + '</a>');
-			slider.controls.prev = $('<a className="bx-prev" href="">' + slider.settings.prevText + '</a>');
+			slider.controls.next = $('<a class="bx-next" href="">' + slider.settings.nextText + '</a>');
+			slider.controls.prev = $('<a class="bx-prev" href="">' + slider.settings.prevText + '</a>');
 			// bind click actions to the controls
 			slider.controls.next.bind('click', clickNextBind);
 			slider.controls.prev.bind('click', clickPrevBind);
@@ -652,7 +652,7 @@
 			// if no custom selectors were supplied
 			if(!slider.settings.nextSelector && !slider.settings.prevSelector){
 				// add the controls to the DOM
-				slider.controls.directionEl = $('<div className="bx-controls-direction" />');
+				slider.controls.directionEl = $('<div class="bx-controls-direction" />');
 				// add the control elements to the directionEl
 				slider.controls.directionEl.append(slider.controls.prev).append(slider.controls.next);
 				// slider.viewport.append(slider.controls.directionEl);
@@ -664,10 +664,10 @@
 		 * Appends start / stop auto controls to the controls element
 		 */
 		var appendControlsAuto = function(){
-			slider.controls.start = $('<div className="bx-controls-auto-item"><a className="bx-start" href="">' + slider.settings.startText + '</a></div>');
-			slider.controls.stop = $('<div className="bx-controls-auto-item"><a className="bx-stop" href="">' + slider.settings.stopText + '</a></div>');
+			slider.controls.start = $('<div class="bx-controls-auto-item"><a class="bx-start" href="">' + slider.settings.startText + '</a></div>');
+			slider.controls.stop = $('<div class="bx-controls-auto-item"><a class="bx-stop" href="">' + slider.settings.stopText + '</a></div>');
 			// add the controls to the DOM
-			slider.controls.autoEl = $('<div className="bx-controls-auto" />');
+			slider.controls.autoEl = $('<div class="bx-controls-auto" />');
 			// bind click actions to the controls
 			slider.controls.autoEl.on('click', '.bx-start', clickStartBind);
 			slider.controls.autoEl.on('click', '.bx-stop', clickStopBind);
@@ -699,7 +699,7 @@
 				var title = $(this).find('img:first').attr('title');
 				// append the caption
 				if (title != undefined && ('' + title).length) {
-                    $(this).append('<div className="bx-caption"><span>' + title + '</span></div>');
+                    $(this).append('<div class="bx-caption"><span>' + title + '</span></div>');
                 }
 			});
 		}

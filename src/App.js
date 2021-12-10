@@ -2,8 +2,11 @@ import React from 'react'
 import Signup from './components/SignUp/Signup'
 import { AuthProvider } from './contexts/AuthContext'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Header from './components/Header/Header'
+import Header from './components/Common/Header/Header'
 import Footer from './components/Footer/Footer'
+import About from './components/About/About'
+import Homepage from './components/Homepage/Homepage'
+import Contacts from './components/Contacts/Contacts'
 import Login from './components/Login/Login'
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Profile from './components/Profile/Profile'
@@ -31,6 +34,9 @@ export default function App() {
       <AuthProvider>
         <Header />
         <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contacts" element={<Contacts />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
