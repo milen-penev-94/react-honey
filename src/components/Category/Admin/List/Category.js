@@ -70,29 +70,9 @@ const Category = ({category, onChange}) => {
                     <FontAwesomeIcon icon={faEdit} /> 
                 </Link> 
                 <span className="delete" onClick={deleteClickHandler}><FontAwesomeIcon icon={faTrash} /></span>
-                {/* { (childCategories.length > 0) ? 
-                     <span className="delete" onClick={deleteClickCategoryWithChildsHandler}><FontAwesomeIcon icon={faTrash} /></span>
-                :
-                     <span className="delete" onClick={deleteClickHandler}><FontAwesomeIcon icon={faTrash} /></span>
-                } */}
             </div>
 
             <ChildCategories parentCategory={category} />
-            
-            {/* {childCategories.length > 0
-                ? (
-                    <div className="child-categories">
-                        <ul className="categories-list">
-                            {childCategories.map(x => 
-                            <li className="category" key={x.docId}>
-                                <Category category={x} childCategories={[]} deleteCategory={deleteChildCategory} onChange={changeDeteleChildCategory} />
-                            </li>
-                            )}
-                        </ul>
-                    </div>
-                ) 
-                : null
-            } */}
         </>
     )
 }
