@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import * as orderService from '../../../../services/orderService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Order from './Order';
-import './Orders.css'
+import './Orders.css';
 
 const Orders = () => {
 
@@ -27,6 +30,12 @@ const Orders = () => {
 
     return (
         <div className="component-orders auto-container">
+
+            <Link to="/profile" className="cancel profile-action-button">
+                <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
+                <span className="label">Към профила</span>
+            </Link>
+
             <h2>Поръчки</h2>
 
             {allOrders.length > 0

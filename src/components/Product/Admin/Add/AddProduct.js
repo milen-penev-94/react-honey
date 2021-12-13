@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import * as categoriesService from '../../../../services/categoriesService';
 import * as productService from '../../../../services/productService';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
-import './AddProduct.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { Helmet } from 'react-helmet';
+import { validateProduct } from '../helper/formValidationHelper';
+import './AddProduct.css';
 
 const AddProduct = () => {
-    const [errorMessage, setErrorMessage] = useState([]);
+    const initialValues = {isEnabled: "1", name: "", description: "",  image: "", quantity: "", category: "", sku: "", price: "", salePrice: ""};
+    const [formValues, setFormValues] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
     const [allCategories, setAllCategories] = useState([]);
+    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate()
 
-        const statuses = [
-        { value: '1', text: 'Активен' },
-        { value: '2', text: 'Неактивен' },
+    const statuses = [
+        { value: "1", text: 'Активен' },
+        { value: "0", text: 'Неактивен' },
     ]
 
     useEffect(() => {
@@ -27,82 +32,47 @@ const AddProduct = () => {
             })  
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); 
+    useEffect(() => {
+       
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
 
-        let form = e.currentTarget;
-        let formData = new FormData(e.currentTarget);
-        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData);
-
-        let errors = [];
-
-        if (name.length < 3) {
-            errors.push('Името неможе да е по-малко от 3 символа');
-        }
-
-        if (description.length < 3) {
-            errors.push('Описанието неможе да е по-малко от 3 символа');
-        }
-
-        if (!image.length) {
-            errors.push('Снимката е задължителна');
-        }
-
-        if (!price.length) {
-            errors.push('Цената е задължителна');
-        } else {
-
-            if (isNaN(price)) {
-                errors.push('Цената трябва да е число')
-            } else {
-
-                if (parseFloat(price) <= 0) {
-                    errors.push('Цената трябва да е по-голяма от 0');
-                }
-            }
-        }   
-        
-        if (salePrice.length) {
-            if (isNaN(salePrice)) {
-                errors.push('Промоционалната цена трябва да е число');
-            } else {
-
-                if (parseFloat(salePrice) <= 0) {
-                    errors.push('Промоционалната цена трябва да е по-голяма от 0')
-                }
-            }
-        }  
-
-        if (quantity.length) {
-            if (isNaN(quantity)) {
-                errors.push('Количеството трябва да е число');
-            } 
-        }  
-        
-        if (errors.length > 0) {
-            setErrorMessage(errors)  
-        } else {
-            
-            let newProduct = {isEnabled, name, description, image, quantity, category, sku, price, salePrice}
-
-            productService.save(newProduct)
+             productService.save(formValues)
             .then(result => {
-                form.reset()
-                setErrorMessage([]);
                 setSuccessMessage('Успешно добавен продукт');
                 setTimeout(() => {
                     setSuccessMessage('');
-                }, 2000)
+                }, 2000);
             
             })   
             .catch(err => {
                 console.log(err);
             })
-        }
-    }
+        } 
+    }, [formErrors]);
 
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({ ...formValues, [name]: value });
+      };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormErrors(validateProduct(formValues));
+        setIsSubmit(true);
+
+        if (Object.keys(formErrors).length === 0 ) {
+            e.currentTarget.reset();
+        }
+    };
+   
     return(
         <div className="add-product-component auto-container">
+
+            <Helmet>
+                <title>Добавяне на продукт</title>
+            </Helmet>
+
             <Link to="/admin/list-products" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
                 <span className="label">Към листа с продукти</span>
@@ -112,64 +82,73 @@ const AddProduct = () => {
 
             {successMessage && <div className="success-message">{successMessage}</div>}
 
-            <div className={(errorMessage.length > 0) ? 'error-message' : null}>
-                { (errorMessage.length > 0) ? errorMessage.map((error) =>
-                    <div>{error}</div>
-                ) : null}
-            </div>
-
             <form onSubmit={handleSubmit}>
-                <div className="two-column">
-                    <label htmlFor="isEnabled">Статус: </label>
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="isEnabled">Статус: </label>
 
-                    <select id="isEnabled" name="isEnabled">
-                        <option value="1">Активен</option>
-                        <option value="0">Неактивен</option>
-                    </select>
+                        <select id="isEnabled" name="isEnabled" onBlur={handleChange}>
+                            {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
+                        </select> 
+                    </div>
+
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="name">Име на продукт: </label>
+                        <input id="name" name="name" type="text" onBlur={handleChange} />
+                        <p className="error-message">{formErrors.name}</p>
+                    </div>
                 </div>
 
-                <div className="two-column">
-                    <label htmlFor="name">Име на продукт: </label>
-                    <input id="name" name="name" type="text" />
-                </div>
-
-                <div>
-                    <label htmlFor="description">Описание: </label>
-                    <textarea id="description" name="description"></textarea>
+                <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12">
+                        <label htmlFor="description">Описание: </label>
+                        <textarea id="description" name="description" onBlur={handleChange}></textarea>
+                        <p className="error-message">{formErrors.description}</p>
+                    </div>     
                 </div>     
 
-                <div className="two-column">
-                    <label htmlFor="image">Снимка (url) </label>
-                    <input id="image" name="image" type="text" />
-                </div>     
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="image">Снимка (url) </label>
+                        <input id="image" name="image" type="text" onBlur={handleChange} />
+                        <p className="error-message">{formErrors.image}</p>
+                    </div>     
 
 
-                <div className="two-column">
-                    <label htmlFor="quantity">Количество </label>
-                    <input id="quantity" name="quantity" type="text" />
-                </div>     
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="quantity">Количество </label>
+                        <input id="quantity" name="quantity" type="text" onBlur={handleChange} />
+                        <p className="error-message">{formErrors.quantity}</p>
+                    </div>  
+                </div>   
 
-                <div className="two-column" >
-                    <label htmlFor="category">Категория: </label>
-                    <select id="category" name="category">   
-                        <option defaultValue=""></option>                   
-                        {allCategories.length > 0 ? allCategories.map(x => <option key={x.docId} value={x.docId}>{x.name}</option>) : null}                       
-                    </select>
-                </div>
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12" >
+                        <label htmlFor="category">Категория: </label>
+                        <select id="category" name="category" onBlur={handleChange}>   
+                            <option defaultValue=""></option>                   
+                            {allCategories.length > 0 ? allCategories.map(x => <option key={x.docId} value={x.docId}>{x.name}</option>) : null}                       
+                        </select>
+                    </div>
 
-                <div className="two-column">
-                    <label htmlFor="sku">Артикулен номер: </label>
-                    <input id="sku" name="sku" type="text" />
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="sku">Артикулен номер: </label>
+                        <input id="sku" name="sku" type="text" onBlur={handleChange} />
+                    </div>  
                 </div>  
 
-                <div className="two-column">
-                    <label htmlFor="price">Цена: </label>
-                    <input id="price" name="price" type="text" />
-                </div>
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="price">Цена: </label>
+                        <input id="price" name="price" type="text" onBlur={handleChange} />
+                        <p className="error-message">{formErrors.price}</p>
+                    </div>
 
-                <div className="two-column">
-                    <label htmlFor="salePrice">Промоционална цена: </label>
-                    <input id="salePrice" name="salePrice" type="text" />
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="salePrice">Промоционална цена: </label>
+                        <input id="salePrice" name="salePrice" type="text" onBlur={handleChange} />
+                        <p className="error-message">{formErrors.salePrice}</p>
+                    </div>
                 </div>
 
                 <div>

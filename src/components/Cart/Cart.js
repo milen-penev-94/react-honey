@@ -28,7 +28,7 @@ const Cart = () => {
         )
     }
 
-    const deliveryPrice = financial(4.9)
+    const deliveryPrice = 4.9
 
     const totalPrice = () => {
         let price = 0
@@ -39,7 +39,7 @@ const Cart = () => {
                 price = price + (parseFloat(cartItem.price) * parseInt(cartItem.quantity))
             }
         })
-        return financial(price + deliveryPrice)
+        return price + deliveryPrice
     }
     
     return (
@@ -61,8 +61,8 @@ const Cart = () => {
             </div>
 
             <div className="total-price">
-                <span className="delivery-price">Цена на доставка: {deliveryPrice} </span>
-                <span className="price">Общо: {totalPrice()}</span>
+                <span className="delivery-price">Цена на доставка: {financial(deliveryPrice)} </span>
+                <span className="price">Общо: {financial(totalPrice())}</span>
             </div> 
         </div>
     )

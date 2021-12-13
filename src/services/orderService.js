@@ -1,5 +1,5 @@
 import { db } from "../firebase"
-import {  addDoc, getDocs, getDoc, doc, deleteDoc, query, collection } from "firebase/firestore"
+import {  addDoc, getDocs, getDoc, doc, deleteDoc, query, collection, orderBy } from "firebase/firestore"
 import * as productService from './productService';
 
 export  async function save(order) {
@@ -35,7 +35,7 @@ export  async function save(order) {
 
 export  async function getAll() {
     const allOrdersArray = []
-    const allOrdersQuery = query(collection(db, "orders"));
+    const allOrdersQuery = query(collection(db, "orders"), orderBy("orderDate", "asc"),);
     const snapshot =  await getDocs(allOrdersQuery)
         
     snapshot.docs.forEach((doc) => {

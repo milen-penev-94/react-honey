@@ -8,21 +8,6 @@
     margin-bottom: 20px;
 }
 
-.checkout-component form {
-    margin-left: -20px;
-}
-
-.checkout-component form div {
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
-
-.checkout-component .two-column {
-    display: inline-block;
-    vertical-align: top;
-    width: calc(50% - 20px);
-}
-
 .checkout-component form input[type=radio]{
     position: relative;
     width: 20px;

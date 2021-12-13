@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faCheckSquare, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import * as orderService from '../../../../services/orderService';
 import DeleteConfirmDialog from '../../../Common/DeleteConfirmDialog/DeleteConfirmDialog';
 import './Orders.css';
@@ -39,12 +39,10 @@ const Product = ({order, onChange}) => {
 
      function quantityProducts() {
 
-     //Object.keys(order.orderedProducts).map((productId) => console.log(productId))
        let quantity = 0
-
        Object.values(order.orderedProducts)
        .map((productQuantity) => {
-        quantity = quantity + productQuantity
+            quantity = quantity + productQuantity
        })
 
        return quantity
@@ -54,7 +52,7 @@ const Product = ({order, onChange}) => {
         <>
             <DeleteConfirmDialog show={showDeleteDialog} onClose={closeEventHandler} onDelete={deleteProduct} />
             <span className="date">Дата: {order.orderDate}</span>
-            <span className="quantity">Брой продукти: { quantityProducts() } </span>
+            <span className="quantity">Брой: { quantityProducts() } </span>
             <span className="status">Статус: {order.status} </span>
             
             <div className="actions">

@@ -7,15 +7,15 @@ import {faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-ic
 import Category from "./Category";
 
 const Categories = () => {
-    const [allCategories, setAllCategories] = useState([]);
+    const [parentCategories, setParentCategories] = useState([]);
     const [deleteCategory, setDeleteCategory] = useState(false);
 
     useEffect(() => {
         setDeleteCategory(false)
 
-        categoriesService.getAll()
+        categoriesService.getParentCategories()
         .then(result => {
-            setAllCategories(result);
+            setParentCategories(result);
         })
         .catch(err => {
             console.log(err);
@@ -25,27 +25,6 @@ const Categories = () => {
 
     function changeDeteleCategory(newValue) {
         setDeleteCategory(newValue)
-    }
-
-    function parentCategories() {
-        let parentCategoriesArr = []
-        allCategories.map(category => {
-            if (!category.parent) {
-                parentCategoriesArr.push(category)
-            }
-        })
-        return parentCategoriesArr
-    }
-
-    function childCategories(parentCategory) {
-        let childCategoriesArr = []
-        allCategories.map(category => {
-           if(category.parent == parentCategory.docId) {
-               childCategoriesArr.push(category)
-           }
-        })
-    
-       return childCategoriesArr
     }
 
     return(
@@ -63,12 +42,12 @@ const Categories = () => {
 
             <h2>Категории</h2>
 
-            {parentCategories().length > 0
+            {parentCategories.length > 0
                 ? (
                     <ul className="categories-list">
-                        { parentCategories().map(parentCategory => 
+                        { parentCategories.map(parentCategory => 
                         <li className="category" key={parentCategory.docId}  >
-                            { <Category category={parentCategory} childCategories={childCategories(parentCategory)} deleteCategory={deleteCategory} onChange={changeDeteleCategory} /> }
+                            { <Category category={parentCategory} deleteCategory={deleteCategory} onChange={changeDeteleCategory} /> }
                         </li>
                         )}
                     </ul>

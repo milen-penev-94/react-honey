@@ -1,7 +1,6 @@
 import { db } from "../firebase"
 import { getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, collection, query, where } from "firebase/firestore"
 
-
 export  async function getAll() {
     const allCategoriesArray = []
     const allCategoriesQuery = query(collection(db, "categories"));
@@ -31,7 +30,7 @@ export  async function getParentCategories() {
 }
 
 export  async function getChildCategories(parentId) {
- 
+  
     let childCategoriesArray = []
     let childCategoriesQuery = query(collection(db, "categories"), where("parent", "==", parentId));
     let snapshot = await getDocs(childCategoriesQuery)

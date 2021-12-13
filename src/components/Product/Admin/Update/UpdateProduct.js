@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import * as productService from '../../../../services/productService';
-import * as categoriesService from '../../../../services/categoriesService';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import * as productService from '../../../../services/productService';
+import * as categoriesService from '../../../../services/categoriesService';
+import { validateProduct } from '../helper/formValidationHelper';
 import './UpdateProduct.css'
 
 const UpdateProduct = () => {
-    const params = useParams()
-    const thisProductId = params.id
+    const params = useParams();
+    const navigate = useNavigate();
 
+    const thisProductId = params.id;
     const [currentProduct, setCurrentProduct] = useState({});
-    const [allCategories, setAllCategories] = useState([]);
-    const [updateForm, setUpdateForm] = useState(false);
-    const [errorMessage, setErrorMessage] = useState([]);
+    const [formErrors, setFormErrors] = useState({});
     const [successMessage, setSuccessMessage] = useState("");
+    const [allCategories, setAllCategories] = useState([]);
+    const [isSubmit, setIsSubmit] = useState(false);
 
     const statuses = [
         { value: '1', text: 'Активен' },
-        { value: '2', text: 'Неактивен' },
+        { value: '0', text: 'Неактивен' },
     ]
 
     useEffect(() => {
-
         productService.getOne(thisProductId)
         .then(result => {
             setCurrentProduct(result);
@@ -31,7 +33,7 @@ const UpdateProduct = () => {
             console.log(err);
         })
        
-    }, [updateForm]);
+    }, []);
 
     useEffect(() => {
         categoriesService.getAll()
@@ -43,87 +45,46 @@ const UpdateProduct = () => {
             }) 
     }, []);
 
-    const handleSubmit = async (e) => {
+    useEffect(() => {
+       
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
 
-        e.preventDefault(); 
-
-        let form = e.currentTarget;
-        let formData = new FormData(e.currentTarget);
-        let { isEnabled, name, description, image, quantity, category, sku, price, salePrice } = Object.fromEntries(formData);
-
-        let errors = [];
-
-        if (name.length < 3) {
-            errors.push('Името неможе да е по-малко от 3 символа');
-        }
-
-        if (description.length < 3) {
-            errors.push('Описанието неможе да е по-малко от 3 символа');
-        }
-
-        if (!image.length) {
-            errors.push('Снимката е задължителна');
-        }
-
-        if (!price.length) {
-            errors.push('Цената е задължителна');
-        } else {
-
-            if (isNaN(price)) {
-                errors.push('Цената трябва да е число');
-            } else {
-
-                if (parseFloat(price) <= 0) {
-                    errors.push('Цената трябва да е по-голяма от 0');
-                }
-            }
-        }   
-        
-        if (salePrice.length) {
-            if (isNaN(salePrice)) {
-                errors.push('Промоционалната цена трябва да е число');
-            } else {
-
-                if (parseFloat(salePrice) <= 0) {
-                    errors.push('Промоционалната цена трябва да е по-голяма от 0');
-                }
-
-                if (parseFloat(salePrice) > parseFloat(price)) {
-                    errors.push('Промоционалната цена трябва да е по-малка от цената');
-                }
-            }
-        }  
-
-        if (quantity.length) {
-            if (isNaN(quantity)) {
-                errors.push('Количеството трябва да е число');
-            } 
-        }  
-
-        if (errors.length > 0) {
-            setErrorMessage(errors)  
-        } else {
-            let product = { isEnabled, name, description, image, quantity, category, sku, price, salePrice }
-
-            productService.update(product, thisProductId)
+             productService.update(currentProduct, thisProductId)
             .then(result => {
-                setErrorMessage('');
                 setSuccessMessage('Успешно редактиран продукт');
                 setTimeout(() => {
                     setSuccessMessage('');
-                    setUpdateForm(true);
-                    form.reset();
-                }, 2000)
-               
+                }, 2000);
+            
             })   
             .catch(err => {
                 console.log(err);
             })
+        } 
+    }, [formErrors]);
+
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCurrentProduct({ ...currentProduct, [name]: value });
+      };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormErrors(validateProduct(currentProduct));
+        setIsSubmit(true);
+
+        if (Object.keys(formErrors).length === 0 ) {
+            e.currentTarget.reset();
         }
-    }
+    };
 
     return (
         <div className="update-product-component auto-container">
+
+            <Helmet>
+                <title>{currentProduct.name}</title>
+            </Helmet>
 
             <Link to="/admin/list-products" className="cancel profile-action-button">
                 <span className="icon"><FontAwesomeIcon icon={faChevronCircleLeft} /></span>
@@ -134,65 +95,84 @@ const UpdateProduct = () => {
 
             {successMessage && <div className="success-message">{successMessage}</div>}
 
-            <div className={(errorMessage.length > 0) ? 'error-message' : null}>
-                { (errorMessage.length > 0) ? errorMessage.map((error) =>
-                    <div>{error}</div>
-                ) : null}
-            </div>
-
             <form onSubmit={handleSubmit}>
-                <div className="two-column">
-                    <label htmlFor="isEnabled">Статус: </label>
-                    <select id="isEnabled" name="isEnabled" value={currentProduct.isEnabled} onChange={(e) => setCurrentProduct(s => ({...s, isEnabled: e.target.value}))}>
-                        {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
-                    </select> 
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="isEnabled">Статус: </label>
+                        <select 
+                        id="isEnabled" 
+                        name="isEnabled" 
+                        onChange={(e) => setCurrentProduct(s => ({...s, isEnabled: e.target.value}))}
+                        onBlur={handleChange}>
+                            {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
+                        </select> 
+                    </div>
+
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="name">Име на продукт: </label>
+                        <input id="name" name="name" type="text" defaultValue={currentProduct.name} onBlur={handleChange} />
+                        <p className="error-message">{formErrors.name}</p>
+                    </div>
                 </div>
 
-                <div className="two-column">
-                    <label htmlFor="name">Име на продукт: </label>
-                    <input id="name" name="name" type="text" defaultValue={currentProduct.name} />
-                </div>
-
-                <div>
-                    <label htmlFor="description">Описание: </label>
-                    <textarea id="description" name="description" defaultValue={currentProduct.description}></textarea>
+                <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12">
+                        <label htmlFor="description">Описание: </label>
+                        <textarea id="description" name="description" defaultValue={currentProduct.description} onBlur={handleChange}></textarea>
+                        <p className="error-message">{formErrors.description}</p>
+                    </div>     
                 </div>     
 
-                <div className="two-column">
-                    <label htmlFor="image">Снимка (url) </label>
-                    <input id="image" name="image" type="text" defaultValue={currentProduct.image} />
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="image">Снимка (url) </label>
+                        <input id="image" name="image" type="text" defaultValue={currentProduct.image}  onBlur={handleChange}/>
+                        <p className="error-message">{formErrors.image}</p>
+                    </div>     
+
+
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="quantity">Количество </label>
+                        <input id="quantity" name="quantity" type="text" defaultValue={currentProduct.quantity}  onBlur={handleChange}/>
+                        <p className="error-message">{formErrors.quantity}</p>
+                    </div>     
                 </div>     
 
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="category" >Категория: </label>
+                        <select 
+                        id="category" 
+                        name="category"  
+                        value={currentProduct.category} 
+                        onChange={(e) => setCurrentProduct(s => ({...s, category: e.target.value}))}
+                        onBlur={handleChange}>   
+                            <option value=""></option> 
+                            {allCategories.length > 0 
+                            ? allCategories.map(x => 
+                                <option key={x.docId} value={x.docId} selected={x.docId === currentProduct.category}>{x.name}</option>) 
+                            : null}                                
+                        </select> 
+                    </div>
 
-                <div className="two-column">
-                    <label htmlFor="quantity">Количество </label>
-                    <input id="quantity" name="quantity" type="text" defaultValue={currentProduct.quantity} />
-                </div>     
-
-                <div className="two-column">
-                    <label htmlFor="category" >Категория: </label>
-                    <select id="category" name="category"  value={currentProduct.category} onChange={(e) => setCurrentProduct(s => ({...s, category: e.target.value}))}>   
-                        <option value=""></option> 
-                        {allCategories.length > 0 
-                        ? allCategories.map(x => 
-                            <option key={x.docId} value={x.docId} selected={x.docId === currentProduct.category}>{x.name}</option>) 
-                        : null}                                
-                    </select> 
-                </div>
-
-                <div className="two-column">
-                    <label htmlFor="sku" >Артикулен номер </label>
-                    <input id="sku" name="sku" type="text" defaultValue={currentProduct.sku} />
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="sku" >Артикулен номер </label>
+                        <input id="sku" name="sku" type="text" defaultValue={currentProduct.sku} onBlur={handleChange} />
+                    </div>    
                 </div>    
 
-                <div className="two-column">
-                    <label htmlFor="price">Цена: </label>
-                    <input id="price" name="price" type="text" defaultValue={currentProduct.price} />
-                </div>
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="price">Цена: </label>
+                        <input id="price" name="price" type="text" defaultValue={currentProduct.price} onBlur={handleChange} />
+                        <p className="error-message">{formErrors.price}</p>
+                    </div>
 
-                <div className="two-column">
-                    <label htmlFor="salePrice">Промоционална цена: </label>
-                    <input id="salePrice" name="salePrice" type="text" defaultValue={currentProduct.salePrice} />
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="salePrice">Промоционална цена: </label>
+                        <input id="salePrice" name="salePrice" type="text" defaultValue={currentProduct.salePrice} onBlur={handleChange} />
+                        <p className="error-message">{formErrors.salePrice}</p>
+                    </div>
                 </div>
 
                 <div>

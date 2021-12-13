@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import * as categoriesService from '../../../../services/categoriesService';
-import './AddCategory.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { validateCategory } from '../helper/formValidationHelper';
+import * as categoriesService from '../../../../services/categoriesService';
+import './AddCategory.css'
 
 const AddCategory = () => {
-    const [errorMessage, setErrorMessage] = useState("")
-    const [successMessage, setSuccessMessage] = useState("")
+    const initialValues = {isEnabled: '1', name: '', description: '',  parent: ''};
+    const [formValues, setFormValues] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState("");
     const [allCategories, setAllCategories] = useState([]);
+    const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate()
+
+    const statuses = [
+        { value: '1', text: 'Активен' },
+        { value: '0', text: 'Неактивен' },
+    ]
 
     useEffect(() => {
         categoriesService.getAll()
@@ -21,36 +30,36 @@ const AddCategory = () => {
             })
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); 
-
-        let form = e.currentTarget
-        let formData = new FormData(e.currentTarget);
-        let {isEnabled, name, description, parent} = Object.fromEntries(formData)
-
-        if (name.length < 3) {
-            setErrorMessage('Името неможе да е по-малко от 3 символа')
-        }
-
-        if (name.length > 3 ) {
-            
-            let newCategory = {isEnabled, name, description, parent}
-             categoriesService.save(newCategory)
+    useEffect(() => {
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            categoriesService.save(formValues)
             .then(result => {
-                form.reset()
-                setErrorMessage("")
-                setSuccessMessage("Успешно запаметена категория")
+                setSuccessMessage('Успешно добавен продукт');
                 setTimeout(() => {
-                    setSuccessMessage("")
-                    navigate("/admin/list-category")
-                }, 3000)  
-            })  
+                    setSuccessMessage('');
+                }, 2000);
+            
+            })   
             .catch(err => {
                 console.log(err);
             })
-        }
-    }
+        } 
+    }, [formErrors]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({ ...formValues, [name]: value });
+      };
     
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormErrors(validateCategory(formValues));
+        setIsSubmit(true);
+
+        if ( Object.keys(formErrors).length === 0 ) {
+            e.currentTarget.reset();
+        }
+    };
 
     return(
         <div className="add-category-component auto-container">
@@ -62,31 +71,32 @@ const AddCategory = () => {
             <h2>Добавяне на категория</h2>
 
             {successMessage && <div className="success-message">{successMessage}</div>}
-            {errorMessage && <div className="error-message"><div>{errorMessage}</div></div>}
-
+         
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="isEnabled">Статус: </label>
-                    <select id="isEnabled" name="isEnabled">
-                        <option value="1">Активна</option>
-                        <option value="0">Неактивна</option>
-                    </select>
-                </div>
+                <div className="row">
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="isEnabled">Статус: </label>
+                        <select id="isEnabled" name="isEnabled">
+                            {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
+                        </select> 
+                    </div>
 
-                <div>
-                    <label htmlFor="name">Име на категория: </label>
-                    <input id="name" name="name" type="text" />
+                    <div className="col-lg-6 col-md-6 col-sm-12">
+                        <label htmlFor="name">Име на категория: </label>
+                        <input id="name" name="name" type="text" onBlur={handleChange} />
+                        <p className="error-message">{formErrors.name}</p>
+                    </div>
                 </div>
 
                 <div>
                     <label htmlFor="description">Описание: </label>
-                    <textarea id="description" name="description"></textarea>
+                    <textarea id="description" name="description" onBlur={handleChange}></textarea>
                 </div>     
 
                 <div>
-                    <label htmlFor="parent">Родителска среща: </label>
+                    <label htmlFor="parent">Родителска категория: </label>
 
-                    {<select id="parent" name="parent">   
+                    {<select id="parent" name="parent" onBlur={handleChange}>   
                         <option defaultValue=""></option>                   
                         {allCategories.length > 0 ? allCategories.map(x => <option key={x.docId} value={x.docId}>{x.name}</option>) : null}                       
                     </select>}

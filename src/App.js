@@ -46,11 +46,7 @@ export default function App() {
           <Route path="/cart" element={<Cart />} />
 
           {/* Checkout */}
-          <Route path="/checkout" element={
-            <CartPrivateRoute>
-              <Checkout />
-            </CartPrivateRoute>
-          }/>
+          <Route path="/checkout" element={<CartPrivateRoute><Checkout /></CartPrivateRoute>}/>
           <Route path="/checkout/success/:orderNumber" element={<SuccessCheckout />} />
 
           {/* Profile */}

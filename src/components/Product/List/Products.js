@@ -15,7 +15,7 @@ const Products = () => {
     const navigate = useNavigate();
     const params = useParams();
 
-    const productsPerPage = 3;
+    const productsPerPage = 9;
     const pagesVisited = pageNumber * productsPerPage;
 
     useEffect(() => {

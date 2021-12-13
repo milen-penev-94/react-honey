@@ -75,18 +75,18 @@ function Header () {
         </div>
 
         <div className="sticky-header">
-                <div className="outer-box">
-                   {logo()}
-                    <div className="menu-area">
-                        <nav className="main-menu clearfix">
-                            {navigationItems()}  
-                        </nav>
-                    </div>
-                    <div className="nav-right-content">
-                        {navigationRightContent()}
-                    </div>
+            <div className="outer-box">
+                {logo()}
+                <div className="menu-area">
+                    <nav className="main-menu clearfix">
+                        {navigationItems()}  
+                    </nav>
+                </div>
+                <div className="nav-right-content">
+                    {navigationRightContent()}
                 </div>
             </div>
+        </div>
     </header>
     )
 }

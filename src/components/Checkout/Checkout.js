@@ -90,7 +90,7 @@ const Checkout = () => {
         }
       })
    
-      let newOrder = {email, phone, name, lastName, city, address, paymentMethod, total, orderedProducts, status, orderDate}
+      let newOrder = {email, phone, name, lastName, city, address, paymentMethod, total, orderedProducts, status, orderDate, orderNumber}
   
       orderService.save(newOrder)
       .then(result => {
@@ -131,48 +131,57 @@ const Checkout = () => {
           <div>
             <h4>Попълнете вашите данни</h4>
           </div>
-          <div className="two-column">
-            <label htmlFor="email">Имеил: </label>
-            <input type="email" name="email" defaultValue={currentUser && currentUser.email} />
-          </div>
+
+          <div className="row">    
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <label htmlFor="email">Имеил: </label>
+              <input type="email" name="email" defaultValue={currentUser && currentUser.email} />
+            </div>
           
-          <div className="two-column">
-            <label htmlFor="phone">Телефон: </label>
-            <input name="phone" id="phone" type="text"  defaultValue={currentUserData.phone}/>
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <label htmlFor="phone">Телефон: </label>
+              <input name="phone" id="phone" type="text"  defaultValue={currentUserData.phone}/>
+            </div>
           </div>
 
-          <div className="two-column">
-            <label htmlFor="name">Име: </label>
-            <input name="name" id="name" type="text"  defaultValue={currentUserData.name}/>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <label htmlFor="name">Име: </label>
+              <input name="name" id="name" type="text"  defaultValue={currentUserData.name}/>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <label htmlFor="lastName">Фамилия:</label>
+              <input name="lastName" id="lastName" type="text"  defaultValue={currentUserData.lastName}/>
+            </div>
           </div>
 
-          <div className="two-column">
-            <label htmlFor="lastName">Фамилия:</label>
-            <input name="lastName" id="lastName" type="text"  defaultValue={currentUserData.lastName}/>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <label htmlFor="city">Град:</label>
+              <input name="city" id="city" type="text"  defaultValue={currentUserData.city}/>
+            </div>
+
+            <div className="col-lg-6 col-md-6 col-sm-12">
+                <label htmlFor="address">Адрес:</label>
+                <input name="address" id="address" type="text"  defaultValue={currentUserData.address}/>
+            </div>
           </div>
 
-          <div className="two-column">
-            <label htmlFor="city">Град:</label>
-            <input name="city" id="city" type="text"  defaultValue={currentUserData.city}/>
-          </div>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-12">
+              <h4>Начин на плащане</h4>
+              <input type="radio" id="paymentMethod" name="paymentMethod" value="1" defaultChecked /> 
+              <label htmlFor="paymentMethod" className="radio-label">Наложен латеж</label>
+            </div>
 
-          <div className="two-column">
-              <label htmlFor="address">Адрес:</label>
-              <input name="address" id="address" type="text"  defaultValue={currentUserData.address}/>
+            <div className="col-lg-6 col-md-6 col-sm-12 delivery-method">
+              <h4>Начин на доставка</h4>
+              <p>Продуктите се доставят на посоченият от вас адрес с фирма Еконт. Цената на доставка е 4.90лв.</p>
+              </div>
+              <div><button type="submit">Поръчай</button>
+            </div>
           </div>
-
-     
-          <div className="two-column">
-            <h4>Начин на плащане</h4>
-            <input type="radio" id="paymentMethod" name="paymentMethod" value="1" defaultChecked /> 
-            <label htmlFor="paymentMethod" className="radio-label">Наложен латеж</label>
-          </div>
-
-          <div className="two-column delivery-method">
-            <h4>Начин на доставка</h4>
-            <p>Продуктите се доставят на посоченият от вас адрес с фирма Еконт. Цената на доставка е 4.90лв.</p>
-          </div>
-          <div><button type="submit">Поръчай</button></div>
         </form>
 
         {<Cart />}

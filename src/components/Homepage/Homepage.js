@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
-import {Helmet} from "react-helmet";
+import  {Helmet } from 'react-helmet';
 import './Homepage.css'
+
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const Homepage = () => {
 
@@ -46,7 +50,7 @@ const Homepage = () => {
             </Helmet>
 
             <section className="banner-section style-two">
-                <div className="banner-carousel owl-theme owl-carousel owl-dots-none">
+                <OwlCarousel className="homepage-banner-carousel owl-theme owl-carousel owl-dots-none" loop margin={1} nav items={1}>
                  {sliderItems.map(item => 
                     <div className="slide-item" key={item.value}>
                         <div className="image-layer" style={{backgroundImage: item.image}}></div>
@@ -63,7 +67,7 @@ const Homepage = () => {
                     </div>
                     )} 
                     
-                </div>
+                </OwlCarousel>
             </section>
         </div>    
     )

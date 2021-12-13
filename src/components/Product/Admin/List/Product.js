@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import * as productService from '../../../../services/productService';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faCheckSquare, faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import * as productService from '../../../../services/productService';
 import DeleteConfirmDialog from '../../../Common/DeleteConfirmDialog/DeleteConfirmDialog';
 import './Products.css';
 

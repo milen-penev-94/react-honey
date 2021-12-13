@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react';
 import * as productService from '../../../../services/productService';
-import { Link } from 'react-router-dom'
-import './Products.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
+import './Products.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import Product from './Product';
 
 const Products = () => {

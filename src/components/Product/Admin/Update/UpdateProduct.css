@@ -2,16 +2,10 @@
     margin-bottom: 20px;
 }
 
-.update-product-component form {
-    margin-left: -20px;
-}
-.update-product-component form div {
-    margin-left: 20px;
+.update-product-component .row {
     margin-bottom: 20px;
 }
 
-.update-product-component .two-column {
-    display: inline-block;
-    vertical-align: top;
-    width: calc(50% - 20px);
+.update-product-component .error-message {
+    color: #f30000;
 }
