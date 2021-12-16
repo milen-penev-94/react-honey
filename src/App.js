@@ -11,6 +11,7 @@ import Login from './components/Login/Login'
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Profile from './components/Profile/Profile'
 import UpdateProfile from './components/UpdateProfile/UpdateProfile';
+import PofileOrders from './components/Profile/PofileOrders/PofileOrders';
 import AuthPrivateRoute from './components/PrivateRoute/AuthPrivateRoute';
 import CartPrivateRoute from './components/PrivateRoute/CartPrivateRoute';
 import AdminOrders from './components/Orders/Admin/List/Orders';
@@ -37,81 +38,39 @@ export default function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contacts" element={<Contacts />} />
+
+           {/* Profile */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<Products />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/profile/orders" element={<AuthPrivateRoute><PofileOrders /></AuthPrivateRoute>} />
 
           {/* Checkout */}
           <Route path="/checkout" element={<CartPrivateRoute><Checkout /></CartPrivateRoute>}/>
           <Route path="/checkout/success/:orderNumber" element={<SuccessCheckout />} />
 
           {/* Profile */}
-          <Route path="/profile" element={
-            <AuthPrivateRoute>
-              <Profile />
-            </AuthPrivateRoute>
-          }/>
-
-          <Route path="/update-profile" element={
-            <AuthPrivateRoute>
-              <UpdateProfile />
-            </AuthPrivateRoute>
-          }/> 
+          <Route path="/profile" element={<AuthPrivateRoute><Profile /></AuthPrivateRoute>}/>
+          <Route path="/update-profile" element={<AuthPrivateRoute> <UpdateProfile /></AuthPrivateRoute>}/> 
 
           {/* Orders */}
-          <Route path="/admin/orders" element={
-            <AuthPrivateRoute isAdmin="true">
-                <AdminOrders />
-            </AuthPrivateRoute>
-          }/>
-
-          <Route path="/admin/update-order/:id" element={
-            <AuthPrivateRoute>
-              <AdminUpdateOrders />
-            </AuthPrivateRoute>
-          }/> 
+          <Route path="/admin/orders" element={<AuthPrivateRoute isAdmin="true"><AdminOrders /></AuthPrivateRoute>}/>
+          <Route path="/admin/update-order/:id" element={<AuthPrivateRoute><AdminUpdateOrders /></AuthPrivateRoute>}/> 
 
           {/* Category */}
-          <Route path="/admin/add-category" element={
-            <AuthPrivateRoute isAdmin="true">
-                <AddCategory />
-            </AuthPrivateRoute>
-          }/>
-
-          <Route path="/admin/list-category" element={
-            <AuthPrivateRoute isAdmin="true">
-              <AdminCategories />
-            </AuthPrivateRoute>
-          }/>
-
-          <Route path="/admin/update-category/:id" element={
-            <AuthPrivateRoute isAdmin="true">
-              <AdminUpdateCategory />
-            </AuthPrivateRoute>
-          }/>
+          <Route path="/admin/add-category" element={<AuthPrivateRoute isAdmin="true"><AddCategory /></AuthPrivateRoute>}/>
+          <Route path="/admin/list-category" element={<AuthPrivateRoute isAdmin="true"><AdminCategories /></AuthPrivateRoute>}/>
+          <Route path="/admin/update-category/:id" element={<AuthPrivateRoute isAdmin="true"><AdminUpdateCategory /></AuthPrivateRoute>}/>
 
           {/* Product */}
-          <Route path="/admin/add-product"  element={
-            <AuthPrivateRoute isAdmin="true">
-              <AdminAddProduct />
-            </AuthPrivateRoute>
-          }/>
-
-          <Route path="/admin/update-product/:id" element={
-            <AuthPrivateRoute isAdmin="true">
-              <AdminUpdateProduct />
-            </AuthPrivateRoute>
-          }/>
-          
-          <Route path="/admin/list-products" element={
-            <AuthPrivateRoute isAdmin="true">
-              <AdminProducts />
-            </AuthPrivateRoute>
-          }/>
+          <Route path="/admin/add-product"  element={<AuthPrivateRoute isAdmin="true"><AdminAddProduct /></AuthPrivateRoute>}/>
+          <Route path="/admin/update-product/:id" element={<AuthPrivateRoute isAdmin="true"><AdminUpdateProduct /></AuthPrivateRoute>}/>
+          <Route path="/admin/list-products" element={<AuthPrivateRoute isAdmin="true"><AdminProducts /></AuthPrivateRoute>}/>
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<Products />} />
+          <Route path="/products/category/:id" element={<Products />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </AuthProvider>    
     </BrowserRouter>  

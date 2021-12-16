@@ -31,6 +31,21 @@ export  async function getAllEnabled() {
  
 }
 
+export  async function getAllEnabledProductWithCat(category) {
+ 
+    let allProductsArray = []
+    const allProductsQuery = query(collection(db, "products"), where("isEnabled", "==", "1"), where("category", "==", category));
+    const snapshot =  await getDocs(allProductsQuery)
+    
+    snapshot.docs.forEach((doc) => {
+        let categoryData = Object.assign(doc.data(), {docId: doc.id})
+        allProductsArray.push(categoryData)
+    })
+    
+    return allProductsArray
+ 
+}
+
 export  async function getOne(id) {
    
     let product = null

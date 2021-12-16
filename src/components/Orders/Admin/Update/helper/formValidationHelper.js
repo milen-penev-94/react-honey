@@ -1,4 +1,4 @@
-export const validate = (values) => {
+export const validateUpdateOrder = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     
@@ -20,9 +20,6 @@ export const validate = (values) => {
         }
     }
 
-    if (!values.message) {
-        errors.message = "Съобщението е задължително!";
-    }
         
     return errors;
 };

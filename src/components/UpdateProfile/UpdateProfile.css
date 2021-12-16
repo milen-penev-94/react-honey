@@ -1,0 +1,15 @@
+.update-profile-component {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    border: 2px solid #ececec;
+}
+
+.update-profile-component h2 {
+    margin-bottom: 20px;
+}
+
+.update-profile-component .row {
+    margin-bottom: 20px;
+}

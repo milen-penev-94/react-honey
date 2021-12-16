@@ -1,0 +1,25 @@
+.ordered-products-component .title {
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.ordered-products .thead-dark {
+    background: #131313;
+}
+
+.ordered-products .ordered-product {
+    margin-bottom: 4px;
+    padding: 8px 20px;
+    background: #f3f3f3;
+}
+.ordered-products .ordered-product .image {
+    display: inline-block;
+    width: 80px;
+    margin-right: 20px;
+}
+
+.ordered-products .ordered-product .information {
+    display: inline-block;
+    width: calc(100% - 100px);
+}

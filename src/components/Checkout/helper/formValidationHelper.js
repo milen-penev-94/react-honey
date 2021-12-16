@@ -1,9 +1,14 @@
-export const validate = (values) => {
+export const validateCheckout = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     
     if (!values.name) {
+        console.log(values.name)
         errors.name = "Името е задължително!";
+    }
+
+    if (!values.lastName) {
+        errors.lastName = "Фамилията е задължителна!";
     }
 
     if (!values.email) {
@@ -13,6 +18,7 @@ export const validate = (values) => {
     }
 
     if (!values.phone) {
+
         errors.phone =  "Телефона е задължителен!";
         } else {
         if (isNaN(values.phone)) {
@@ -20,8 +26,16 @@ export const validate = (values) => {
         }
     }
 
-    if (!values.message) {
-        errors.message = "Съобщението е задължително!";
+    if (!values.city) {
+        errors.city = "Населеното място е задължително!";
+    }
+
+    if (!values.address) {
+        errors.address = "Населеното място е задължително!";
+    } else {
+        if (values.address.length < 3) {
+            errors.address = "Адреса не може да е по-малко от 3 символа!";
+        }
     }
         
     return errors;

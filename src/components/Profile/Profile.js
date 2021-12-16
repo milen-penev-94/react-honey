@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import { Alert } from 'react-bootstrap'
-import { useAuth } from '../../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router-dom'
-import './Profile.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faList, faPen, faFile } from '@fortawesome/free-solid-svg-icons'
+import React, { useState } from 'react';
+import { Alert } from 'react-bootstrap';
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faList, faPen, faFile } from '@fortawesome/free-solid-svg-icons';
+import './Profile.css';
 
 const Profile = () => {
-  const [error, setError] = useState("")
-  const { currentUser, currentUserData, logout } = useAuth()
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
+  const { currentUser, currentUserData, logout } = useAuth();
+  const navigate = useNavigate();
 
   async function handleLogout() {
-    setError("")
+    setError("");
 
     try {
-      await logout()
-      navigate("/login")
+      await logout();
+      navigate("/login");
     } catch {
-      setError("Failed to log out")
+      setError("Failed to log out");
     }
   }
 
@@ -42,30 +42,28 @@ const Profile = () => {
         </button>
       </div>
 
+      {currentUserData.isAdmin && 
+      
       <div className="col-lg-5 col-md-5 col-sm-12 admin-menu">
-        {currentUserData.isAdmin && <h2>Админ меню</h2> }
+        <h2>Админ меню</h2> 
 
-        { currentUserData.isAdmin  && 
-            <Link to="/admin/orders" className="profile-action-button">
-              <span className="icon"><FontAwesomeIcon icon={faFile} /></span>
-              <span className="label">Поръчки</span>
-            </Link> 
-        }
-
-        { currentUserData.isAdmin  && 
-            <Link to="/admin/list-category" className="profile-action-button">
-              <span className="icon"><FontAwesomeIcon icon={faList} /></span>
-              <span className="label">Категории</span>
-            </Link> 
-        }
-
-        { currentUserData.isAdmin  && 
-            <Link to="/admin/list-products" className="profile-action-button">
-              <span className="icon"><FontAwesomeIcon icon={faList} /></span>
-              <span className="label">Продукти</span>
-            </Link> 
-        }    
+        <Link to="/admin/orders" className="profile-action-button">
+          <span className="icon"><FontAwesomeIcon icon={faFile} /></span>
+          <span className="label">Поръчки</span>
+        </Link> 
+  
+    
+        <Link to="/admin/list-category" className="profile-action-button">
+          <span className="icon"><FontAwesomeIcon icon={faList} /></span>
+          <span className="label">Категории</span>
+        </Link> 
+    
+        <Link to="/admin/list-products" className="profile-action-button">
+          <span className="icon"><FontAwesomeIcon icon={faList} /></span>
+          <span className="label">Продукти</span>
+        </Link> 
       </div> 
+      }
     </div>
   )
 }

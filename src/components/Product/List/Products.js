@@ -7,25 +7,40 @@ import ReactPaginate from 'react-paginate';
 import * as productService from '../../../services/productService';
 import Product from './Product.js';
 import Categories from '../../Category/List/Categories';
-import './Products.css'
+import './Products.css';
 
 const Products = () => {
+    const params = useParams();
+    let thisCategoryId = params.id
     const [allProducts, setAllProducts] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const navigate = useNavigate();
-    const params = useParams();
 
     const productsPerPage = 9;
     const pagesVisited = pageNumber * productsPerPage;
 
+console.log(thisCategoryId)
     useEffect(() => {
-        productService.getAllEnabled()
-        .then(result => {
-            setAllProducts(result);
-        })  
-        .catch(err => {
-            console.log(err);
-        })
+
+        if (thisCategoryId) {
+            console.log('usloviq s kategoriq')
+            productService.getAllEnabledProductWithCat(thisCategoryId)
+            .then(result => {
+                setAllProducts(result);
+            })  
+            .catch(err => {
+                console.log(err);
+            })
+        } else {
+            console.log('usloviq bez kategoriq')
+            productService.getAllEnabled()
+            .then(result => {
+                setAllProducts(result);
+            })  
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }, []);
 
     useEffect(() => {        
@@ -36,9 +51,12 @@ const Products = () => {
         }
     }, [pageNumber]);
 
-    const displayAllProducts = allProducts
+    console.log(allProducts)
+
+    const displayAllProducts = allProducts 
     .slice(pagesVisited, pagesVisited + productsPerPage)
     .map((product) => {
+             
         return (
             <Product key={product.docId} product={product} /> 
         );
@@ -85,7 +103,6 @@ const Products = () => {
                                 <div className="shop-sidebar">
 
                                     {<Categories />}
-                                    
                                 </div>
                             </div>
                             <div className="col-lg-9 col-md-12 col-sm-12 content-side">

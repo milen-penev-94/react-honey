@@ -47,15 +47,22 @@ const Categories = () => {
                 {parentCategories().length > 0
                     ? (
                         <ul className="category-list clearfix">
-                            { parentCategories().map(parentCategory => 
-                            <li key={parentCategory.docId}>
-                                <li><Link to={`/producs/category/${parentCategory.docId}`}>{parentCategory.name}</Link>
-                                    <ul className="child-categories">
-                                        {childCategories(parentCategory).map(childCategory => 
-                                            <li key={childCategory.docId}><Link to={`/producs/category/${childCategory.docId}`}>{childCategory.name}</Link></li> )}
-                                    </ul>
-                                </li>
-                            </li>
+                            <li><Link to={`/products`}>Всички продукти</Link></li>    
+
+                            { parentCategories().map(parentCategory =>                
+                            <li key={parentCategory.docId}><Link to={`/products/category/${parentCategory.docId}`}>{parentCategory.name}</Link>
+                                <ul className="child-categories">
+                                    {childCategories(parentCategory).map(categoryLevel2 => 
+                                        <li key={categoryLevel2.docId}><Link to={`/products/category/${categoryLevel2.docId}`}>{categoryLevel2.name}</Link>
+                                            <ul className="child-categories">
+                                                {childCategories(categoryLevel2).map(categoryLevel3 => 
+                                                    <li key={categoryLevel3.docId}><Link to={`/products/category/${categoryLevel3.docId}`}>{categoryLevel3.name}</Link>
+                                                        
+                                                    </li> )}
+                                            </ul>
+                                        </li> )}
+                                </ul>
+                            </li>                        
                             )}
                         </ul>
                     ) 

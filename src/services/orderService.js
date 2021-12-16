@@ -1,5 +1,5 @@
 import { db } from "../firebase"
-import {  addDoc, getDocs, getDoc, doc, deleteDoc, query, collection, orderBy } from "firebase/firestore"
+import {  addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, collection, orderBy, where } from "firebase/firestore"
 import * as productService from './productService';
 
 export  async function save(order) {
@@ -35,7 +35,7 @@ export  async function save(order) {
 
 export  async function getAll() {
     const allOrdersArray = []
-    const allOrdersQuery = query(collection(db, "orders"), orderBy("orderDate", "asc"),);
+    const allOrdersQuery = query(collection(db, "orders"), orderBy("orderDate", "desc"));
     const snapshot =  await getDocs(allOrdersQuery)
         
     snapshot.docs.forEach((doc) => {
@@ -44,6 +44,19 @@ export  async function getAll() {
     })
 
     return allOrdersArray
+}
+
+export  async function getAllOnThisUser(userId) {
+    const allOnThisUsersArray = []
+    const allOnThisUsersQuery = query(collection(db, "orders"), where("userId", "==", userId));
+    const snapshot =  await getDocs(allOnThisUsersQuery)
+        
+    snapshot.docs.forEach((doc) => {
+        let orderData = Object.assign(doc.data(), {docId: doc.id})
+        allOnThisUsersArray.push(orderData)
+    })
+
+    return allOnThisUsersArray
 }
 
 export  async function getOne(id) {
@@ -57,6 +70,19 @@ export  async function getOne(id) {
     }
 
     return order
+}
+
+export async function update(order, docId) {
+
+    let successSave = false
+    let query = doc(db, "orders", docId);
+    if(query) {
+        await updateDoc(query, {
+        ...order
+        })
+        successSave = true;
+    }
+    return successSave
 }
 
 export async function remove(docId) {

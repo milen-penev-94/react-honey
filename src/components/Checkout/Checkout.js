@@ -1,113 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuid } from 'uuid';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext'
 import { clearCart  } from '../../cartReducer';
 import * as orderService from '../../services/orderService';
+import { validateCheckout } from './helper/formValidationHelper';
 import useDateNow from '../../hooks/useDateNowState';
 import Cart from '../Cart/Cart'
 import './Checkout.css'
 
 const Checkout = () => {
-
   const { cart, dispatch } = useCart();
   const { currentUser, currentUserData } = useAuth({})
-  const [successMessage, setSuccessMessage] = useState()
-  const [errorMessage, setErrorMessage] = useState([])
+  const initialValues = { email:"", userId: "", phone: currentUserData.phone, name: "", lastName: "", city: "", address: "", paymentMethod: "1", userId: ""};
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
   const [dateNow, setDateNow] = useDateNow(new Date());
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
- 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    setDateNow(new Date())
+  /* Set data when user is logged */
+  useEffect(() => { 
 
-    let form = e.currentTarget
-    let formData = new FormData(e.currentTarget);
-    let {email, phone, name, lastName, city, address, paymentMethod} = Object.fromEntries(formData)
-    let status = 'NEW'
-    let orderDate = dateNow
-    let orderNumber = uuid();
+    if (currentUser) {
 
-    let errors = [];
-
-    if (!validateEmail(email)) {
-      errors.push('Имеила е невалиден')
-    }
-
-    if (phone.length < 5) {
-      errors.push('Телефона трябва да е повече от 5 символа')
-    } else {
-      if (isNaN(phone)) {
-        errors.push('Телефона трябва да само цифри')
+      if (Object.keys(currentUser).length !== 0) {
+        setFormValues({ 
+          ...formValues, 
+          email: currentUser.email, 
+          userId: currentUser.uid
+        });
+      }
+  
+      if (Object.keys(currentUserData).length !== 0) {
+        setFormValues({ 
+          ...formValues, 
+          name: currentUserData.name, 
+          lastName: currentUserData.lastName, 
+          phone: currentUserData.phone, 
+          city: currentUserData.city, 
+          address: currentUserData.address,
+        });
       }
     }
+   }, [currentUser, currentUserData]);
 
-    if (name.length < 3) {
-      errors.push('Името не може да е по-малко от 3 символа')
-    }
+   /* Check for errors and write to the database */
+  useEffect(() => {
+    
+      if (Object.keys(formErrors).length === 0 && isSubmit) {
+          setDateNow(new Date())  
+          let orderNumber = uuid();
+          let total = 0;
+          let orderedProducts = { };
+          cart.forEach(cartItem => {
+            orderedProducts[cartItem.id] = cartItem.quantity;
 
-    if (name.length < 3) {
-        errors.push('Името не може да е по-малко от 3 символа')
-    }
+            if (parseFloat(cartItem.salePrice) < parseFloat(cartItem.price)) {
+              total = total + (cartItem.salePrice * cartItem.quantity)
+            } else {
+              total = total + (cartItem.price * cartItem.quantity)
+            }
+          })
 
-    if (lastName.length < 3) {
-        errors.push('Фамилията не може да е по-малко от 3 символа')
-    }
-
-    if (city.length < 3) {
-      errors.push('Града не може да е по-малко от 3 символа')
-    }
-
-    if (address.length < 3) {
-      errors.push('Адреса не може да е по-малко от 3 символа')
-    }
-
-    if (errors.length > 0) {
-      setErrorMessage(errors)  
-    } else {
-      
-      setErrorMessage([])  
-
-      let total = 0
-      let orderedProducts = { };
-   
-      cart.forEach(cartItem => {
-        orderedProducts[cartItem.id] = cartItem.quantity;
-
-        if (parseFloat(cartItem.salePrice) < parseFloat(cartItem.price)) {
-          total = total + (cartItem.salePrice * cartItem.quantity)
-        } else {
-          total = total + (cartItem.price * cartItem.quantity)
-        }
-      })
-   
-      let newOrder = {email, phone, name, lastName, city, address, paymentMethod, total, orderedProducts, status, orderDate, orderNumber}
-  
-      orderService.save(newOrder)
-      .then(result => {
-          form.reset()
-          setErrorMessage("")
-          navigate(`/checkout/success/${orderNumber}`)
-          dispatch(clearCart());
-      }) 
-      .catch(err => {
-        console.log(err);
-      })
-    }
-  }
+          let finalFormValues = Object.assign(formValues, 
+            {orderDate: dateNow}, 
+            {orderNumber: orderNumber}, 
+            {orderedProducts: orderedProducts}, 
+            {total: total},
+            {status: 'NEW'}
+          );
+          orderService.save(finalFormValues)
+          .then(result => {
+              navigate(`/checkout/success/${orderNumber}`)
+              dispatch(clearCart());
+          
+          })   
+          .catch(err => {
+              console.log(err);
+          })
+      }
+  }, [formErrors]);
 
 
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      setFormErrors(validateCheckout(formValues));
+      setIsSubmit(true);
+
+      if ( Object.keys(formErrors).length === 0 ) {
+          e.currentTarget.reset();
+      }
+  };
+ 
   return (
-
     <div className="checkout-component">
       <section className="page-title centred" style={{backgroundImage: `url("/images/background/page-title.jpg")`}}>
         <div className="auto-container">
@@ -121,12 +114,6 @@ const Checkout = () => {
 
       <div className="auto-container row">
         <form onSubmit={handleSubmit} className="col-lg-8 col-md-12 col-sm-12">
-          {successMessage && <div className="success-message">{successMessage}</div>}
-          <div className={(errorMessage.length > 0) ? 'error-message' : null}>
-            { (errorMessage.length > 0) ? errorMessage.map((error) =>
-                <div>{error}</div>
-            ) : null}
-          </div>
 
           <div>
             <h4>Попълнете вашите данни</h4>
@@ -135,43 +122,49 @@ const Checkout = () => {
           <div className="row">    
             <div className="col-lg-6 col-md-6 col-sm-12">
               <label htmlFor="email">Имеил: </label>
-              <input type="email" name="email" defaultValue={currentUser && currentUser.email} />
+              <input type="text" name="email" defaultValue={currentUser && currentUser.email} onBlur={handleChange} />
+              <p className="error-message">{formErrors.email}</p>
             </div>
           
             <div className="col-lg-6 col-md-6 col-sm-12">
               <label htmlFor="phone">Телефон: </label>
-              <input name="phone" id="phone" type="text"  defaultValue={currentUserData.phone}/>
+              <input name="phone" id="phone" type="text"  defaultValue={currentUserData.phone} onBlur={handleChange}/>
+              <p className="error-message">{formErrors.phone}</p>
             </div>
           </div>
 
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-12">
               <label htmlFor="name">Име: </label>
-              <input name="name" id="name" type="text"  defaultValue={currentUserData.name}/>
+              <input name="name" id="name" type="text"  defaultValue={currentUserData.name} onBlur={handleChange}/>
+              <p className="error-message">{formErrors.name}</p>
             </div>
 
             <div className="col-lg-6 col-md-6 col-sm-12">
               <label htmlFor="lastName">Фамилия:</label>
-              <input name="lastName" id="lastName" type="text"  defaultValue={currentUserData.lastName}/>
+              <input name="lastName" id="lastName" type="text"  defaultValue={currentUserData.lastName} onBlur={handleChange}/>
+              <p className="error-message">{formErrors.lastName}</p>
             </div>
           </div>
 
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-12">
-              <label htmlFor="city">Град:</label>
-              <input name="city" id="city" type="text"  defaultValue={currentUserData.city}/>
+              <label htmlFor="city">Населено място:</label>
+              <input name="city" id="city" type="text"  defaultValue={currentUserData.city} onBlur={handleChange}/>
+              <p className="error-message">{formErrors.city}</p>
             </div>
 
             <div className="col-lg-6 col-md-6 col-sm-12">
                 <label htmlFor="address">Адрес:</label>
-                <input name="address" id="address" type="text"  defaultValue={currentUserData.address}/>
+                <input name="address" id="address" type="text"  defaultValue={currentUserData.address} onBlur={handleChange}/>
+                <p className="error-message">{formErrors.address}</p>
             </div>
           </div>
 
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-12">
               <h4>Начин на плащане</h4>
-              <input type="radio" id="paymentMethod" name="paymentMethod" value="1" defaultChecked /> 
+              <input type="radio" id="paymentMethod" name="paymentMethod" value="1" defaultChecked  onBlur={handleChange}/> 
               <label htmlFor="paymentMethod" className="radio-label">Наложен латеж</label>
             </div>
 

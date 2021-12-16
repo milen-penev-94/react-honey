@@ -1,0 +1,15 @@
+.profile-details-component {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto 0 auto;
+    padding: 40px;
+    border: 2px solid #ececec;
+}
+
+.profile-details-component h2 {
+    margin-bottom: 20px;
+}
+
+.profile-details-component .row {
+    margin-bottom: 20px;
+}

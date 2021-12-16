@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
             setCurrentUserData(newCurrentUserData)
         })
         .catch(err => {
-            console.err(err)
+            console.log(err)
         })
        
       }
