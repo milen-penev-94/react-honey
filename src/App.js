@@ -24,6 +24,7 @@ import AdminUpdateProduct from './components/Product/Admin/Update/UpdateProduct'
 import AdminProducts from './components/Product/Admin/List/Products';
 import AdminMessages from './components/Contacts/Admin/List/Messages';
 import Products from './components/Product/List/Products';
+import Category from './components/Category/List/Category'
 import ProductDetails from './components/Product/Details/ProductDetails';
 import Checkout from './components/Checkout/Checkout';
 import SuccessCheckout from './components/Checkout/Success';
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="/admin/add-category" element={<AuthPrivateRoute isAdmin="true"><AddCategory /></AuthPrivateRoute>}/>
           <Route path="/admin/list-category" element={<AuthPrivateRoute isAdmin="true"><AdminCategories /></AuthPrivateRoute>}/>
           <Route path="/admin/update-category/:id" element={<AuthPrivateRoute isAdmin="true"><AdminUpdateCategory /></AuthPrivateRoute>}/>
+          <Route path="/category/:id/:page" element={<Category />}/>
 
           {/* Product */}
           <Route path="/admin/add-product"  element={<AuthPrivateRoute isAdmin="true"><AdminAddProduct /></AuthPrivateRoute>}/>
@@ -71,9 +73,9 @@ export default function App() {
           <Route path="/admin/list-products" element={<AuthPrivateRoute isAdmin="true"><AdminProducts /></AuthPrivateRoute>}/>
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<Products />} />
-          <Route path="/products/category/:id" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
+        <Footer />
       </AuthProvider>    
     </BrowserRouter>  
   );

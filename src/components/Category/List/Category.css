@@ -1,0 +1,28 @@
+.list-products-category-component .page-title {
+    padding: 60px 0px 60px 0px;;
+    margin-bottom: 60px;
+}
+
+.list-products-category-component .shop-page-section {
+    padding-top: 20px;
+}
+
+.list-products-category-component .pagination-wrapper {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.list-products-category-component .sidebar-widget .category-list .child-categories  {
+    margin-top: 10px;
+    margin-left: 14px;
+}
+
+.list-products-category-component .sidebar-widget .category-list .child-categories li {
+    margin-bottom: 5px;
+}
+
+.list-products-category-component .sidebar-widget .category-list .child-categories li  a {
+    font-weight: 500;
+    font-size: 14px;
+}

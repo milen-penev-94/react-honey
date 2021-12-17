@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import './Product.css'
 
 const Product = ({product}) => {
-
     return (
         <div className="col-lg-4 col-md-4 col-sm-12 shop-block product">
             <div className="shop-block-one">

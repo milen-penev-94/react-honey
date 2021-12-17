@@ -50,14 +50,14 @@ const Categories = () => {
                             <li><Link to={`/products`}>Всички продукти</Link></li>    
 
                             { parentCategories().map(parentCategory =>                
-                            <li key={parentCategory.docId}><Link to={`/products/category/${parentCategory.docId}`}>{parentCategory.name}</Link>
+                            <li key={parentCategory.docId}><Link to={`/category/${parentCategory.docId}/1`}>{parentCategory.name}</Link>
                                 <ul className="child-categories">
                                     {childCategories(parentCategory).map(categoryLevel2 => 
-                                        <li key={categoryLevel2.docId}><Link to={`/products/category/${categoryLevel2.docId}`}>{categoryLevel2.name}</Link>
+                                        <li key={categoryLevel2.docId}><Link to={`/category/${categoryLevel2.docId}/1`}>{categoryLevel2.name}</Link>
                                             <ul className="child-categories">
                                                 {childCategories(categoryLevel2).map(categoryLevel3 => 
-                                                    <li key={categoryLevel3.docId}><Link to={`/products/category/${categoryLevel3.docId}`}>{categoryLevel3.name}</Link>
-                                                        
+                                                    <li key={categoryLevel3.docId}>
+                                                        <Link to={`/category/${categoryLevel3.docId}/1`}>{categoryLevel3.name}</Link>
                                                     </li> )}
                                             </ul>
                                         </li> )}

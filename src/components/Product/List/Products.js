@@ -11,7 +11,6 @@ import './Products.css';
 
 const Products = () => {
     const params = useParams();
-    let thisCategoryId = params.id
     const [allProducts, setAllProducts] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const navigate = useNavigate();
@@ -19,30 +18,18 @@ const Products = () => {
     const productsPerPage = 9;
     const pagesVisited = pageNumber * productsPerPage;
 
-console.log(thisCategoryId)
     useEffect(() => {
-
-        if (thisCategoryId) {
-            console.log('usloviq s kategoriq')
-            productService.getAllEnabledProductWithCat(thisCategoryId)
-            .then(result => {
-                setAllProducts(result);
-            })  
-            .catch(err => {
-                console.log(err);
-            })
-        } else {
-            console.log('usloviq bez kategoriq')
-            productService.getAllEnabled()
-            .then(result => {
-                setAllProducts(result);
-            })  
-            .catch(err => {
-                console.log(err);
-            })
-        }
+   
+        productService.getAllEnabled()
+        .then(result => {
+            setAllProducts(result);
+        })  
+        .catch(err => {
+            console.log(err);
+        })
+        
     }, []);
-
+    
     useEffect(() => {        
         if (params.id)  {
             setPageNumber(parseInt(params.id) - 1)
@@ -50,8 +37,6 @@ console.log(thisCategoryId)
             setPageNumber(0);
         }
     }, [pageNumber]);
-
-    console.log(allProducts)
 
     const displayAllProducts = allProducts 
     .slice(pagesVisited, pagesVisited + productsPerPage)
@@ -66,8 +51,6 @@ console.log(thisCategoryId)
     if (pageCount > 0 && pageCount < params.id) {
         navigate('/404');
     }
-
-    const allProductsCount = allProducts.length
 
     const changePage = ({ selected }) => {
         const pageNumber =  (selected + 1)
@@ -101,7 +84,6 @@ console.log(thisCategoryId)
                         <div className="row clearfix">
                             <div className="col-lg-3 col-md-12 col-sm-12 sidebar-side">
                                 <div className="shop-sidebar">
-
                                     {<Categories />}
                                 </div>
                             </div>
@@ -109,7 +91,7 @@ console.log(thisCategoryId)
                                 <div className="our-shop">
                                     <div className="item-shorting clearfix">
                                         <div className="text pull-left">
-                                            <p>Showing 1–12 of  {allProductsCount}</p>
+                                            <p>Showing 1–12 of  { allProducts.length}</p>
                                         </div>
                                     </div>
                                     <div className="row clearfix centred">
