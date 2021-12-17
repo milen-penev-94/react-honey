@@ -1,0 +1,25 @@
+.profile-order-component .info-text{
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-order-component .order-number {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.profile-order-component .ordered-products > .ordered-product {
+    margin-bottom: 4px;
+    padding: 8px 20px;
+    background: #f3f3f3;
+ }
+
+ .profile-order-component .ordered-products > .ordered-product .image{
+     width: 80px;
+ }
+
+ .profile-order-component .ordered-products > .ordered-product > span {
+    
+     margin-right: 20px;
+ }
+ 

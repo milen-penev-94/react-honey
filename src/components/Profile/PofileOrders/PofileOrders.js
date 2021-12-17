@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
 import * as orderService from '../../../services/orderService';
-import ProfileOrder from './ProfileOrder'
+import ProfileOrder from './ProfileOrder';
+import './ProfileOrders.css';
 
 const PofileOrders = () => {
 
@@ -19,7 +20,8 @@ const PofileOrders = () => {
     }, []);
 
     return (
-        <div className="profile-orders-component">
+        <div className="profile-orders-component auto-container">
+            <h2>Поръчани продукти </h2>
             {profileOrders
                 ? (
                     <ul className="orders-list">
