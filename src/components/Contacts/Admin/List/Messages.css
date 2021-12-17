@@ -1,0 +1,21 @@
+.messages-component h2 {
+    margin-bottom: 30px;
+}
+
+.messages-component .messages .message {
+    position: relative;
+    margin-bottom: 4px;
+    padding: 8px 20px;
+    background: #f3f3f3;
+ }
+
+ .messages-component .messages .message .delete {
+     position: absolute;
+     top: 7px;
+     right: 15px;
+     cursor: poointer;
+ }
+
+ .messages-component .messages .message .delete:hover {
+     color: #b73604;
+ }

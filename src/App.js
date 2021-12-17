@@ -22,6 +22,7 @@ import AdminUpdateCategory from './components/Category/Admin/Update/UpdateCatego
 import AdminAddProduct from './components/Product/Admin/Add/AddProduct';
 import AdminUpdateProduct from './components/Product/Admin/Update/UpdateProduct';
 import AdminProducts from './components/Product/Admin/List/Products';
+import AdminMessages from './components/Contacts/Admin/List/Messages';
 import Products from './components/Product/List/Products';
 import ProductDetails from './components/Product/Details/ProductDetails';
 import Checkout from './components/Checkout/Checkout';
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contacts" element={<Contacts />} />
+          <Route path="/admin/messages" element={<AuthPrivateRoute isAdmin="true"><AdminMessages /></AuthPrivateRoute>} />
 
            {/* Profile */}
           <Route path="/signup" element={<Signup />} />

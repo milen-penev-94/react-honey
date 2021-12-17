@@ -74,7 +74,7 @@ const UpdateProduct = () => {
         setFormErrors(validateProduct(currentProduct));
         setIsSubmit(true);
 
-        if (Object.keys(formErrors).length === 0 ) {
+        if (Object.keys(validateProduct(currentProduct)).length === 0 ) {
             e.currentTarget.reset();
         }
     };

@@ -3,7 +3,7 @@ import { Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faList, faPen, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faList, faPen, faFile, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './Profile.css';
 
 const Profile = () => {
@@ -32,14 +32,21 @@ const Profile = () => {
         { currentUserData && <p>Фамилия: {currentUserData.lastName}</p> }
 
         {error && <Alert variant="danger">{error}</Alert>}
-        <Link to="/update-profile" className="profile-action-button">
-          <span className="icon"><FontAwesomeIcon icon={faPen} /></span>
-          <span className="label">Промени профила</span>
-        </Link>
-    
-        <button onClick={handleLogout} className="profile-action-button">
-          <span className="label">Изход</span>
-        </button>
+        <div className="buttons">
+          <Link to="/update-profile" className="profile-action-button">
+            <span className="icon"><FontAwesomeIcon icon={faPen} /></span>
+            <span className="label">Промени профила</span>
+          </Link>
+
+          <Link to="/profile/orders" className="profile-action-button">
+            <span className="icon"><FontAwesomeIcon icon={faList} /></span>
+            <span className="label">Поръчки</span>
+          </Link>
+      
+          <button onClick={handleLogout} className="profile-action-button">
+            <span className="label">Изход</span>
+          </button>
+        </div>
       </div>
 
       {currentUserData.isAdmin && 
@@ -61,6 +68,11 @@ const Profile = () => {
         <Link to="/admin/list-products" className="profile-action-button">
           <span className="icon"><FontAwesomeIcon icon={faList} /></span>
           <span className="label">Продукти</span>
+        </Link> 
+
+        <Link to="/admin/messages" className="profile-action-button">
+          <span className="icon"><FontAwesomeIcon icon={faEnvelope} /></span>
+          <span className="label">Съобщения</span>
         </Link> 
       </div> 
       }

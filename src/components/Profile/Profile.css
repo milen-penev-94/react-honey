@@ -16,6 +16,12 @@
     padding: 20px;
 }
 
+.profile-component .profile-action-button,
 .profile-component .admin-menu .profile-action-button {
+    display: block;
     width: 100%;
+}
+
+.profile-component .buttons {
+    margin-top: 20px;
 }

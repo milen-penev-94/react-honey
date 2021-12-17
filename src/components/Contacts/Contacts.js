@@ -23,9 +23,8 @@ const Contacts = () => {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-        setDateNow(new Date());
 
-        if ( Object.keys(formErrors).length === 0 ) {
+        if (Object.keys(validate(formValues)).length === 0) {
             e.currentTarget.reset();
         }
     };
@@ -33,6 +32,8 @@ const Contacts = () => {
     useEffect(() => {
        
         if (Object.keys(formErrors).length === 0 && isSubmit) {
+            setDateNow(new Date()); 
+
             const finalFormValues = Object.assign(formValues, {date: dateNow});
             contactsService.save(finalFormValues)
             .then(result => {

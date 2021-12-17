@@ -1,9 +1,9 @@
 import { db } from "../firebase"
-import { getDocs, doc, addDoc, updateDoc, deleteDoc, collection, query } from "firebase/firestore"
+import { getDocs, doc, addDoc, deleteDoc, collection, query, orderBy } from "firebase/firestore"
 
 export  async function getAll() {
     const allMessages = []
-    const allMessagesQuery = query(collection(db, "contacts"));
+    const allMessagesQuery = query(collection(db, "contacts"), orderBy("date", "desc"));
     const snapshot =  await getDocs(allMessagesQuery)
         
     snapshot.docs.forEach((doc) => {
