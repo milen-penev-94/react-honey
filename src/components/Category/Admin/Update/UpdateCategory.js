@@ -75,7 +75,7 @@ const UpdateCategory = () => {
         setFormErrors(validateCategory(currentCategory));
         setIsSubmit(true);
 
-        if (Object.keys(formErrors).length === 0 ) {
+        if (Object.keys(validateCategory(currentCategory)).length === 0 ) {
             e.currentTarget.reset();
         }
     };

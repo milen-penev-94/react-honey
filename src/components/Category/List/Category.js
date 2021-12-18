@@ -92,7 +92,7 @@ const Category = () => {
                                 <div className="our-shop">
                                     <div className="item-shorting clearfix">
                                         <div className="text pull-left">
-                                            <p>Showing 1–12 of  {  products.length}</p>
+                                            <p>Общо:  {  products.length} продукти</p>
                                         </div>
                                     </div>
                                     <div className="row clearfix centred">

@@ -13,7 +13,7 @@ import './Checkout.css'
 const Checkout = () => {
   const { cart, dispatch } = useCart();
   const { currentUser, currentUserData } = useAuth({})
-  const initialValues = { email:"", userId: "", phone: currentUserData.phone, name: "", lastName: "", city: "", address: "", paymentMethod: "1", userId: ""};
+  const initialValues = { email:"", userId: "", phone: "", name: "", lastName: "", city: "", address: "", paymentMethod: "1", userId: ""};
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);

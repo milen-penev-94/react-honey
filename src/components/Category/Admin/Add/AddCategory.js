@@ -56,7 +56,7 @@ const AddCategory = () => {
         setFormErrors(validateCategory(formValues));
         setIsSubmit(true);
 
-        if ( Object.keys(formErrors).length === 0 ) {
+        if ( Object.keys(validateCategory(formValues)).length === 0 ) {
             e.currentTarget.reset();
         }
     };

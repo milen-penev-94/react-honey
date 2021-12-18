@@ -61,7 +61,7 @@ const AddProduct = () => {
         setFormErrors(validateProduct(formValues));
         setIsSubmit(true);
 
-        if (Object.keys(formErrors).length === 0 ) {
+        if (Object.keys(validateProduct(formValues)).length === 0 ) {
             e.currentTarget.reset();
         }
     };
