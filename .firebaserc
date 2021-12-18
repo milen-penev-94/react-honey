@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "react-project-developmen-be149"
-  }
+    "react-honey": "react-honey-122b5",
+    "default": "react-honey-122b5"
+  },
+  "targets": {}
 }
