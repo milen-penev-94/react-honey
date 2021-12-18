@@ -42,7 +42,7 @@ export default function App() {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/admin/messages" element={<AuthPrivateRoute isAdmin="true"><AdminMessages /></AuthPrivateRoute>} />
 
-           {/* Profile */}
+          {/* Profile */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

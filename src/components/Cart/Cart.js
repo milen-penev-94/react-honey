@@ -10,10 +10,6 @@ const Cart = () => {
         dispatch(removeFromCart(itemToRemove));
     }
 
-    const decrementQuantity = (item) => {
-        dispatch(decrementItemQuantity(item));
-    }
-
     const financial = (price) => {
         return Number.parseFloat(price).toFixed(2) + 'лв.';
     }

@@ -13,7 +13,6 @@ const AddCategory = () => {
     const [successMessage, setSuccessMessage] = useState("");
     const [allCategories, setAllCategories] = useState([]);
     const [isSubmit, setIsSubmit] = useState(false);
-    const navigate = useNavigate()
 
     const statuses = [
         { value: '1', text: 'Активен' },
