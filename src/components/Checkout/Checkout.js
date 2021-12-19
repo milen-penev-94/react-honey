@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { v4 as uuid } from 'uuid';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext'
@@ -7,13 +7,13 @@ import { clearCart  } from '../../cartReducer';
 import * as orderService from '../../services/orderService';
 import { validateCheckout } from './helper/formValidationHelper';
 import useDateNow from '../../hooks/useDateNowState';
-import Cart from '../Cart/Cart'
-import './Checkout.css'
+import Cart from '../Cart/Cart';
+import './Checkout.css';
 
 const Checkout = () => {
   const { cart, dispatch } = useCart();
   const { currentUser, currentUserData } = useAuth({})
-  const initialValues = { email:"", userId: "", phone: "", name: "", lastName: "", city: "", address: "", paymentMethod: "1", userId: ""};
+  const initialValues = { email: "", userId: "", phone: "", name: "", lastName: "", city: "", address: "", paymentMethod: "1", userId: ""};
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
@@ -24,18 +24,12 @@ const Checkout = () => {
   useEffect(() => { 
 
     if (currentUser) {
-
-      if (Object.keys(currentUser).length !== 0) {
+  
+      if (Object.keys(currentUserData).length !== 0 && Object.keys(currentUser).length) {
         setFormValues({ 
           ...formValues, 
           email: currentUser.email, 
-          userId: currentUser.uid
-        });
-      }
-  
-      if (Object.keys(currentUserData).length !== 0) {
-        setFormValues({ 
-          ...formValues, 
+          userId: currentUser.uid,
           name: currentUserData.name, 
           lastName: currentUserData.lastName, 
           phone: currentUserData.phone, 
@@ -71,6 +65,7 @@ const Checkout = () => {
             {total: total},
             {status: 'NEW'}
           );
+   
           orderService.save(finalFormValues)
           .then(result => {
               navigate(`/checkout/success/${orderNumber}`)
