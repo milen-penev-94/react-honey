@@ -23,3 +23,23 @@
 .header-component .menu-right-content .profile a {
     color: #131313;
 }
+
+
+@media screen and (max-width: 767px) {
+    
+    .main-header .nav-right-content {
+      display: block;
+    }
+
+    .main-header .menu-right-content li.cart-btn {
+        display: inline-block;
+    }
+    
+  }
+
+  @media screen and (max-width: 500px) {
+
+    .main-header .menu-right-content li {
+        margin: 0px 10px;
+    }
+  }

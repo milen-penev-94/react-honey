@@ -40,7 +40,9 @@
 		
 	}
 
-	//Mobile Nav Hide Show
+
+	setTimeout(() => {
+			//Mobile Nav Hide Show
 	if($('.mobile-menu').length){
 		
 		$('.mobile-menu .menu-box').mCustomScrollbar();
@@ -60,14 +62,18 @@
 		});
 		//Menu Toggle Btn
 		$('.mobile-nav-toggler').on('click', function() {
+			
 			$('body').addClass('mobile-menu-visible');
 		});
+
+		console.log($('.mobile-nav-toggler'))
 
 		//Menu Toggle Btn
 		$('.mobile-menu .menu-backdrop,.mobile-menu .close-btn').on('click', function() {
 			$('body').removeClass('mobile-menu-visible');
 		});
 	}
+	}, 1000)
 
 
 	// Scroll to a Specific Div
