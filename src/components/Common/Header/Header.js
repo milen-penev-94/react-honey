@@ -80,7 +80,7 @@ function Header () {
                             {logo()}
                             <div className="menu-area">
                                 <nav className="main-menu clearfix">
-                                    {navigationItems()}  
+                                   
                                 </nav>
                             </div>
                             <div className="nav-right-content">
