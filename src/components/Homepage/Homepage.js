@@ -69,6 +69,51 @@ const Homepage = () => {
                     
                 </OwlCarousel>
             </section>
+
+            <section className="about-style-two">
+                <div className="auto-container">
+                    <div className="row clearfix">
+                        <div className="col-lg-6 col-md-12 col-sm-12 image-column">
+                            <div className="image_block_2">
+                                <div className="image-box">
+                                    <figure className="image image-1"><img src="/images/resource/about-1.jpg" alt="" /> </figure>
+                                    <figure className="image image-2"><img src="/images/resource/about-2.jpg" alt="" /> </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-sm-12 content-column">
+                            <div className="content_block_3">
+                                <div className="content-box">
+                                    <div className="sec-title style-two">
+                                        <p>Пчеларски магазин Пенев</p>
+                                        <h2>30 години продаваме качествен био мед</h2>
+                                    </div>
+                                    <div className="tabs-box">
+                                        <div className="tab-btn-box">
+                                            <ul className="tab-btns tab-buttons clearfix">
+                                                <li className="tab-btn active-btn" data-tab="#tab-1"><h5>История</h5></li>
+                                            </ul>
+                                        </div>
+                                        <div className="tabs-content">
+                                            <div className="tab active-tab" id="tab-1">
+                                                <div className="inner-box">
+                                                    <div className="inner">
+                                                        <figure className="image-box"><img src="/images/resource/about-3.jpg" alt="" /> </figure>
+                                                        <div className="text">
+                                                            <p>Ние сме в индустрията с пчелни продукти от 30 години. Стараем се да предоставим най-качествените пчелни продукти.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="btn-box"><Link to="/about"  className="theme-btn-two">За нас</Link></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>    
     )
 }

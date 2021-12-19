@@ -21,22 +21,6 @@
 
 @media only screen and (max-width: 1200px){
 
-  .main-menu,
-  .sticky-header,
-  .main-header.style-one .outer-container:before{
-    display: none !important;
-  }
-
-  .menu-area .mobile-nav-toggler {
-    display: block;
-    margin-top: 0px;
-    padding: 10px;
-    background: #fff;
-  }
-
-  .main-header .nav-right-content .nav-box{
-    display: none;
-  }
 
   .banner-carousel .image{
     display: none;
