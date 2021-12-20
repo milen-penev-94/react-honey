@@ -9,7 +9,7 @@ const validateEmail = (email) => {
 export function emailValidate(email) {
   let error = ''
     if (!validateEmail(email)) {
-        error = 'Имеила е невалиден'
+        error = 'Имейла е невалиден'
     }
 
     return error.length ? error : null

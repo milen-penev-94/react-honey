@@ -7,9 +7,9 @@ export const validateUpdateOrder = (values) => {
     }
 
     if (!values.email) {
-        errors.email = "Имеила е задължителен!";
+        errors.email = "Имейла е задължителен!";
     } else if (!regex.test(values.email)) {
-        errors.email = "Невалиден формат за имеил!";
+        errors.email = "Невалиден формат за имейл!";
     }
 
     if (!values.phone) {

@@ -26,7 +26,7 @@ const Profile = () => {
     <div className="profile-component profile-container row">
       <div className="col-lg-7 col-md-7 col-sm-12">
         <h2>Профил</h2>
-        <p>Имеил: {currentUser.email}</p>
+        <p>Имейл: {currentUser.email}</p>
 
         { currentUserData && <p>Име: {currentUserData.name}</p> }
         { currentUserData && <p>Фамилия: {currentUserData.lastName}</p> }

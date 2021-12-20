@@ -53,7 +53,7 @@ const UpdateProfile = () => {
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div div className="col-lg-12 col-md-12 col-sm-12">
-              <label>Имеил</label>
+              <label>Имейл</label>
               <input type="email" ref={emailRef} required defaultValue={currentUser.email} />
             </div>
           </div>

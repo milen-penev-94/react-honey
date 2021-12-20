@@ -37,7 +37,7 @@ const OrderedProducts = ({order}) => {
                 <tbody>
                 { orderedProducts.map((orderedProduct) => 
                      <tr key={orderedProduct.docId} className="ordered-product">
-                        <th><img src={orderedProduct.image} className="image" /></th>
+                        <th><img src={orderedProduct.image} className="image" alt={orderedProduct.name} /></th>
                         <th>{orderedProduct.sku}</th>
                         <th>{orderedProduct.name}</th>
                         <th>{orderedProduct.quantity} </th>

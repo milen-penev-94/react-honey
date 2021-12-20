@@ -39,7 +39,7 @@ export default function Login() {
         {error && <Alert variant="danger">{error}</Alert>}
         <form onSubmit={handleSubmit}>
           <div className="group">
-            <label>Имеил</label>
+            <label>Имейл</label>
             <input type="email" ref={emailRef} required />
           </div>
 

@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom"
 import { useCart } from "../../../contexts/CartContext";
 import './Header.css'
 
 function Header () {
-    const { cart, dispatch } = useCart();
+    const { cart } = useCart();
 
     function cartQuantity() {
         let quantity = 0

@@ -21,7 +21,7 @@ export  async function getAllEnabled() {
     let allProductsArray = []
     const allProductsQuery = query(collection(db, "products"), where("isEnabled", "==", "1"));
     const snapshot =  await getDocs(allProductsQuery)
-    
+
     snapshot.docs.forEach((doc) => {
         let categoryData = Object.assign(doc.data(), {docId: doc.id})
         allProductsArray.push(categoryData)

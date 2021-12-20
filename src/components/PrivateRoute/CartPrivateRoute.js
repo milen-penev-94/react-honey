@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom"
 import { useCart } from "../../contexts/CartContext";
 
 export default function CartPrivateRoute({ children }) {
-    const { cart, dispatch } = useCart();
+    const { cart } = useCart();
     let redirect = null
 
     if (cart.length) {

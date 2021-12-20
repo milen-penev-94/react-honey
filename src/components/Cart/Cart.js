@@ -1,5 +1,5 @@
 import { useCart } from '../../contexts/CartContext';
-import {decrementItemQuantity, removeFromCart  } from '../../cartReducer';
+import { removeFromCart  } from '../../cartReducer';
 import './Cart.css'
 
 const Cart = () => {
@@ -49,7 +49,7 @@ const Cart = () => {
                         <div className="details">
                              <span className="name">{item.name}</span>
                              {itemPrice(item)}
-                             <span className="quantity">Количеств: {item.quantity}</span>
+                             <span className="quantity">Количествo: {item.quantity}</span>
                              {<span className="remove-button" onClick={() => removeFromCartHandler(item)}>×</span>}  
                         </div>
                      </div>

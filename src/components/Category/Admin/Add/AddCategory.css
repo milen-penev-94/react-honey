@@ -1,3 +1,9 @@
 .add-category-component h2 {
     margin-bottom: 20px;
 }
+
+.add-category-component .error-message {
+    color: #f30000;
+    font-size: 11px;
+    font-weight: 600;
+}

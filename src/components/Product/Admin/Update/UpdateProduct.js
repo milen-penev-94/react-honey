@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,6 @@ import './UpdateProduct.css'
 
 const UpdateProduct = () => {
     const params = useParams();
-    const navigate = useNavigate();
 
     const thisProductId = params.id;
     const [currentProduct, setCurrentProduct] = useState({});
@@ -103,6 +102,7 @@ const UpdateProduct = () => {
                         id="isEnabled" 
                         name="isEnabled" 
                         onChange={(e) => setCurrentProduct(s => ({...s, isEnabled: e.target.value}))}
+                        value={currentProduct.isEnabled}
                         onBlur={handleChange}>
                             {statuses.map(status => <option key={status.value} value={status.value}>{status.text}</option>)}
                         </select> 
@@ -150,7 +150,7 @@ const UpdateProduct = () => {
                             <option value=""></option> 
                             {allCategories.length > 0 
                             ? allCategories.map(x => 
-                                <option key={x.docId} value={x.docId} selected={x.docId === currentProduct.category}>{x.name}</option>) 
+                                <option key={x.docId} value={x.docId} >{x.name}</option>) 
                             : null}                                
                         </select> 
                     </div>

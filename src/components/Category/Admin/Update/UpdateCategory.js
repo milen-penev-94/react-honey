@@ -126,7 +126,7 @@ const UpdateCategory = () => {
                         <option value=""></option> 
                         {allCategories.length > 0 
                         ? allCategories.map(x => 
-                            <option key={x.docId} value={x.docId} selected={x.docId === currentCategory.parent}>{x.name}</option>) 
+                            <option key={x.docId} value={x.docId}>{x.name}</option>) 
                         : null}                                
                     </select> 
                  </div>
