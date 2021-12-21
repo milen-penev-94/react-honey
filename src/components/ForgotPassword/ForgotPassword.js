@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react"
-import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../../contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import React, { useState } from 'react';
+import { Alert } from 'react-bootstrap';
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import {Helmet} from 'react-helmet';
+import './ForgotPassword.css';
 
 const ForgotPassword = () => {
-    const emailRef = useRef()
     const { resetPassword } = useAuth()
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
@@ -14,46 +15,47 @@ const ForgotPassword = () => {
     async function handleSubmit(e) {
     e.preventDefault()
 
+    let formData = new FormData(e.currentTarget);
+    let {email} = Object.fromEntries(formData);
+
     try {
         setMessage("")
         setError("")
         setLoading(true)
-        await resetPassword(emailRef.current.value)
-        setMessage("Check your inbox for further instructions")
+        await resetPassword(email)
+        setMessage("Изпратили сме ви имеил с допълнителни инструкции.")
        setTimeout(() => {
             navigate("/login")
           }, 4000);
     } catch {
-        setError("Failed to reset password")
+        setError("Неуспешно възстановяване на парола")
     }
 
     setLoading(false)
     }
     return (
-        <>
-          <Card>
-            <Card.Body>
-              <h2 className="text-center mb-4">Password Reset</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
-              {message && <Alert variant="success">{message}</Alert>}
-              <Form onSubmit={handleSubmit}>
-                <Form.Group id="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" ref={emailRef} required />
-                </Form.Group>
-                <Button disabled={loading} className="w-100" type="submit">
-                  Reset Password
-                </Button>
-              </Form>
-              <div className="w-100 text-center mt-3">
-                <Link to="/login">Login</Link>
-              </div>
-            </Card.Body>
-          </Card>
-          <div className="w-100 text-center mt-2">
-            Need an account? <Link to="/signup">Sign Up</Link>
-          </div>
-        </>
+      <div className="forgot-password-component">
+        <Helmet>
+          <title>Забравена парола</title>
+        </Helmet>
+
+        <h2 className="text-center mb-4">Забравена парола</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+        {message && <Alert variant="success">{message}</Alert>}
+        <form onSubmit={handleSubmit}>
+
+          <label>Имеил</label>
+          <input type="email" name="email" required />
+
+          <button disabled={loading} type="submit">
+            Възстановяване на парола
+          </button>
+        </form>
+
+        <Link to="/login" className="button-link">Вход</Link>
+
+        <Link to="/signup" className="button-link">Регистрация</Link>
+      </div>
       )
 }
 

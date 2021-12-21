@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {Helmet} from 'react-helmet';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,8 +6,6 @@ import { Alert } from 'react-bootstrap';
 import './Login.css';
 
 export default function Login() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,13 +14,16 @@ export default function Login() {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    let formData = new FormData(e.currentTarget);
+    let {email, password} = Object.fromEntries(formData);
+
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
+      await login(email, password);
       navigate("/profile");
     } catch {
-      setError("Failed to log in");
+      setError("Невалидено потребилтелско име или парола");
     }
 
     setLoading(false);
@@ -40,12 +41,12 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <div className="group">
             <label>Имейл</label>
-            <input type="email" ref={emailRef} required />
+            <input type="email" name="email" required />
           </div>
 
           <div className="group">
             <label>Парола</label>
-            <input type="password" ref={passwordRef} required />
+            <input type="password" name="password" required />
           </div>
        
           <button disabled={loading} className="w-100" type="submit">
