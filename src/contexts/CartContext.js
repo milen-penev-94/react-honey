@@ -7,7 +7,7 @@ export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, [], initializer);
 
   useEffect(() => {
-    console.log("Cart updated, persisting to local storage", cart);
+    //console.log("Cart updated, persisting to local storage", cart);
     localStorage.setItem("localCart", JSON.stringify(cart));
   }, [cart]);
 

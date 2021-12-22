@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap";
 import { CartProvider } from "./contexts/CartContext";
+import { HelmetProvider } from 'react-helmet-async';
 
 ReactDOM.render(
   <React.StrictMode>
+    <HelmetProvider>
     <CartProvider>
       <App />
     </CartProvider>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

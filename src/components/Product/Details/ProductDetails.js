@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {  Link, useParams } from 'react-router-dom';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import * as productService from '../../../services/productService';
 import * as categoriesService from '../../../services/categoriesService';
 import { addToCart  } from '../../../cartReducer';

@@ -4,7 +4,7 @@ import * as categoriesService from '../../../../services/categoriesService';
 import * as productService from '../../../../services/productService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { validateProduct } from '../helper/formValidationHelper';
 import './AddProduct.css';
 

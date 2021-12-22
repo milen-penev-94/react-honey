@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 import * as productService from '../../../services/productService';
 import Product from '../../Product/List/Product';
 import Categories from './Categories';

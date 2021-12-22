@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { validate } from './formValidationHelper';
 import * as contactsService from '../../services/contactsService';
 import useDateNow from '../../hooks/useDateNowState';
@@ -68,7 +68,7 @@ const Contacts = () => {
             <div className="row auto-container">
                 <div className="col-lg-6 col-md-6 col-sm-12 map">               
                     <h4>Карта</h4>   
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1218.647619570089!2d24.60637673627721!3d43.41864668948844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40ab8b450cedefb7%3A0x1bf4ab29118a06da!2sul.%20%22Lozenka%22%205%D0%92%2C%205802%20g.k.%20Strogozia%2C%20Pleven!5e0!3m2!1sen!2sbg!4v1639592865361!5m2!1sen!2sbg" width="600" height="450" style={{border: '0'}} allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1218.647619570089!2d24.60637673627721!3d43.41864668948844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40ab8b450cedefb7%3A0x1bf4ab29118a06da!2sul.%20%22Lozenka%22%205%D0%92%2C%205802%20g.k.%20Strogozia%2C%20Pleven!5e0!3m2!1sen!2sbg!4v1639592865361!5m2!1sen!2sbg" width="600" height="450" style={{border: '0'}} allowFullScreen="" loading="lazy"></iframe>
                     <span>гр. Плевен, ул Лозенка №5</span>
                     <span>Телефон: 0886582763</span>
                 </div>
