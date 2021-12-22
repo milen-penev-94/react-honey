@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from "react"
-import {  Link, useParams } from "react-router-dom"
-import {Helmet} from "react-helmet";
+import React, { useState, useEffect } from 'react'
+import {  Link, useParams } from 'react-router-dom';
+import {Helmet} from 'react-helmet';
 import * as productService from '../../../services/productService';
 import * as categoriesService from '../../../services/categoriesService';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
+import { addToCart  } from '../../../cartReducer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { useCart } from "../../../contexts/CartContext";
-import './ProductDetails.css'
+import './ProductDetails.css';
 
 const ProductDetails = () => {
 
-    let params = useParams()
-    let thisProductId = params.id
-    const [product, setProduct] = useState({})
-    const [productCategory, setProductCategory] = useState({})
-    const [quantity, setQuantity] = useState(1)
-    const [successMessage, setSuccessMessage] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+    let params = useParams();
+    let thisProductId = params.id;
+    const [product, setProduct] = useState({});
+    const [productCategory, setProductCategory] = useState({});
+    const [quantity, setQuantity] = useState(1);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const { cart, dispatch } = useCart();
 
     useEffect(() => {
         productService.getOne(thisProductId)
         .then(result => {
-            setProduct(result)
+            setProduct(result);
 
             categoriesService.getOne(result.category)
             .then(result => {
-                setProductCategory(result)
+                setProductCategory(result);
             })   
             .catch(err => {
                 console.log(err);
@@ -36,11 +37,11 @@ const ProductDetails = () => {
 
 
     const increaseQuantityHandler = () => {
-        let count = quantity
-        count = count + 1
+        let count = quantity;
+        count = count + 1;
 
         if (count > parseInt(product.quantity)) {
-            setErrorMessage('Няма достатъчно наличност')
+            setErrorMessage('Няма достатъчно наличност');
         }  else {
             
         }
@@ -49,9 +50,9 @@ const ProductDetails = () => {
     };
 
     const decreaseQuantityHandler = () => {
-        let count = quantity
+        let count = quantity;
         if (count > 1) {
-            count = count - 1    
+            count = count - 1;
 
             if (count == parseInt(product.quantity) || count < parseInt(product.quantity)) {
                 setErrorMessage('')
@@ -66,22 +67,18 @@ const ProductDetails = () => {
       }
 
     const addToCartHandler = () => {
-
-        dispatch({
-            type: "ADD_TO_CART",
-            item: {
-                id: thisProductId,
-                name: product.name,
-                image: product.image,
-                price: financial(product.price),
-                salePrice: product.salePrice.length ? financial(product.salePrice) : null,
-                quantity: quantity
-            }
-        });    
+        dispatch(addToCart({
+            id: thisProductId,
+            name: product.name,
+            image: product.image,
+            price: financial(product.price),
+            salePrice: product.salePrice.length ? financial(product.salePrice) : null,
+            quantity: quantity
+        }));    
 
         setSuccessMessage('Продукта е успешно добавен в количката')
         setTimeout(() => {
-            setSuccessMessage('')
+            setSuccessMessage('');
         }, 3000)
     };
 

@@ -49,6 +49,7 @@
 
 .cart-component .cart-items .cart-item .name {
     display: block;
+    width: calc(100% - 20px);
     font-size: 16px;
 }
 
