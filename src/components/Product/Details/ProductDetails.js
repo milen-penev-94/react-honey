@@ -76,7 +76,7 @@ const ProductDetails = () => {
             quantity: quantity
         }));    
 
-        setSuccessMessage('Продукта е успешно добавен в количката')
+        setSuccessMessage('Продукта е успешно в количката')
         setTimeout(() => {
             setSuccessMessage('');
         }, 3000)

@@ -10,9 +10,9 @@ import { HelmetProvider } from 'react-helmet-async';
 ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
-    <CartProvider>
-      <App />
-    </CartProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
     </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -8,7 +8,7 @@ const Product = ({product}) => {
                 <div className="inner-box">
                     <figure className="image-box product-image"><Link to={`/product/${product.docId}`}><img src={product.image} alt=""/></Link></figure>
                     <div className="lower-content">
-                        <h5><a href="shop-details.html">{product.name}</a></h5>
+                        <h5>{product.name}</h5>
                         <span className="price">
                             {product.salePrice
                                 ? <span className="price">
